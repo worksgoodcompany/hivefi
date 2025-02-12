@@ -177,56 +177,56 @@ export default function Portfolio() {
     const assets = [
         {
             name: "Mantle",
-            symbol: "STRK",
-            value: formatCurrency(3280.00),
-            amount: "100,000 STRK",
-            price: "$0.0328",
-            change24h: -2.52,
+            symbol: "MNT",
+            value: formatCurrency(3440.82),
+            amount: "3,374 MNT",
+            price: "$1.02",
+            change24h: -0.2,
             apy: 4.5
         },
         {
-            name: "Wrapped BTC",
-            symbol: "wBTC",
-            value: formatCurrency(4705.00),
-            amount: "0.05 wBTC",
-            price: "$94,100.00",
-            change24h: -1.32,
+            name: "Mantle Staked Ether",
+            symbol: "METH",
+            value: formatCurrency(2760.44),
+            amount: "1.00 METH",
+            price: "$2,760.44",
+            change24h: -3.3,
             apy: 3.8
         },
         {
-            name: "Wrapped Ether",
-            symbol: "WETH",
-            value: formatCurrency(3283.00),
-            amount: "1.00 WETH",
-            price: "$3,283.00",
-            change24h: -0.15,
+            name: "Mantle Restaked ETH",
+            symbol: "CMETH",
+            value: formatCurrency(2760.42),
+            amount: "1.00 CMETH",
+            price: "$2,760.42",
+            change24h: -3.2,
             apy: 8.2
         },
         {
-            name: "StarkEx",
-            symbol: "STRK",
-            value: formatCurrency(3374.00),
-            amount: "1.00 STRK",
-            price: "$3,374.00",
-            change24h: -0.83,
-            apy: 12.4
+            name: "Solv Protocol SolvBTC",
+            symbol: "SOLVBTC",
+            value: formatCurrency(95731.51),
+            amount: "1.00 SOLVBTC",
+            price: "$95,731.51",
+            change24h: -2.0,
+            apy: 2.4
         },
         {
-            name: "StarkGate",
-            symbol: "GATE",
-            value: formatCurrency(1693.00),
-            amount: "100,000 GATE",
-            price: "$0.01693",
-            change24h: -3.22,
-            apy: 9.6
+            name: "Solv Protocol SolvBTC.BBN",
+            symbol: "SOLVBTC.BBN",
+            value: formatCurrency(95205.63),
+            amount: "1.00 SOLVBTC.BBN",
+            price: "$95,205.63",
+            change24h: -1.9,
+            apy: 1.6
         },
         {
-            name: "Tether",
-            symbol: "USDT",
-            value: formatCurrency(836.10),
-            amount: "100,000 USDT",
-            price: "$0.008361",
-            change24h: 34.13,
+            name: "Ondo US Dollar Yield",
+            symbol: "USDY",
+            value: formatCurrency(1080.00),
+            amount: "1,000 USDY",
+            price: "$1.08",
+            change24h: 0.0,
             apy: 15.2
         }
     ];

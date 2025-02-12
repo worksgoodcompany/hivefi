@@ -13,8 +13,14 @@ interface TooltipProps {
     payload?: Array<{
         name: string;
         value: number;
+        dataKey?: string;
     }>;
     label?: string;
+}
+
+interface PieChartLabelProps {
+    name: string;
+    percent: number;
 }
 
 function StatCard({ title, value, change, icon }: StatCardProps) {
@@ -55,12 +61,12 @@ const tvlData = [
 ];
 
 const protocolData = [
-    { id: 'nostra', name: 'Nostra', value: 120.6 },
-    { id: 'ekubo', name: 'Ekubo', value: 60.27 },
-    { id: 'vesu', name: 'Vesu', value: 25.39 },
-    { id: 'zklend', name: 'zkLend', value: 21.07 },
-    { id: 'nimbora', name: 'Nimbora', value: 14.8 },
-    { id: 'endur', name: 'Endur', value: 10.5 }
+    { id: 'treehouse', name: 'Treehouse Protocol', value: 96.73 },
+    { id: 'merchant', name: 'Merchant Moe', value: 89.34 },
+    { id: 'agni', name: 'Agni Finance', value: 78.68 },
+    { id: 'init', name: 'INIT Capital', value: 70.48 },
+    { id: 'pendle', name: 'Pendle', value: 61.70 },
+    { id: 'stargate', name: 'Stargate Finance', value: 35.95 }
 ];
 
 const COLORS = ['#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe'];
@@ -83,10 +89,10 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
 
 export default function Analytics() {
     const stats = [
-        { id: 'tvl', title: "Total Value Locked", value: "$132.64M", change: 2.5, icon: <LucideLineChart className="h-4 w-4 text-blue-500" /> },
-        { id: 'volume', title: "24h Volume", value: "$818.67K", change: -1.2, icon: <LucideBarChart className="h-4 w-4 text-purple-500" /> },
-        { id: 'positions', title: "Active Positions", value: "1,234", change: 5.8, icon: <LucidePieChart className="h-4 w-4 text-green-500" /> },
-        { id: 'revenue', title: "Protocol Revenue", value: "$182.72K", change: 3.7, icon: <Activity className="h-4 w-4 text-orange-500" /> }
+        { id: 'tvl', title: "Total Value Locked", value: "$355.12M", change: -2.5, icon: <LucideLineChart className="h-4 w-4 text-blue-500" /> },
+        { id: 'volume', title: "24h Volume", value: "$43.88M", change: -1.2, icon: <LucideBarChart className="h-4 w-4 text-purple-500" /> },
+        { id: 'revenue', title: "App Revenue (24h)", value: "$6,367", change: 3.7, icon: <Activity className="h-4 w-4 text-orange-500" /> },
+        { id: 'perps', title: "Perps Volume (24h)", value: "$5.39M", change: 5.8, icon: <LucidePieChart className="h-4 w-4 text-green-500" /> }
     ];
 
     return (
@@ -122,7 +128,7 @@ export default function Analytics() {
                                 <XAxis dataKey="date" stroke="rgba(255,255,255,0.5)" />
                                 <YAxis
                                     stroke="rgba(255,255,255,0.5)"
-                                    tickFormatter={(value) => `$${(value / 1e6).toFixed(0)}M`}
+                                    tickFormatter={(value: number) => `$${(value / 1e6).toFixed(0)}M`}
                                 />
                                 <Tooltip content={<CustomTooltip />} />
                                 <Area
@@ -162,7 +168,7 @@ export default function Analytics() {
                                     fill="#8884d8"
                                     paddingAngle={2}
                                     dataKey="value"
-                                    label={({ name, percent }) => {
+                                    label={({ name, percent }: PieChartLabelProps) => {
                                         if (window.innerWidth < 640) return null;
                                         return `${name} ${(percent * 100).toFixed(0)}%`;
                                     }}
@@ -193,7 +199,7 @@ export default function Analytics() {
                             />
                             <YAxis
                                 stroke="rgba(255,255,255,0.5)"
-                                tickFormatter={(value) => `$${(value / 1e3).toFixed(0)}K`}
+                                tickFormatter={(value: number) => `$${(value / 1e3).toFixed(0)}K`}
                                 tick={{ fontSize: window.innerWidth < 640 ? 10 : 12 }}
                             />
                             <Tooltip content={<CustomTooltip />} />

@@ -4,37 +4,14 @@ import { useEffect, useState, useRef } from "react";
 
 // Import all logos
 import ai16z from "../assets/logos-ext/ai16z.svg";
-import apibara from "../assets/logos-ext/apibara.svg";
-import argent from "../assets/logos-ext/argent.svg";
-import avnu from "../assets/logos-ext/avnu.svg";
-import braavos from "../assets/logos-ext/braavos.svg";
-import coingecho from "../assets/logos-ext/coingecho.svg";
+import coingecko from "../assets/logos-ext/coingecko.svg";
 import defillama from "../assets/logos-ext/defillama.svg";
-import ekubo from "../assets/logos-ext/ekubo.svg";
-import endur from "../assets/logos-ext/endur.svg";
-import nethermind from "../assets/logos-ext/nethermind.svg";
-import starknet from "../assets/logos-ext/starknet.svg";
-import starknetid from "../assets/logos-ext/starknetid.svg";
-import unruggable from "../assets/logos-ext/unruggable.svg";
-import vesu from "../assets/logos-ext/vesu.svg";
-import voyager from "../assets/logos-ext/voyager.svg";
+
 
 const logos = [
-  { id: "starknet", src: starknet, alt: "Mantle" },
-  { id: "argent", src: argent, alt: "Argent Wallet" },
-  { id: "braavos", src: braavos, alt: "Braavos Wallet" },
-  { id: "starknetid", src: starknetid, alt: "Mantle ID" },
-  { id: "avnu", src: avnu, alt: "Avnu DEX" },
-  { id: "ekubo", src: ekubo, alt: "Ekubo DEX" },
   { id: "defillama", src: defillama, alt: "DefiLlama" },
-  { id: "nethermind", src: nethermind, alt: "Nethermind" },
-  { id: "apibara", src: apibara, alt: "Apibara" },
-  { id: "endur", src: endur, alt: "Endur" },
-  { id: "unruggable", src: unruggable, alt: "Unruggable Labs" },
-  { id: "vesu", src: vesu, alt: "Vesu" },
-  { id: "voyager", src: voyager, alt: "Voyager" },
   { id: "ai16z", src: ai16z, alt: "AI16Z" },
-  { id: "coingecho", src: coingecho, alt: "Coingecho" },
+  { id: "coingecko", src: coingecko, alt: "Coingecko" },
 ];
 
 export function LogoCarousel() {

@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/icon.svg";
 
 export function HomeHeader() {
     const navigate = useNavigate();

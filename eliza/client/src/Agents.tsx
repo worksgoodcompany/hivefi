@@ -4,24 +4,24 @@ import { HomeHeader } from "./components/home-header";
 import type { FC } from 'react';
 
 // Import agent images
-import salesAgentImg from "./assets/agents/sales-agent.png";
-import memeAgentImg from "./assets/agents/meme-agent.png";
-import vcAgentImg from "./assets/agents/vc-agent.png";
-import metricsAgentImg from "./assets/agents/metrics-agent.png";
-import alphaAgentImg from "./assets/agents/alpha-agent.png";
-import analystAgentImg from "./assets/agents/analyst-agent.png";
-import nftsAgentImg from "./assets/agents/nfts-agent.png";
-import kolAgentImg from "./assets/agents/kol-agent.png";
-import tokenDeployerImg from "./assets/agents/token-deployer-agent.png";
-import nftDeployerImg from "./assets/agents/nft-deployer-agent.png";
-import starknetExpertImg from "./assets/agents/starknet-expert-agent.png";
-import predictionsAgentImg from "./assets/agents/predictions-agent.png";
-import coordinatorAgentImg from "./assets/agents/coordinator-agent.png";
-import defiAgentImg from "./assets/agents/defi-agent.png";
-import tradingAgentImg from "./assets/agents/trading-agent.png";
-import walletAgentImg from "./assets/agents/wallet-agent.png";
-import daoAgentImg from "./assets/agents/dao-agent.png";
-import advisorAgentImg from "./assets/agents/advisor-agent.png";
+import salesAgentImg from "./assets/agents/Sales Agent.png";
+import memeAgentImg from "./assets/agents/Meme Agent.png";
+import demoAgentImg from "./assets/agents/Demo Agent.png";
+import metricsAgentImg from "./assets/agents/Metrics Agent.png";
+import alphaAgentImg from "./assets/agents/Alpha Agent.png";
+import analystAgentImg from "./assets/agents/Analyst Agent.png";
+import nftsAgentImg from "./assets/agents/NFTs Agent.png";
+import kolAgentImg from "./assets/agents/KOL Agent.png";
+import tokenDeployerImg from "./assets/agents/Token Deployer.png";
+import nftDeployerImg from "./assets/agents/NFT Deployer.png";
+import mantleExpertImg from "./assets/agents/Mantle Expert.png";
+import predictionsAgentImg from "./assets/agents/Predictions Agent.png";
+import coordinatorAgentImg from "./assets/agents/Coordinator Agent.png";
+import defiAgentImg from "./assets/agents/DeFi Agent.png";
+import tradingAgentImg from "./assets/agents/Trading Agent.png";
+import walletAgentImg from "./assets/agents/Wallet Agent.png";
+import daoAgentImg from "./assets/agents/DAO Agent.png";
+import advisorAgentImg from "./assets/agents/Advisor Agent.png";
 
 interface Agent {
     name: string;
@@ -144,7 +144,7 @@ const agentCategories: Record<string, AgentCategory> = {
                 capabilities: ["Feature showcase", "User guidance", "Live demonstrations", "Use case examples", "Product tutorials"],
                 category: "Support",
                 icon: Puzzle,
-                imagePath: vcAgentImg
+                imagePath: demoAgentImg
             }
         ]
     },
@@ -220,7 +220,7 @@ const agentCategories: Record<string, AgentCategory> = {
                 ],
                 category: "Support",
                 icon: GraduationCap,
-                imagePath: starknetExpertImg
+                imagePath: mantleExpertImg
             },
             {
                 name: "Predictions Agent",

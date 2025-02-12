@@ -67,7 +67,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import yargs from "yargs";
 import net from "net";
-import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -578,8 +577,7 @@ export async function createAgent(
             getSecret(character, "COINBASE_NOTIFICATION_URI")
                 ? webhookPlugin
                 : null,
-/*             getSecret(character, "EVM_PROVIDER_URL") ? goatPlugin : null,
- */            getSecret(character, "ABSTRACT_PRIVATE_KEY")
+            getSecret(character, "ABSTRACT_PRIVATE_KEY")
                 ? abstractPlugin
                 : null,
             getSecret(character, "FLOW_ADDRESS") &&
@@ -783,16 +781,7 @@ const startAgents = async () => {
     );
 };
 
-async function main() {
-    // Load environment variables
-    dotenv.config();
-
-    // Initialize runtime
-    const runtime = new AgentRuntime();
-    await runtime.initialize(); // Make sure there's an initialize method
-
-    // Start your agent
-    // ...
-}
-
-main().catch(console.error);
+startAgents().catch((error) => {
+    elizaLogger.error("Unhandled error in startAgents:", error);
+    process.exit(1);
+});

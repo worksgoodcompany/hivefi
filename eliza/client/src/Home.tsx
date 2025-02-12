@@ -9,7 +9,7 @@ import discordIcon from "./assets/discord.svg";
 import githubIcon from "./assets/github-dark.svg";
 import telegramIcon from "./assets/telegram.svg";
 import x_dark from "./assets/x_dark.svg";
-import logo from "./assets/logo.svg";
+import logo from "./assets/icon.svg";
 import hero from "./assets/hero.svg";
 import bg1 from "./assets/bg1.png";
 import bg2 from "./assets/bg2.png";
@@ -58,7 +58,7 @@ function Home() {
                         <div className="flex flex-col items-center text-center">
                             <div className="flex items-center justify-center mb-8">
                                 <img
-                                    src="/hero1.svg"
+                                    src="/hero.svg"
                                     alt="HiveFi Hero"
                                     className="w-[1024px] h-auto max-w-full"
                                     style={{
@@ -396,7 +396,7 @@ function Home() {
                                 <div className="flex flex-col items-center space-y-4">
                                     <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-[#7f00ff] ring-offset-2 ring-offset-[#121212] group-hover:ring-4 transition-all duration-300">
                                         <img
-                                            src="/agents/meme-agent.png"
+                                            src="/agents/Meme Agent.png"
                                             alt="AI Meme Agent"
                                             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                                         />
@@ -436,7 +436,7 @@ function Home() {
                         <div className="flex flex-col items-center gap-8">
                             <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-[#7f00ff] ring-offset-2 ring-offset-[#121212] hover:ring-4 transition-all duration-300">
                                 <img
-                                    src="/agents/sales-agent.png"
+                                    src="/agents/Sales Agent.png"
                                     alt="AI Sales Agent"
                                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
                                 />

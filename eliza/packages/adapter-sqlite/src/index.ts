@@ -16,43 +16,11 @@ import { Database } from "better-sqlite3";
 import { v4 } from "uuid";
 import { load } from "./sqlite_vec.ts";
 import { sqliteTables } from "./sqliteTables.ts";
-import { dirname } from 'path';
-import { mkdirSync } from 'fs';
 
 export class SqliteDatabaseAdapter
     extends DatabaseAdapter<Database>
     implements IDatabaseCacheAdapter
 {
-    private db: Database.Database;
-
-    constructor(dbPath: string) {
-        super();
-        // Extract actual path from sqlite: prefix
-        const path = dbPath.replace('sqlite:', '');
-
-        // Ensure directory exists
-        mkdirSync(dirname(path), { recursive: true });
-
-        // Initialize database
-        this.db = new Database(path, { verbose: console.log });
-
-        // Initialize tables
-        this.initializeTables();
-        load(this.db);
-    }
-
-    private initializeTables() {
-        this.db.exec(`
-            CREATE TABLE IF NOT EXISTS participants (
-                id TEXT PRIMARY KEY,
-                account_id TEXT NOT NULL,
-                name TEXT NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-            -- Add other necessary tables
-        `);
-    }
-
     async getRoom(roomId: UUID): Promise<UUID | null> {
         const sql = "SELECT id FROM rooms WHERE id = ?";
         const room = this.db.prepare(sql).get(roomId) as
@@ -99,6 +67,12 @@ export class SqliteDatabaseAdapter
             "UPDATE participants SET userState = ? WHERE roomId = ? AND userId = ?"
         );
         stmt.run(state, roomId, userId);
+    }
+
+    constructor(db: Database) {
+        super();
+        this.db = db;
+        load(db);
     }
 
     async init() {

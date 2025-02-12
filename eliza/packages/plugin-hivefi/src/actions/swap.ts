@@ -17,7 +17,6 @@ const TOKEN_ADDRESSES = {
     USDC: "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
     WETH: "0xdEaddEaDdeadDEadDEADDEAddEADDEAddead1111",
     WBTC: "0xCAbAE6f6Ea1ecaB08Ad02fE02ce9A44F09aebfA2",
-    AGNI: "0x45579918686B26951b899A1A5e7282e53f4c8136",
 } as const;
 
 // Token decimals
@@ -27,7 +26,6 @@ const TOKEN_DECIMALS = {
     USDC: 6,
     WETH: 18,
     WBTC: 8,
-    AGNI: 18,
 } as const;
 
 // Define Mantle chain configuration

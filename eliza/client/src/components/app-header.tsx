@@ -3,7 +3,7 @@ import { ConnectWallet } from "./connect-wallet";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/icon.svg";
 
 export function AppHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

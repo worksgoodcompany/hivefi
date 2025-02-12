@@ -333,11 +333,6 @@ Send 0.0001 ETH to 0x060ce783C1BD3416101C6EA0F73dfe987ec314f12E683eA3Cf383A5f194
 Swap 0.2 MNT for ETH on Agni Protocol
 ```
 
-### Token Deployment
-
-```
-Deploy a new token called HiveFi with the symbol HIVE, owned by 0x00d545834ce70540124d8fBa3FD1A1283A682C6584440B90eDEfa5b0903D728c and initial supply of 10000 on Mantle
-```
 
 ## 🔍 Important Notes
 
