@@ -1,10 +1,11 @@
 import type { Action, Memory } from "@elizaos/core";
 import {
     parseUnits,
+    type SendTransactionParameters,
 } from "viem";
 import { mantleChain } from "../config/chains";
 import { initWalletProvider } from "../providers/wallet";
-import { TOKENS, getTokenBySymbol, isERC20Token } from "../config/tokens";
+import { TOKENS, getTokenBySymbol, isERC20Token, type TokenSymbol } from "../config/tokens";
 
 interface TransferEntities {
     amount?: string | number;
@@ -89,7 +90,7 @@ export const erc20Transfer: Action = {
             to = content[3].toLowerCase() as `0x${string}`;
 
             // Get token config and validate
-            const token = getTokenBySymbol(tokenSymbol);
+            const token = getTokenBySymbol(tokenSymbol as TokenSymbol);
             if (!token || !isERC20Token(token)) {
                 const supportedTokens = Object.entries(TOKENS)
                     .filter(([_, t]) => t.type === 'erc20')
@@ -145,7 +146,7 @@ export const erc20Transfer: Action = {
                 account: provider.getAccount(),
                 to: token.address,
                 data: data as `0x${string}`,
-                value: 0n,
+                type: "legacy" as const,
             });
 
             callback?.({

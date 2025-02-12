@@ -1,95 +1,43 @@
-import type { Action, IAgentRuntime, Memory, State, HandlerCallback } from "@elizaos/core";
-import { generateObject, composeContext, ModelClass } from "@elizaos/core";
-import { createWalletClient, http, parseUnits } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { mainnet } from "viem/chains";
-import type { SwapContent } from "../types/swap";
-import { isSwapContent, SwapSchema } from "../types/swap";
+import type { Action, Memory } from "@elizaos/core";
+import {
+    parseUnits,
+    createPublicClient,
+    http,
+    type Address,
+} from "viem";
+import { mantleChain } from "../config/chains";
+import { initWalletProvider } from "../providers/wallet";
+import { TOKENS, getTokenBySymbol, isERC20Token, type TokenConfig } from "../config/tokens";
 import AgniRouterABI from "../abi/AgniRouter.json";
 
 // Agni Router contract address on Mantle
-const AGNI_ROUTER_ADDRESS = "0x319B69888b0d11cEC22caA5034e25FfFBDc88421";
+const AGNI_ROUTER_ADDRESS = "0x319B69888b0d11cEC22caA5034e25FfFBDc88421" as const;
 
-// Token addresses on Mantle
-const TOKEN_ADDRESSES = {
-    MNT: "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8", // WMNT
-    USDT: "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-    USDC: "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-    WETH: "0xdEaddEaDdeadDEadDEADDEAddEADDEAddead1111",
-    WBTC: "0xCAbAE6f6Ea1ecaB08Ad02fE02ce9A44F09aebfA2",
-} as const;
-
-// Token decimals
-const TOKEN_DECIMALS = {
-    MNT: 18,
-    USDT: 6,
-    USDC: 6,
-    WETH: 18,
-    WBTC: 8,
-} as const;
-
-// Define Mantle chain configuration
-const mantleChain = {
-    ...mainnet,
-    id: 5000,
-    name: 'Mantle',
-    network: 'mantle',
-    nativeCurrency: {
-        decimals: 18,
-        name: 'MNT',
-        symbol: 'MNT',
-    },
-    rpcUrls: {
-        default: { http: ['https://rpc.mantle.xyz'] },
-        public: { http: ['https://rpc.mantle.xyz'] },
-    },
-    blockExplorers: {
-        default: { name: 'Explorer', url: 'https://explorer.mantle.xyz' },
-    },
-} as const;
-
-// Add ERC20 ABI for approvals
-const ERC20_ABI = [
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "spender",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "approve",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-] as const;
-
-// Add helper functions
-async function approveToken(
-    client: WalletClient,
-    tokenAddress: string,
-    spenderAddress: string,
-    amount: bigint
-): Promise<`0x${string}`> {
-    return client.writeContract({
-        address: tokenAddress as `0x${string}`,
-        abi: ERC20_ABI,
-        functionName: 'approve',
-        args: [spenderAddress as `0x${string}`, amount]
-    });
-}
+// ERC20 ABI for approvals
+const ERC20_ABI = [{
+    "inputs": [
+        {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+        }
+    ],
+    "name": "approve",
+    "outputs": [
+        {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}] as const;
 
 export const swap: Action = {
     name: "SWAP_MANTLE",
@@ -97,9 +45,9 @@ export const swap: Action = {
     examples: [
         [
             {
-                user: "user",
+                user: "user1",
                 content: {
-                    text: "swap 0.1 MNT for USDT on Mantle",
+                    text: "Swap 0.1 MNT for USDT",
                 },
             },
             {
@@ -116,153 +64,224 @@ export const swap: Action = {
             },
         ],
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
-        return true;
-    },
-    handler: async (
-        runtime: IAgentRuntime,
-        initialMessage: Memory,
-        initialState?: State,
-        options?: { [key: string]: unknown },
-        callback?: HandlerCallback
-    ): Promise<boolean> => {
-        const state = initialState
-            ? await runtime.updateRecentMessageState(initialState)
-            : await runtime.composeState(initialMessage);
-
-        const context = composeContext({
-            state,
-            template: swapTemplate,
-        });
-
-        const content = await generateObject({
-            runtime,
-            context,
-            modelClass: ModelClass.LARGE,
-            schema: SwapSchema,
-        });
-
-        if (!isSwapContent(content.object)) {
-            throw new Error("Invalid swap content");
-        }
-
-        const swapContent = content.object;
-        const { amount, fromToken, toToken } = swapContent.params;
-
-        // Send initial confirmation
-        if (callback) {
-            callback({
-                text: `The swap of ${amount} ${fromToken} for ${toToken} on Agni DEX has been initiated. You will receive a confirmation once the transaction is complete.`,
-            });
-        }
-
+    handler: async (runtime, message: Memory, state, options, callback) => {
         try {
-            const privateKey = runtime.getSetting("EVM_PRIVATE_KEY");
-            if (!privateKey) {
-                throw new Error("Wallet not configured. Please set EVM_PRIVATE_KEY.");
+            // Parse the swap request
+            const content = message.content?.text?.match(
+                /swap ([\d.]+) ([A-Za-z]+) (?:for|to) ([A-Za-z]+)/i
+            );
+
+            if (!content) {
+                callback?.({
+                    text: "Could not parse swap details. Please use format: Swap <amount> <fromToken> for <toToken>",
+                });
+                return false;
             }
 
-            const rpcUrl = runtime.getSetting("EVM_RPC_URL") || "https://rpc.mantle.xyz";
-            const account = privateKeyToAccount(privateKey as `0x${string}`);
+            const amount = content[1];
+            const fromTokenSymbol = content[2].toUpperCase();
+            const toTokenSymbol = content[3].toUpperCase();
 
-            const client = createWalletClient({
-                account,
-                chain: mantleChain,
-                transport: http(rpcUrl),
+            // Get token configs and validate
+            const fromToken = getTokenBySymbol(fromTokenSymbol);
+            const toToken = getTokenBySymbol(toTokenSymbol);
+
+            if (!fromToken || !toToken) {
+                const supportedTokens = Object.keys(TOKENS).join(", ");
+                callback?.({
+                    text: `Invalid token symbol. Supported tokens: ${supportedTokens}`,
+                });
+                return false;
+            }
+
+            // Initialize wallet provider
+            const provider = initWalletProvider(runtime);
+            if (!provider) {
+                callback?.({
+                    text: "Mantle wallet not configured. Please set EVM_PRIVATE_KEY in your environment variables.",
+                });
+                return false;
+            }
+
+            // Send initial confirmation
+            callback?.({
+                text: `The swap of ${amount} ${fromTokenSymbol} for ${toTokenSymbol} on Agni DEX has been initiated. You will receive a confirmation once the transaction is complete.`,
             });
 
-            // Get token addresses and setup
-            const tokenIn = TOKEN_ADDRESSES[fromToken as keyof typeof TOKEN_ADDRESSES];
-            const tokenOut = TOKEN_ADDRESSES[toToken as keyof typeof TOKEN_ADDRESSES];
-            const decimalsIn = TOKEN_DECIMALS[fromToken as keyof typeof TOKEN_DECIMALS];
-            const amountIn = parseUnits(amount.toString(), decimalsIn);
-            const path = [tokenIn, tokenOut];
-            const to = account.address;
+            const walletClient = provider.getWalletClient();
+            const publicClient = createPublicClient({
+                chain: mantleChain,
+                transport: http("https://rpc.mantle.xyz")
+            });
+
+            // Setup swap parameters
+            const wmnt = TOKENS.WMNT;
+            if (!isERC20Token(wmnt)) throw new Error("WMNT token not found");
+
+            // Check if dealing with native MNT
+            const isNativeMNTIn = fromToken.type === 'native';
+            const isNativeMNTOut = toToken.type === 'native';
+
+            // Get token addresses
+            const fromTokenAddress = isERC20Token(fromToken) ? fromToken.address : wmnt.address;
+            const toTokenAddress = isERC20Token(toToken) ? toToken.address : wmnt.address;
+
+            // Setup swap path
+            let path: Address[];
+
+            // Check if both tokens are stablecoins (USDC/USDT)
+            const isStablecoinSwap =
+                (fromTokenSymbol === 'USDC' || fromTokenSymbol === 'USDT') &&
+                (toTokenSymbol === 'USDC' || toTokenSymbol === 'USDT');
+
+            if (isStablecoinSwap) {
+                // Direct path for stablecoin pairs
+                path = [fromTokenAddress, toTokenAddress];
+            } else if (isNativeMNTIn) {
+                // If swapping from native MNT, try direct path first
+                path = [wmnt.address, toTokenAddress];
+
+                // For other tokens, try routing through WMNT
+                if (toTokenSymbol !== 'USDC' && toTokenSymbol !== 'USDT') {
+                    const meth = TOKENS.METH;
+                    if (isERC20Token(meth)) {
+                        path = [wmnt.address, meth.address, toTokenAddress];
+                    }
+                }
+            } else if (isNativeMNTOut) {
+                // If swapping to native MNT, try direct path first
+                path = [fromTokenAddress, wmnt.address];
+
+                // For other tokens, try routing through WMNT
+                if (fromTokenSymbol !== 'USDC' && fromTokenSymbol !== 'USDT') {
+                    const meth = TOKENS.METH;
+                    if (isERC20Token(meth)) {
+                        path = [fromTokenAddress, meth.address, wmnt.address];
+                    }
+                }
+            } else {
+                // For non-stablecoin pairs, try routing through WMNT
+                path = [fromTokenAddress, wmnt.address, toTokenAddress];
+            }
+
+            const to = provider.getAddress() as Address;
             const deadline = BigInt(Math.floor(Date.now() / 1000) + 20 * 60); // 20 minutes
             const slippage = 0.5; // 0.5%
 
-            // Check if dealing with native MNT
-            const isNativeMNTIn = fromToken === 'MNT';
-            const isNativeMNTOut = toToken === 'MNT';
+            // Parse amount with correct decimals
+            const decimals = fromToken.decimals;
+            const amountIn = parseUnits(amount, decimals);
 
-            // Get amounts out for slippage calculation
-            const amountsOut = await client.readContract({
-                address: AGNI_ROUTER_ADDRESS as `0x${string}`,
-                abi: AgniRouterABI.abi,
-                functionName: 'getAmountsOut',
-                args: [amountIn, path]
-            });
+            let amountOutMin: bigint;
+            try {
+                // Get amounts out for slippage calculation
+                const amountsOut = await publicClient.readContract({
+                    address: AGNI_ROUTER_ADDRESS as Address,
+                    abi: AgniRouterABI.abi,
+                    functionName: 'getAmountsOut',
+                    args: [amountIn, path]
+                }) as bigint[];
 
-            const amountOutMin = (amountsOut[1] * BigInt(1000 - Math.floor(slippage * 10))) / BigInt(1000);
+                amountOutMin = (amountsOut[amountsOut.length - 1] * BigInt(1000 - Math.floor(slippage * 10))) / BigInt(1000);
+            } catch (error) {
+                console.error("Failed to get amounts out:", error);
+                callback?.({
+                    text: "Failed to calculate swap amounts. This pair might not have enough liquidity. Try a different token pair or amount.",
+                });
+                return false;
+            }
 
             let hash: `0x${string}`;
+            const account = provider.getAccount();
 
-            if (isNativeMNTIn) {
-                // Swapping MNT for tokens
-                hash = await client.writeContract({
-                    address: AGNI_ROUTER_ADDRESS as `0x${string}`,
-                    abi: AgniRouterABI.abi,
-                    functionName: 'swapExactMNTForTokens',
-                    args: [amountOutMin, path, to, deadline],
-                    value: amountIn
-                });
-            } else if (isNativeMNTOut) {
-                // Approve tokens first
-                const approvalHash = await approveToken(
-                    client,
-                    tokenIn,
-                    AGNI_ROUTER_ADDRESS,
-                    amountIn
-                );
-                await client.waitForTransactionReceipt({ hash: approvalHash });
+            try {
+                if (isNativeMNTIn) {
+                    // Swapping MNT for tokens
+                    hash = await walletClient.writeContract({
+                        address: AGNI_ROUTER_ADDRESS as Address,
+                        abi: AgniRouterABI.abi,
+                        functionName: 'swapExactMNTForTokens',
+                        args: [amountOutMin, path, to, deadline],
+                        value: amountIn,
+                        chain: mantleChain,
+                        account
+                    });
+                } else if (isNativeMNTOut) {
+                    // Approve tokens first if swapping to MNT
+                    const approvalHash = await walletClient.writeContract({
+                        address: fromTokenAddress,
+                        abi: ERC20_ABI,
+                        functionName: 'approve',
+                        args: [AGNI_ROUTER_ADDRESS as Address, amountIn],
+                        chain: mantleChain,
+                        account
+                    });
 
-                // Swap tokens for MNT
-                hash = await client.writeContract({
-                    address: AGNI_ROUTER_ADDRESS as `0x${string}`,
-                    abi: AgniRouterABI.abi,
-                    functionName: 'swapExactTokensForMNT',
-                    args: [amountIn, amountOutMin, path, to, deadline]
-                });
-            } else {
-                // Approve tokens first
-                const approvalHash = await approveToken(
-                    client,
-                    tokenIn,
-                    AGNI_ROUTER_ADDRESS,
-                    amountIn
-                );
-                await client.waitForTransactionReceipt({ hash: approvalHash });
+                    // Wait for approval
+                    await publicClient.waitForTransactionReceipt({ hash: approvalHash });
 
-                // Swap tokens for tokens
-                hash = await client.writeContract({
-                    address: AGNI_ROUTER_ADDRESS as `0x${string}`,
-                    abi: AgniRouterABI.abi,
-                    functionName: 'swapExactTokensForTokens',
-                    args: [amountIn, amountOutMin, path, to, deadline]
+                    // Swap tokens for MNT
+                    hash = await walletClient.writeContract({
+                        address: AGNI_ROUTER_ADDRESS as Address,
+                        abi: AgniRouterABI.abi,
+                        functionName: 'swapExactTokensForMNT',
+                        args: [amountIn, amountOutMin, path, to, deadline],
+                        chain: mantleChain,
+                        account
+                    });
+                } else {
+                    // Approve tokens first for token-to-token swap
+                    const approvalHash = await walletClient.writeContract({
+                        address: fromTokenAddress,
+                        abi: ERC20_ABI,
+                        functionName: 'approve',
+                        args: [AGNI_ROUTER_ADDRESS as Address, amountIn],
+                        chain: mantleChain,
+                        account
+                    });
+
+                    // Wait for approval
+                    await publicClient.waitForTransactionReceipt({ hash: approvalHash });
+
+                    // Swap tokens for tokens
+                    hash = await walletClient.writeContract({
+                        address: AGNI_ROUTER_ADDRESS as Address,
+                        abi: AgniRouterABI.abi,
+                        functionName: 'swapExactTokensForTokens',
+                        args: [amountIn, amountOutMin, path, to, deadline],
+                        chain: mantleChain,
+                        account
+                    });
+                }
+
+                // Wait for swap transaction
+                await publicClient.waitForTransactionReceipt({ hash });
+
+                callback?.({
+                    text: `${amount} ${fromTokenSymbol} swapped for ${toTokenSymbol}\nTransaction Hash: ${hash}\nView on Explorer: https://explorer.mantle.xyz/tx/${hash}`,
+                    content: { hash },
                 });
+                return true;
+            } catch (error) {
+                console.error("Failed to execute swap:", error);
+                callback?.({
+                    text: `Failed to execute swap: ${error instanceof Error ? error.message : 'Unknown error'}. This might be due to insufficient balance, slippage, or liquidity issues.`,
+                });
+                return false;
             }
-
-            // Wait for transaction receipt
-            await client.waitForTransactionReceipt({ hash });
-
-            if (callback) {
-                callback({
-                    text: `${amount} ${fromToken} swapped for ${toToken}: ${hash}`,
-                    content: { hash }
-                });
-            }
-
-            return true;
         } catch (error) {
-            console.error("Swap failed:", error);
-            if (callback) {
-                callback({
-                    text: error instanceof Error ? error.message : "Unknown error occurred",
-                });
+            console.error("Failed to swap tokens on Mantle:", error);
+            if (error instanceof Error) {
+                console.error("Error details:", error.message, error.stack);
             }
+            callback?.({
+                text: `Failed to swap tokens: ${error instanceof Error ? error.message : 'Unknown error'}. Please ensure your wallet has sufficient balance and is properly configured.`,
+                content: { error: error instanceof Error ? error.message : 'Unknown error' },
+            });
             return false;
         }
     },
+    validate: async () => true,
     similes: [
         "like trading tokens on Agni DEX",
         "like exchanging assets on Mantle",

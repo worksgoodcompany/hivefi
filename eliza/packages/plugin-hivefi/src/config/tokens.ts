@@ -17,6 +17,7 @@ interface ERC20TokenConfig extends BaseTokenConfig {
 }
 
 type TokenConfig = NativeTokenConfig | ERC20TokenConfig;
+export type { TokenConfig };
 
 type TokensConfig = {
     [K in string]: TokenConfig;
