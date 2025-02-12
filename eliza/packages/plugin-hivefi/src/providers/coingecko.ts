@@ -19,44 +19,31 @@ const TRACKED_TOKENS = [
 
 type TokenInfo = typeof TRACKED_TOKENS[number];
 
-// Types for API responses
-interface CoinGeckoMarketData {
-  id: string;
-  symbol: string;
-  name: string;
-  current_price: number;
-  market_cap: number;
-  market_cap_rank: number;
-  price_change_percentage_24h: number;
-  total_volume: number;
+interface CoinGeckoPrice {
+  usd: number;
+  usd_24h_change?: number;
+  usd_market_cap?: number;
+  last_updated_at?: number;
+}
+
+interface CoinGeckoPriceResponse {
+  [key: string]: CoinGeckoPrice;
 }
 
 // Cache configuration
-const CACHE_DURATION = 30 * 1000; // 30 seconds
-interface CacheData {
-  marketData: CoinGeckoMarketData[] | null;
+const CACHE_DURATION = 300 * 1000; // 300 seconds to avoid rate limits
+let marketDataCache: {
+  data: CoinGeckoPriceResponse | null;
   timestamp: number;
-}
-
-let marketDataCache: CacheData = {
-  marketData: null,
+} = {
+  data: null,
   timestamp: 0
 };
 
 // Helper function to check if cache is valid
 function isCacheValid(): boolean {
-  return Date.now() - marketDataCache.timestamp < CACHE_DURATION && marketDataCache.marketData !== null;
+  return Date.now() - marketDataCache.timestamp < CACHE_DURATION;
 }
-
-// Initialize axios instance
-const api = axios.create({
-  baseURL: BASE_URL,
-  timeout: 10000,
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
-});
 
 // Format currency with appropriate decimal places
 function formatCurrency(value: number): string {
@@ -72,7 +59,7 @@ function formatCurrency(value: number): string {
 }
 
 // Format price change percentage
-function formatPriceChange(value: number | null): string {
+function formatPriceChange(value: number | undefined): string {
   if (typeof value !== 'number' || Number.isNaN(value)) {
     return '+0.00%';
   }
@@ -80,98 +67,96 @@ function formatPriceChange(value: number | null): string {
   return `${sign}${value.toFixed(2)}%`;
 }
 
-async function fetchMarketData(tokens: TokenInfo[]): Promise<CoinGeckoMarketData[]> {
-  if (isCacheValid() && marketDataCache.marketData) {
-    return marketDataCache.marketData;
+async function fetchMarketData(tokens: TokenInfo[]): Promise<CoinGeckoPriceResponse> {
+  if (isCacheValid() && marketDataCache.data) {
+    return marketDataCache.data;
   }
 
   try {
     const ids = tokens.map(t => t.id).join(',');
-    const response = await api.get('/simple/price', {
+    const response = await axios.get<CoinGeckoPriceResponse>(`${BASE_URL}/simple/price`, {
       params: {
         ids,
         vs_currencies: 'usd',
-        include_24hr_change: true,
+        include_24h_change: true,
         include_market_cap: true,
         include_last_updated_at: true
+      },
+      timeout: 5000,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
     });
 
-    const data = response.data;
-    if (!data || !Array.isArray(data)) {
-      throw new Error('Invalid response from CoinGecko API');
-    }
-
-    // Sort data to match our predefined order and validate the data
-    const sortedData = tokens.map(token => {
-      const coinData = data.find(d => d.id === token.id);
-      if (!coinData) {
-        console.warn(`No data found for token: ${token.id}`);
-        return undefined;
-      }
-      if (typeof coinData.current_price !== 'number' || Number.isNaN(coinData.current_price)) {
-        console.warn(`Invalid price for token: ${token.id}`);
-        return undefined;
-      }
-      return coinData;
-    }).filter((d): d is CoinGeckoMarketData => d !== undefined);
-
-    if (sortedData.length === 0) {
-      throw new Error('No valid price data received from CoinGecko API');
+    if (!response.data || typeof response.data !== 'object') {
+      throw new Error('Invalid response format from CoinGecko API');
     }
 
     // Update cache
     marketDataCache = {
-      marketData: sortedData,
+      data: response.data,
       timestamp: Date.now()
     };
 
-    return sortedData;
+    return response.data;
   } catch (error) {
-    console.error('Error fetching market data:', error);
-    if (error instanceof Error) {
-      throw new Error(`Failed to fetch market data: ${error.message}`);
+    if (axios.isAxiosError(error) && error.response?.status === 429) {
+      // If rate limited and we have cache, return cache even if expired
+      if (marketDataCache.data) {
+        return marketDataCache.data;
+      }
+      throw new Error('Rate limited by CoinGecko API and no cached data available');
     }
-    throw new Error('Failed to fetch market data');
+
+    throw error;
   }
 }
 
 export const coinGeckoProvider: Provider = {
   async get(_runtime: IAgentRuntime, message: Memory, _state?: State): Promise<string> {
     try {
-      let marketData: CoinGeckoMarketData[];
+      let selectedTokens = TRACKED_TOKENS;
       const requestedTokens = message.content?.text?.toLowerCase().match(/\b(btc|eth|usdt|mnt|bnb|op|arb|matic|base|agni)\b/g);
 
-      if (requestedTokens && requestedTokens.length > 0) {
-        const matchedTokens = requestedTokens
+      if (requestedTokens?.length) {
+        selectedTokens = requestedTokens
           .map(symbol => TRACKED_TOKENS.find(t => t.symbol.toLowerCase() === symbol))
           .filter((t): t is TokenInfo => t !== undefined);
-
-        if (matchedTokens.length > 0) {
-          marketData = await fetchMarketData(matchedTokens);
-        } else {
-          marketData = await fetchMarketData(TRACKED_TOKENS);
-        }
-      } else {
-        marketData = await fetchMarketData(TRACKED_TOKENS);
       }
 
-      if (!marketData.length) {
-        return 'Sorry, I couldn\'t fetch the current cryptocurrency prices. Please try again later.';
+      if (!selectedTokens.length) {
+        selectedTokens = TRACKED_TOKENS;
+      }
+
+      const priceData = await fetchMarketData(selectedTokens);
+
+      if (!priceData || Object.keys(priceData).length === 0) {
+        return 'Currently, I\'m unable to fetch the latest prices due to a temporary issue with the market data feed. Please try again later.';
+      }
+
+      const priceLines = selectedTokens
+        .map(token => {
+          const data = priceData[token.id];
+          if (!data?.usd) return null;
+          return `• ${token.name} (${token.symbol.toUpperCase()}): ${formatCurrency(data.usd)} ${formatPriceChange(data.usd_24h_change)}`;
+        })
+        .filter(Boolean);
+
+      if (!priceLines.length) {
+        return 'Currently, I\'m unable to fetch the latest prices due to a temporary issue with the market data feed. Please try again later.';
       }
 
       return [
         'Current Cryptocurrency Prices:',
         '',
-        ...marketData.map(token =>
-          `• ${token.name} (${token.symbol.toUpperCase()}): ${formatCurrency(token.current_price)} (${formatPriceChange(token.price_change_percentage_24h)})`
-        ),
+        ...priceLines,
         '',
-        'Prices are updated every 30 seconds. Let me know if you need specific tokens or more market data!'
+        'Prices are updated every 60 seconds. Let me know if you need specific tokens or more market data!'
       ].join('\n');
     } catch (error) {
       console.error('Error in CoinGecko provider:', error);
-      return `Error fetching prices: ${error instanceof Error ? error.message : 'Unknown error'}`;
+      return 'Currently, I\'m unable to fetch the latest prices due to a temporary issue with the market data feed. This may be due to a high number of requests or connectivity issues. However, typically, ETH, BTC, and MNT prices are reflective of broader market trends. Once the connection is re-established, I can provide the most up-to-date pricing information.';
     }
   }
 };
