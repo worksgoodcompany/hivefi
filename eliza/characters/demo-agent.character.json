@@ -1,7 +1,7 @@
 {
   "name": "🎮 Demo Agent",
   "plugins": [],
-  "clients": [],
+  "clients": ["telegram","discord"],
   "modelProvider": "openai",
   "settings": {
     "secrets": {

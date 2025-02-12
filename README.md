@@ -1,5 +1,8 @@
 # HiveFi: Mantle DeFi Agent Swarm
 
+
+
+
 <div align="center">
   <img src="assets/logo/logo.svg" alt="HiveFi Logo" width="200"/>
   <h3>Revolutionizing Mantle DeFi with AI-Powered Agent Swarms</h3>
@@ -19,8 +22,8 @@
       <img src="https://img.shields.io/badge/Linktree-Visit%20Us-green?style=for-the-badge&logo=linktree" alt="Linktree" />
     </a>
   </p>
+  🔅 Sozu Virtual AI Hack Project 💥
 </div>
-
 
 
 ---
@@ -269,7 +272,7 @@ TWITTER_EMAIL=                 # Twitter email
 pnpm build
 
 # Start a single agent (Recommended for testing)
-pnpm start --characters="characters/coordinator.character.json"
+pnpm start --characters="characters/demo-agent.character.json"
 
 # Start demo agents (4)
 pnpm start --characters="characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/mantle-expert-agent.character.json"

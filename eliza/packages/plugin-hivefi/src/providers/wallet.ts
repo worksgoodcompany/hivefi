@@ -16,7 +16,7 @@ class WalletProvider {
     private publicClient: PublicClient;
     private walletClient: WalletClient;
 
-    constructor(privateKey: `0x${string}`, rpcUrl: string = "https://rpc.mantle.xyz") {
+    constructor(privateKey: `0x${string}`, rpcUrl = "https://rpc.mantle.xyz") {
         this.account = privateKeyToAccount(privateKey);
 
         this.publicClient = createPublicClient({
@@ -33,6 +33,10 @@ class WalletProvider {
 
     getAddress(): string {
         return this.account.address;
+    }
+
+    getAccount(): ReturnType<typeof privateKeyToAccount> {
+        return this.account;
     }
 
     async getBalance(): Promise<string> {

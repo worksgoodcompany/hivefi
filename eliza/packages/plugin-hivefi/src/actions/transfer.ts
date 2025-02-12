@@ -4,7 +4,7 @@ import {
     type Chain,
 } from "viem";
 import { mantleChain } from "../config/chains";
-import { getWalletClient } from "../providers/wallet";
+import { initWalletProvider } from "../providers/wallet";
 
 export const transfer: Action = {
     name: "SEND_MNT",
@@ -48,7 +48,7 @@ export const transfer: Action = {
         }
 
         const amount = content[1];
-        const to = content[2] as `0x${string}`;
+        const to = content[2].toLowerCase() as `0x${string}`;
 
         // Validate address format
         if (!to.match(/^0x[a-fA-F0-9]{40}$/)) {
@@ -59,16 +59,9 @@ export const transfer: Action = {
         }
 
         try {
-            // Initialize wallet client with settings from runtime
-            const privateKey = runtime.character.settings?.secrets?.EVM_PRIVATE_KEY;
-            const rpcUrl = runtime.character.settings?.secrets?.EVM_RPC_URL;
-
-            const settings: Record<string, string> = {};
-            if (privateKey) settings.EVM_PRIVATE_KEY = privateKey;
-            if (rpcUrl) settings.EVM_RPC_URL = rpcUrl;
-
-            const wallet = getWalletClient({ settings });
-            if (!wallet) {
+            // Initialize wallet provider
+            const provider = initWalletProvider(runtime);
+            if (!provider) {
                 callback?.({
                     text: "Mantle wallet not configured. Please set EVM_PRIVATE_KEY in your environment variables.",
                 });
@@ -80,20 +73,22 @@ export const transfer: Action = {
                 text: `The transaction of ${amount} MNT to the address ${to} has been initiated. You will receive a confirmation once the transaction is complete.`,
             });
 
-            // Validate balance before sending
-            const balance = await wallet.getBalance();
+            // Get wallet client and balance
+            const balance = await provider.getBalance();
             const value = parseEther(amount);
 
-            if (BigInt(balance) < value) {
+            if (BigInt(parseEther(balance)) < value) {
                 callback?.({
                     text: `Insufficient balance. You need at least ${amount} MNT to complete this transaction.`,
                 });
                 return false;
             }
 
-            const hash = await wallet.walletClient.sendTransaction({
+            // Send the transaction
+            const walletClient = provider.getWalletClient();
+            const hash = await walletClient.sendTransaction({
                 chain: mantleChain,
-                account: wallet.account,
+                account: provider.getAccount(),
                 to,
                 value,
             });
