@@ -95,7 +95,7 @@ function Home() {
                                     <Button
                                         size="lg"
                                         variant="outline"
-                                        onClick={() => handleExternalLink('https://github.com/worksgoodcompany/starkhive')}
+                                        onClick={() => handleExternalLink('https://github.com/worksgoodcompany/hivefi')}
                                         className="border-[#27272A] hover:bg-[#7f00ff]/10 hover:border-[#7f00ff]/50 text-white w-full sm:w-auto"
                                     >
                                         Learn More
@@ -280,7 +280,7 @@ function Home() {
                                 price: "Free",
                                 description: "Unlimited. Full control over your data and agents",
                                 buttonText: "View Documentation",
-                                href: "https://github.com/worksgoodcompany/starkhive",
+                                href: "https://github.com/worksgoodcompany/hivefi",
                                 featured: true
                             },
                             {
@@ -364,7 +364,7 @@ function Home() {
                                 variant="outline"
                                 size="lg"
                                 className="border-[#27272A] hover:bg-[#7f00ff]/10 hover:border-[#7f00ff]/50 hover:text-[#7f00ff] transition-all duration-300 w-full sm:w-auto"
-                                onClick={() => handleExternalLink('https://github.com/worksgoodcompany/starkhive')}
+                                onClick={() => handleExternalLink('https://github.com/worksgoodcompany/hivefi')}
                             >
                                 <img src={githubIcon} alt="GitHub" className="mr-2 h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
                                 Contribute on GitHub
@@ -498,7 +498,7 @@ function Home() {
                                     <img src={discordIcon} alt="Discord" className="w-full h-full opacity-60 hover:opacity-100 transition-opacity" />
                                 </a>
                                 <a
-                                    href="https://github.com/worksgoodcompany/starkhive"
+                                    href="https://github.com/worksgoodcompany/hivefi"
                                     className="w-6 h-6 flex items-center justify-center"
                                     target="_blank"
                                     rel="noopener noreferrer"

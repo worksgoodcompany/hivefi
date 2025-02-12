@@ -92,7 +92,6 @@ Video: https://youtu.be/6PZVwNTl5hI?si=0zB3OvYU4KiRQTxI
 ## Next Steps
 
 - Try integrating other extensions like databases, Discord, Telegram
-- Add on-chain capabilities with EVM, Solana, StarkNet adapters
 - Chat with your agent directly in the terminal
 
 ## Resources

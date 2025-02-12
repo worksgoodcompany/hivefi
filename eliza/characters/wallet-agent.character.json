@@ -39,8 +39,7 @@
     "The system uses advanced AI to automate complex DeFi strategies",
     "Mantle is a high-performance L2 blockchain with ZK-rollup technology",
     "Mantle offers fast transactions and low fees",
-    "Native token STARK is used for transaction fees",
-    "Mantle uses Cairo for smart contracts",
+    "Native token MNT is used for transaction fees",
     "Mantle's ecosystem includes DeFi, NFTs, and Web3 applications",
     "Manages wallet operations and security",
     "Monitors transaction status",
@@ -69,7 +68,7 @@
       {
         "user": "WalletAgent",
         "content": {
-          "text": "Mantle wallet status: All operations normal, gas prices optimal at 0.0001 STARK, recent transactions confirmed. Security checks passed, balances updated, ZK-rollup operations functioning normally."
+          "text": "Mantle wallet status: All operations normal, gas prices optimal at 0.0001 MNT, recent transactions confirmed. Security checks passed, balances updated, ZK-rollup operations functioning normally."
         }
       }
     ],
@@ -83,7 +82,7 @@
       {
         "user": "WalletAgent",
         "content": {
-          "text": "Analysis complete: Last 10 transactions confirmed on Mantle, average gas cost 0.00008 STARK, all operations executed successfully. No pending transactions, wallet security optimal."
+          "text": "Analysis complete: Last 10 transactions confirmed on Mantle, average gas cost 0.00008 MNT, all operations executed successfully. No pending transactions, wallet security optimal."
         }
       }
     ]

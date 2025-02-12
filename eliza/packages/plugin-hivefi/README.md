@@ -1,31 +1,22 @@
 # HiveFi Plugin
 
-A comprehensive plugin for HiveFi that provides essential DeFi functionality and data integration with StarkNet, CoinGecko, DefiLlama, and other critical services. This plugin serves as the core infrastructure for interacting with various DeFi protocols and services on StarkNet.
+A comprehensive plugin for HiveFi that provides essential DeFi functionality and data integration with Mantle, CoinGecko, DefiLlama, and other critical services. This plugin serves as the core infrastructure for interacting with various DeFi protocols and services on Mantle.
 
 ## Features
 
 ### Actions
 
 1. **Transfer**
-   - Execute token transfers on StarkNet
+   - Execute token transfers on Mantle
    - Handle ERC20 and native token transfers
 
-2. **Unruggable**
-   - Deploys a token using Unruggable and launches it on Ekubo
-
-3. **Swap**
-   - Execute token swaps on AVNU
-
-4. **Order Management**
-   - Place and take orders on marketplaces
-
-5. **Subdomain**
-   - Handles Mantle id domains
+2. **Swap**
+   - Execute token swaps on Mantle
 
 ### Providers
 
 1. **Wallet Provider**
-   - StarkNet wallet integration
+   - Mantle wallet integration
    - Transaction management
    - Key management
 
@@ -63,56 +54,6 @@ A comprehensive plugin for HiveFi that provides essential DeFi functionality and
    - Social engagement metrics
    - Community analytics
    - Social signal tracking
-
-## Future Development Phase 1
-
-### Planned Protocol Integrations
-
-#### Endur Integration (Liquid Staking)
-- **Actions**
-  - Stake STRK for xSTRK
-  - Unstake xSTRK
-  - Claim staking rewards
-  - Withdraw after lock period
-- **Providers**
-  - APY tracking
-  - Total value staked
-  - User positions
-  - Lock period status
-
-#### Vesu Integration (Lending & Borrowing)
-- **Actions**
-  - Lend assets
-  - Borrow against collateral
-  - Repay debt
-  - Remove collateral
-  - Loop and leverage positions
-  - Short asset positions
-- **Providers**
-  - Pool information and stats
-  - Interest rates
-  - Available liquidity
-  - User positions
-- **Evaluators**
-  - LTV monitoring
-  - Liquidation risk assessment
-  - Position health tracking
-
-### Planned Infrastructure Integrations
-
-#### Apibara Provider (Blockchain Indexer)
-- Event indexing and tracking
-- Real-time event streaming
-- Historical event queries
-- Custom indexing strategies
-- Transaction monitoring
-
-#### Nethermind Provider (Explorer & RPC)
-- Block data retrieval
-- Transaction tracking
-- Contract state queries
-- Network statistics
-- Chain analytics
 
 ### Swarm Communication Layer
 
