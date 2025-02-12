@@ -20,8 +20,7 @@ HiveFi employs a modular architecture where specialized agents collaborate to ac
 - Transaction management
 
 #### Protocol Layer
-- Agni Protocol integration (DEX & Lending)
-- Izumi Finance integration (DEX)
+- Merchant Moe Protocol integration (DEX)
 - Mantle Staking integration
 - Bridge operations
 - Custom protocol support
@@ -103,7 +102,7 @@ For implementation details, see our [plugin documentation](docs/plugin-hivefi.md
 
 ### Integration Points
 - Mantle RPC endpoints
-- DeFi protocols (Agni, Izumi)
+- DeFi protocols (Merchant Moe)
 - Cross-chain bridges
 - Data providers
 - Social platforms

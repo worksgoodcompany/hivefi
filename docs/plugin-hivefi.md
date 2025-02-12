@@ -12,11 +12,10 @@ A comprehensive plugin for HiveFi that provides essential DeFi functionality and
 
 2. **Token Deployment**
    - Deploy ERC20 tokens on Mantle
-   - Create and manage liquidity pools on Agni/Izumi
+   - Create and manage liquidity pools on Merchant Moe
 
 3. **Swap**
-   - Execute token swaps on Agni Protocol
-   - Execute token swaps on Izumi Finance
+   - Execute token swaps on Merchant Moe
 
 4. **Bridge**
    - Cross-chain bridging via Mantle Bridge

@@ -18,7 +18,7 @@ Powered by our [analytics agents](agents.md#public-agents-shared-services):
 ### Trading Services
 
 Managed by our [trading agents](agents.md#private-agents-custom-deployments):
-- Order execution on Agni/Izumi
+- Order execution on Merchant Moe
 - Portfolio management
 - Strategy implementation
 - Risk monitoring
@@ -29,7 +29,7 @@ Managed by our [trading agents](agents.md#private-agents-custom-deployments):
 Operated by our [DeFi agents](agents.md#private-agents-custom-deployments):
 - Liquid staking on Mantle Staking
 - Lending and borrowing on Agni Protocol
-- Liquidity provision on Agni/Izumi
+- Liquidity provision on Merchant Moe
 - Position management
 - Strategy optimization
 - Cross-chain bridging

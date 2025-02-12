@@ -96,12 +96,10 @@ Learn more about our agent system in the [agents documentation](docs/agents.md).
 
 - 💰 Wallet management
 - 💸 Token transfers (ETH, USDT, MNT, and custom tokens)
-- 💱 Token swapping on Agni Protocol and Izumi Finance
+- 💱 Token swapping on Merchant Moe
 - 💎 Token and liquidity pool deployment
 - 🔍 Transaction tracking
-- 🤝 Lending and borrowing on Agni Protocol
 - 💧 Liquid staking on Mantle Staking
-- 🌉 Cross-chain bridging via Mantle Bridge
 
 
 ### 🖥️ Web App Features
@@ -340,10 +338,10 @@ Send 0.01 USDC to 0xF12d64817029755853bc74a585EcD162f63c5f84
 Send 0.00001 METH to 0xF12d64817029755853bc74a585EcD162f63c5f84
 ```
 
-### Token Swaps
+### Token Swaps (Merchant Moe)
 
 ```
-Swap 0.2 MNT for ETH on Agni Protocol
+Swap 0.1 MNT for USDC
 ```
 
 

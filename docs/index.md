@@ -34,14 +34,12 @@
   - Wallet Agent
 
 ### Protocol Integrations
-- Agni Protocol (DEX & Lending)
-- Izumi Finance (DEX)
+- Merchant Moe (DEX)
 - Mantle Staking
-- Cross-chain Bridges
 
 ### Service Packages
 - [DeFi Trader Pack](services.md#defi-trader-pack)
-  - Trading on Agni/Izumi
+  - Trading on Merchant Moe
   - Cross-chain operations
   - Analytics suite
 - [Social Influencer Pack](services.md#social-influencer-pack)
