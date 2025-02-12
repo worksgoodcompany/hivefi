@@ -1,34 +1,10 @@
 import type { Action, Memory } from "@elizaos/core";
 import {
     parseUnits,
-    type SendTransactionParameters,
 } from "viem";
 import { mantleChain } from "../config/chains";
 import { initWalletProvider } from "../providers/wallet";
-
-// Token addresses on Mantle
-const TOKEN_ADDRESSES = {
-    USDT: "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-    USDC: "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-    WETH: "0xdEaddEaDdeadDEadDEADDEAddEADDEAddead1111",
-    METH: "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-    CMETH: "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
-    WMNT: "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
-    WBTC: "0xCAbAE6f6Ea1ecaB08Ad02fE02ce9A44F09aebfA2",
-    AGNI: "0x45579918686B26951b899A1A5e7282e53f4c8136",
-} as const;
-
-// Token decimals
-const TOKEN_DECIMALS = {
-    USDT: 6,
-    USDC: 6,
-    WETH: 18,
-    METH: 18,
-    CMETH: 18,
-    WMNT: 18,
-    WBTC: 8,
-    AGNI: 18,
-} as const;
+import { TOKENS, getTokenBySymbol, isERC20Token } from "../config/tokens";
 
 interface TransferEntities {
     amount?: string | number;
@@ -38,7 +14,7 @@ interface TransferEntities {
 
 export const erc20Transfer: Action = {
     name: "SEND_TOKEN_MANTLE",
-    description: "Send ERC20 tokens (USDT, USDC, WETH, WMNT, WBTC, AGNI) on Mantle network",
+    description: "Send ERC20 tokens on Mantle network",
     examples: [
         [
             {
@@ -112,10 +88,15 @@ export const erc20Transfer: Action = {
             tokenSymbol = content[2].toUpperCase();
             to = content[3].toLowerCase() as `0x${string}`;
 
-            // Validate token
-            if (!Object.keys(TOKEN_ADDRESSES).includes(tokenSymbol)) {
+            // Get token config and validate
+            const token = getTokenBySymbol(tokenSymbol);
+            if (!token || !isERC20Token(token)) {
+                const supportedTokens = Object.entries(TOKENS)
+                    .filter(([_, t]) => t.type === 'erc20')
+                    .map(([symbol]) => symbol)
+                    .join(", ");
                 callback?.({
-                    text: `Invalid token symbol. Supported tokens: ${Object.keys(TOKEN_ADDRESSES).join(", ")}`,
+                    text: `Invalid token symbol. Supported tokens: ${supportedTokens}`,
                 });
                 return false;
             }
@@ -150,7 +131,7 @@ export const erc20Transfer: Action = {
             const cleanTo = to.toLowerCase().replace("0x", "");
             const amountHex = parseUnits(
                 amount,
-                TOKEN_DECIMALS[tokenSymbol as keyof typeof TOKEN_DECIMALS]
+                token.decimals
             )
                 .toString(16)
                 .padStart(64, "0");
@@ -162,8 +143,9 @@ export const erc20Transfer: Action = {
             const hash = await walletClient.sendTransaction({
                 chain: mantleChain,
                 account: provider.getAccount(),
-                to: TOKEN_ADDRESSES[tokenSymbol as keyof typeof TOKEN_ADDRESSES] as `0x${string}`,
+                to: token.address,
                 data: data as `0x${string}`,
+                value: 0n,
             });
 
             callback?.({

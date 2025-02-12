@@ -4,13 +4,15 @@ import { defiLlamaProvider } from "./providers/defillama";
 import { walletProvider } from "./providers/wallet";
 import { transfer } from "./actions/transfer";
 import { erc20Transfer } from "./actions/erc20Transfer";
+import { portfolio } from "./actions/portfolio";
 
 export const hivefiPlugin: Plugin = {
     name: "hivefi",
     description: "HiveFi Plugin for Eliza - Mantle DeFi Agent Swarm",
     actions: [
         transfer,
-        erc20Transfer
+        erc20Transfer,
+        portfolio
     ],
     evaluators: [],
     providers: [

@@ -317,8 +317,14 @@ Get prices for ETH, BTC, MNT
 ### Wallet Operations
 
 ```
-Show me my Mantle wallet address and balance
+Show me my Mantle wallet address and balances
 ```
+
+```
+Show my portfolio
+```
+
+
 
 ### Token Transfers
 
