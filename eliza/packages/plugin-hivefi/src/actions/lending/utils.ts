@@ -119,13 +119,13 @@ export function formatSuccessMessage(
         '',
         `[View on Explorer](https://explorer.mantle.xyz/tx/${txHash})`,
         '',
-        '📊 Position Summary  ',
-        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD  `,
-        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD  `,
+        '📊 Position Summary',
+        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD`,
+        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD`,
         '',
-        '📈 Account Status  ',
-        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD  `,
-        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}  `
+        '📈 Account Status',
+        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD`,
+        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}`
     ].join('\n');
 }
 
@@ -206,12 +206,12 @@ export function formatBorrowRepayMessage(
         '',
         `[View on Explorer](https://explorer.mantle.xyz/tx/${txHash})`,
         '',
-        '📊 Position Summary  ',
-        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD  `,
-        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD  `,
+        '📊 Position Summary',
+        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD`,
+        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD`,
         '',
-        '📈 Account Status  ',
-        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD  `,
-        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}  `
+        '📈 Account Status',
+        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD`,
+        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}`
     ].join('\n');
 }

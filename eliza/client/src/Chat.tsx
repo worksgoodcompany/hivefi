@@ -160,12 +160,12 @@ export default function Chat() {
                                                     remarkPlugins={[remarkGfm]}
                                                     components={{
                                                         // Override default elements with custom styling
-                                                        p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
-                                                        a: ({node, ...props}) => <a className="text-[#7f00ff] hover:underline" {...props} />,
+                                                        p: ({node, ...props}) => <p className="mb-2 last:mb-0 whitespace-pre-line" {...props} />,
+                                                        a: ({node, ...props}) => <a className="text-[#7f00ff] hover:underline cursor-pointer" {...props} />,
                                                         ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2" {...props} />,
                                                         ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2" {...props} />,
                                                         li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                                                        code: ({node, inline, ...props}: {node: any, inline?: boolean, [key: string]: any}) =>
+                                                        code: ({inline, ...props}: {inline?: boolean} & React.HTMLProps<HTMLElement>) =>
                                                             inline ? (
                                                                 <code className="bg-black/30 rounded px-1 py-0.5" {...props} />
                                                             ) : (
@@ -179,6 +179,21 @@ export default function Chat() {
                                                         table: ({node, ...props}) => <div className="overflow-x-auto my-2"><table className="min-w-full divide-y divide-[#27272A]" {...props} /></div>,
                                                         th: ({node, ...props}) => <th className="px-3 py-2 text-left text-sm font-semibold" {...props} />,
                                                         td: ({node, ...props}) => <td className="px-3 py-2 text-sm" {...props} />,
+                                                        // Add custom handling for financial data sections
+                                                        div: ({className, ...props}: React.HTMLProps<HTMLDivElement>) => {
+                                                            if (className?.includes('Position Summary') || className?.includes('Account Status')) {
+                                                                return <div className="bg-black/20 rounded-lg p-3 my-2 space-y-1" {...props} />;
+                                                            }
+                                                            return <div {...props} />;
+                                                        },
+                                                        // Add special styling for transaction success messages
+                                                        strong: ({children, ...props}: React.HTMLProps<HTMLElement>) => {
+                                                            const text = String(children);
+                                                            if (text.startsWith('Successfully')) {
+                                                                return <strong className="text-green-400 font-medium" {...props}>{children}</strong>;
+                                                            }
+                                                            return <strong className="font-medium" {...props}>{children}</strong>;
+                                                        }
                                                     }}
                                                 >
                                                     {message.text}
