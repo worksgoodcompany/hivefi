@@ -114,25 +114,19 @@ export function formatSuccessMessage(
     txHash: string,
     accountData: UserAccountData
 ): string {
-    const lines = [
+    return [
         `Successfully ${action}ed ${amount} ${tokenSymbol} into Lendle`,
-        `View on Explorer: https://explorer.mantle.xyz/tx/${txHash}`,
         '',
-        'Updated Account Status:',
-        `Total Collateral: ${accountData.totalCollateralETH} USD`,
-        `Total Debt: ${accountData.totalDebtETH} USD`,
-        `Available to Borrow: ${accountData.availableBorrowsETH} USD`,
-        `Health Factor: ${accountData.healthFactor}`,
-    ];
-
-    if (accountData.walletBalance) {
-        lines.push(`Wallet Balance: ${accountData.walletBalance} ${tokenSymbol}`);
-    }
-    if (accountData.suppliedBalance) {
-        lines.push(`Supplied Balance: ${accountData.suppliedBalance} ${tokenSymbol}`);
-    }
-
-    return lines.join('\n');
+        `[View on Explorer](https://explorer.mantle.xyz/tx/${txHash})`,
+        '',
+        '📊 Position Summary  ',
+        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD  `,
+        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD  `,
+        '',
+        '📈 Account Status  ',
+        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD  `,
+        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}  `
+    ].join('\n');
 }
 
 // Helper to check debt token balance (borrowed amount)
@@ -205,25 +199,19 @@ export function formatBorrowRepayMessage(
     tokenSymbol: string,
     txHash: string,
     accountData: UserAccountData,
-    borrowedBalance?: string
+    _borrowedBalance?: string
 ): string {
-    const lines = [
+    return [
         `Successfully ${action}ed ${amount} ${tokenSymbol} ${action === 'borrow' ? 'from' : 'to'} Lendle`,
-        `View on Explorer: https://explorer.mantle.xyz/tx/${txHash}`,
         '',
-        'Updated Account Status:',
-        `Total Collateral: ${accountData.totalCollateralETH} USD`,
-        `Total Debt: ${accountData.totalDebtETH} USD`,
-        `Available to Borrow: ${accountData.availableBorrowsETH} USD`,
-        `Health Factor: ${accountData.healthFactor}`,
-    ];
-
-    if (accountData.walletBalance) {
-        lines.push(`Wallet Balance: ${accountData.walletBalance} ${tokenSymbol}`);
-    }
-    if (borrowedBalance) {
-        lines.push(`Borrowed Balance: ${borrowedBalance} ${tokenSymbol}`);
-    }
-
-    return lines.join('\n');
+        `[View on Explorer](https://explorer.mantle.xyz/tx/${txHash})`,
+        '',
+        '📊 Position Summary  ',
+        `💰 Total Collateral: ${Number(accountData.totalCollateralETH).toFixed(4)} USD  `,
+        `💳 Total Debt: ${Number(accountData.totalDebtETH).toFixed(4)} USD  `,
+        '',
+        '📈 Account Status  ',
+        `💵 Available to borrow: ${Number(accountData.availableBorrowsETH).toFixed(4)} USD  `,
+        `❤️ Health Factor: ${Number(accountData.healthFactor).toFixed(2)}  `
+    ].join('\n');
 }
