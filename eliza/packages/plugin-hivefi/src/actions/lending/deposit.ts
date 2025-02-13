@@ -164,9 +164,9 @@ export const deposit: Action = {
                 }
 
                 const positionIdHex = createPosReceipt.logs[0].data;
-                // Take the last 64 characters (32 bytes) of the hex string, removing '0x' prefix
-                const cleanHex = '0x' + positionIdHex.slice(-64);
-                const positionId = BigInt(cleanHex);
+                // Remove '0x' prefix if present and take last 64 characters
+                const cleanHex = positionIdHex.replace('0x', '').slice(-64);
+                const positionId = BigInt(`0x${cleanHex}`);
                 console.log('Position ID:', positionId.toString());
 
                 // Then transfer tokens
