@@ -6,12 +6,31 @@ import { useEffect, useState, useRef } from "react";
 import ai16z from "../assets/logos-ext/ai16z.svg";
 import coingecko from "../assets/logos-ext/coingecko.svg";
 import defillama from "../assets/logos-ext/defillama.svg";
-
+import discord from "../assets/logos-ext/discord.svg";
+import telegram from "../assets/logos-ext/telegram.svg";
+import merchantmoe from "../assets/logos-ext/Merchant Moe.svg";
+import initcapital from "../assets/logos-ext/initcapital.svg";
+import mantlenetwork from "../assets/logos-ext/mantlenetwork.svg";
+import methprotocol from "../assets/logos-ext/methprotocol.svg";
+import ondo from "../assets/logos-ext/ondo.svg";
+import pendle from "../assets/logos-ext/pendle.svg";
+import stargate from "../assets/logos-ext/stargate.svg";
+import treehouse from "../assets/logos-ext/treehouse.svg";
 
 const logos = [
   { id: "defillama", src: defillama, alt: "DefiLlama" },
   { id: "ai16z", src: ai16z, alt: "AI16Z" },
-  { id: "coingecko", src: coingecko, alt: "Coingecko" },
+  { id: "coingecko", src: coingecko, alt: "CoinGecko" },
+  { id: "merchantmoe", src: merchantmoe, alt: "Merchant Moe" },
+  { id: "initcapital", src: initcapital, alt: "INIT Capital" },
+  { id: "mantlenetwork", src: mantlenetwork, alt: "Mantle Network" },
+  { id: "methprotocol", src: methprotocol, alt: "METH Protocol" },
+  { id: "ondo", src: ondo, alt: "Ondo Finance" },
+  { id: "pendle", src: pendle, alt: "Pendle" },
+  { id: "stargate", src: stargate, alt: "Stargate" },
+  { id: "treehouse", src: treehouse, alt: "Treehouse" },
+  { id: "discord", src: discord, alt: "Discord" },
+  { id: "telegram", src: telegram, alt: "Telegram" },
 ];
 
 export function LogoCarousel() {

@@ -1,0 +1,39 @@
+HiveFi is an open-source Multi-Agent System (MAS) designed specifically for Mantle Network, providing automated DeFi operations through intelligent agent swarms. HiveFi combines AI technology with blockchain automation to offer efficient, secure, and scalable DeFi solutions while maintaining a strong focus on self-hosted deployments.
+
+HiveFi's architecture employs 18 specialized AI agents organized into three distinct categories: Internal Agents for HiveFi platform operations, Public Agents for shared services, and Private Agents for custom deployments. Each HiveFi agent is designed for optimal performance in its specific role, enabling modular, scalable, and efficient operations within the ecosystem.
+
+HiveFi offers a comprehensive set of active features including token transfers (ETH, USDT, MNT, custom tokens), token swaps on Merchant Moe, transaction tracking, gas optimization, real-time TVL metrics via DefiLlama integration, token price tracking via CoinGecko integration, protocol analytics, and comprehensive market statistics.
+
+HiveFi's DeFi Agent is a specialized component that handles core financial operations on Mantle Network. This agent's current capabilities include token transfers, swaps on Merchant Moe, and transaction monitoring. HiveFi's DeFi Agent roadmap includes implementing liquid staking on Mantle Staking, lending operations on INIT Capital, and advanced yield farming strategies.
+
+HiveFi's Trading Agent is dedicated to managing sophisticated trading operations on Mantle Network. This specialized agent currently supports basic token swaps and position management on Merchant Moe DEX. HiveFi's Trading Agent roadmap includes implementing advanced trading strategies, market making capabilities, and comprehensive portfolio optimization features.
+
+HiveFi's Wallet Agent delivers comprehensive wallet operations and security management for Mantle Network. This agent handles EVM-compatible transaction management, implements smart transaction routing, optimizes gas usage, tracks real-time balances, and supports multi-signature operations for enhanced security.
+
+HiveFi integrates with major data providers to power its analytics infrastructure. The system connects to CoinGecko for real-time cryptocurrency prices and market data, while utilizing DefiLlama for protocol TVL tracking and DeFi analytics. This integrated data powers HiveFi's market analysis and decision-making capabilities.
+
+HiveFi implements a multi-layered security architecture to protect user assets and data. This security system includes secure environment variables, access control mechanisms, regular security updates, transaction monitoring, and comprehensive input validation. All HiveFi operations follow strict security protocols and industry best practices.
+
+HiveFi's self-hosted solution empowers users with full control over their infrastructure. This deployment option requires Node.js 23+, Git, pnpm, basic TypeScript/Node.js knowledge, and relevant API keys. HiveFi provides detailed documentation and community support for users implementing self-hosted solutions.
+
+HiveFi's technical stack is built on Node.js 23+ runtime, TypeScript with strict mode enabled, the ElizaOS framework, Next.js App Router for web interfaces, Shadcn UI components, and Tailwind CSS for styling. HiveFi maintains compatibility with standard Web3 libraries including ethers.js and web3.js for blockchain interactions.
+
+HiveFi's web client (app.hivefi.xyz) delivers a modern, responsive interface for interacting with the agent system. This interface includes a comprehensive agent directory, chat interface for agent interaction, Mantle wallet integration supporting multiple providers, and an analytics dashboard for portfolio tracking.
+
+HiveFi's plugin system (docs.hivefi.xyz/plugin) enables seamless integration with various DeFi protocols on Mantle Network. This system supports custom action development, provider integration, and extensive customization options while maintaining HiveFi's security and performance standards.
+
+HiveFi provides comprehensive community support through multiple channels. Users can access the HiveFi Discord community (discord.gg/APAKDaUYAM), GitHub discussions, and social media platforms. HiveFi maintains extensive documentation, tutorials, and development guides at docs.hivefi.xyz.
+
+HiveFi's development roadmap outlines plans for expanding protocol integrations, enhancing AI capabilities, implementing cross-chain operations, adding institutional features, and improving automation capabilities. HiveFi follows an open-source development model with active community participation and contribution.
+
+HiveFi's agent communication system facilitates efficient interaction between different AI agents through standardized message formats, priority-based task delegation, state management, and coordinated decision-making. HiveFi's Coordinator Agent oversees all inter-agent communications and task orchestration within the system.
+
+HiveFi implements comprehensive error handling and recovery procedures across its operations. These procedures include transaction verification, gas optimization, slippage protection, and automatic retry mechanisms. HiveFi's monitoring system tracks performance metrics, error rates, and system health in real-time.
+
+HiveFi's data management system handles market data, transaction history, and user preferences efficiently. This system implements caching strategies for frequently accessed data, query optimization for performance, and secure storage of sensitive information following cybersecurity best practices.
+
+HiveFi provides developers with extensive tools and documentation for building on the platform. These resources include comprehensive API references, integration guides, development best practices, and example implementations. HiveFi supports custom agent development and protocol integration through its flexible plugin architecture.
+
+HiveFi optimizes performance through various technical implementations, including minimizing 'use client' directives, favoring React Server Components, implementing proper suspense boundaries, and optimizing images. HiveFi follows mobile-first responsive design principles and implements efficient state management practices.
+
+HiveFi maintains a comprehensive testing framework that includes unit tests, integration tests, end-to-end testing, and performance benchmarks. All changes to HiveFi's codebase undergo thorough review processes and must meet strict quality standards before deployment to ensure system reliability and security.

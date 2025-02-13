@@ -1,75 +1,93 @@
 # HiveFi Documentation
 
-- [Pitch Deck](HiveFiPitchDeck.pdf) - HiveFi pitch deck
-
 ## Core Documentation
 - [Overview](overview.md) - Project overview and introduction
 - [Whitepaper](whitepaper.md) - Comprehensive technical whitepaper
-- [Business Plan](business-plan.md) - Business strategy and projections
-- [AI Workforce Suite (AIWS)](aiws.md) - AIWS framework overview
-
-## Technical Documentation
-- [Agents](agents.md) - Detailed agent specifications
-- [Plugin Documentation](plugin-hivefi.md) - HiveFi plugin integration guide
 - [Technical Specifications](specs.md) - Technical architecture and specifications
 - [Development Plan](plan.md) - Development roadmap and phases
+- [AI Workforce Suite (AIWS)](aiws.md) - AIWS framework overview
 
-## Services Documentation
-- [Services](services.md) - Available services and packages
+## Implementation Documentation
+- [Agents](agents.md) - Detailed agent specifications and capabilities
+- [Plugin Documentation](plugin-hivefi.md) - HiveFi plugin integration guide
+- [Services](services.md) - Available services and deployment options
 
 ## Quick Links
 
+### Current Features ✅
+
+#### DeFi Operations
+- Token transfers (ETH, USDT, MNT, custom tokens)
+- Token swaps on Merchant Moe
+- Transaction tracking
+- Gas optimization
+- Portfolio management
+
+#### Analytics & Data
+- Real-time TVL metrics via DefiLlama
+- Token price tracking via CoinGecko
+- Protocol analytics
+- Market statistics
+
+#### Social & Community
+- Content creation
+- Community management
+- Brand development
+- Social engagement
+
 ### Agent Categories
-- [Internal Agents](agents.md#internal-agents-platform-operations)
-  - Sales Agent
-  - Meme Agent
-  - Demo Agent
-- [Public Agents](agents.md#public-agents-shared-services)
-  - Metrics Agent
-  - Token Deployer
-  - Mantle Expert
-- [Private Agents](agents.md#private-agents-custom-deployments)
-  - DeFi Agent
-  - Trading Agent
-  - Wallet Agent
+
+#### Internal Agents (Platform Operations)
+- Sales Agent ✅
+- Meme Agent ✅
+- Demo Agent ✅
+
+#### Public Agents (Shared Services)
+- Metrics Agent ✅
+- Token Deployer ✅
+- Mantle Expert ✅
+- Alpha Agent 🔄
+- Analyst Agent 🔄
+- NFTs Agent 🔄
+- KOL Agent ✅
+- NFT Deployer 🔄
+- Predictions Agent 🔄
+
+#### Private Agents (Custom Deployments)
+- Coordinator Agent ✅
+- DeFi Agent ✅
+- Trading Agent ✅
+- Wallet Agent ✅
+- DAO Agent 🔄
+- Advisor Agent ✅
 
 ### Protocol Integrations
-- Merchant Moe (DEX)
-- Mantle Staking
 
-### Service Packages
-- [DeFi Trader Pack](services.md#defi-trader-pack)
-  - Trading on Merchant Moe
-  - Cross-chain operations
-  - Analytics suite
-- [Social Influencer Pack](services.md#social-influencer-pack)
-- [Developer Pack](services.md#developer-pack)
-  - EVM development tools
-  - Gas optimization
-- [Enterprise Pack](services.md#enterprise-pack)
+#### Active ✅
+- Merchant Moe DEX
+  - Token swaps
+  - Price discovery
+  - Transaction monitoring
+
+#### Coming Soon 🔄
+- Mantle Staking
+  - Liquid staking
+  - Reward tracking
+  - Position management
+
+- INIT Capital
+  - Lending operations
+  - Supply/withdraw
+  - Position management
 
 ### Technical Resources
-- [Integration Guidelines](plugin-hivefi.md#integration-guidelines)
-  - EVM compatibility
-  - Gas optimization
-  - Bridge operations
-- [Development Tools](aiws.md#development-tools)
-  - Smart contract templates
-  - Testing frameworks
+- [Integration Guide](plugin-hivefi.md#integration-guide)
 - [API Documentation](plugin-hivefi.md#api-integration)
-  - RPC endpoints
-  - WebSocket feeds
+- [Development Guidelines](plugin-hivefi.md#best-practices)
+- [Security Best Practices](specs.md#security-implementation)
 
-### Business Information
-- [Revenue Model](business-plan.md#revenue-model)
-- [Target Market](business-plan.md#target-market)
-- [Development Roadmap](plan.md#development-roadmap)
-- [Risk Management](business-plan.md#risk-management)
-
-### Platform Features
-- EVM Compatibility
-- Cross-chain Operations
-- Gas Optimization
-- Bridge Integration
-- Protocol Connectivity
-- Advanced Analytics
+### Community
+- [Discord Community](https://discord.gg/APAKDaUYAM)
+- [GitHub Discussions](https://github.com/worksgoodcompany/hivefi/discussions)
+- [X (Twitter)](https://x.com/HiveFiAgent)
+- [Demo Video](https://youtu.be/48U3xAXCxqs)

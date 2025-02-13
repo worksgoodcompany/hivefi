@@ -1,267 +1,242 @@
 # HiveFi Plugin
 
-A comprehensive plugin for HiveFi that provides essential DeFi functionality and data integration with Mantle Network, CoinGecko, DefiLlama, and other critical services. This plugin serves as the core infrastructure for interacting with various DeFi protocols and services on Mantle.
+A comprehensive plugin for HiveFi that provides essential DeFi functionality and data integration with Mantle Network. This plugin serves as the core infrastructure for interacting with various DeFi protocols and services on Mantle.
 
 ## Features
 
-### Actions
+### Core Actions
 
-1. **Transfer**
-   - Execute token transfers on Mantle
-   - Handle ERC20 and native token transfers
+1. **Wallet Operations**
+   - **Status**: Active ✅
+   - EVM wallet integration
+   - Transaction management
+   - Balance tracking
+   - Gas optimization
 
-2. **Token Deployment**
-   - Deploy ERC20 tokens on Mantle
-   - Create and manage liquidity pools on Merchant Moe
+2. **Token Operations**
+   - **Status**: Active ✅
+   - ERC20 token transfers
+   - Token balance tracking
+   - Token metadata handling
+   - Smart contract interaction
 
-3. **Swap**
-   - Execute token swaps on Merchant Moe
+3. **Swap Operations**
+   - **Status**: Active ✅
+   - Token swaps on Merchant Moe
+   - Price discovery
+   - Slippage management
+   - Transaction monitoring
 
-4. **Bridge**
-   - Cross-chain bridging via Mantle Bridge
-   - Bridge asset management and tracking
-
-5. **Staking**
+4. **Staking Operations**
+   - **Status**: Work in Progress 🔄
    - Liquid staking on Mantle Staking
    - Stake/unstake operations
-   - Reward management
+   - Reward tracking
+   - Position management
+
+5. **Lending Operations**
+   - **Status**: Work in Progress 🔄
+   - Lending on INIT Capital
+   - Supply/withdraw assets
+   - Borrow/repay loans
+   - Position management
 
 ### Providers
 
 1. **Wallet Provider**
-   - EVM wallet integration
-   - Transaction management
-   - Key management
-   - Gas optimization
+   - **Status**: Active ✅
+   - **Features**:
+     - EVM wallet integration
+     - Transaction management
+     - Key management
+     - Gas optimization
+   - **Usage**:
+     ```typescript
+     // Example wallet provider usage
+     const balance = await walletProvider.getBalance(address);
+     const tx = await walletProvider.sendTransaction(txParams);
+     ```
 
 2. **Token Provider**
-   - Token metadata and information
-   - Token balance tracking
-   - Token transfer history
-   - Smart contract interaction
+   - **Status**: Active ✅
+   - **Features**:
+     - Token metadata and information
+     - Token balance tracking
+     - Token transfer history
+     - Smart contract interaction
+   - **Usage**:
+     ```typescript
+     // Example token provider usage
+     const tokenBalance = await tokenProvider.getBalance(tokenAddress, walletAddress);
+     const allowance = await tokenProvider.getAllowance(tokenAddress, spenderAddress);
+     ```
 
 3. **CoinGecko Provider**
-   - Real-time cryptocurrency prices
-   - Market data and metrics
-   - Token metadata and information
-   - Historical price data
+   - **Status**: Active ✅
+   - **Features**:
+     - Real-time cryptocurrency prices
+     - Market data and metrics
+     - Token metadata
+     - Historical price data
+   - **Usage**:
+     ```typescript
+     // Example CoinGecko provider usage
+     const price = await coingeckoProvider.getPrice('mantle');
+     const marketData = await coingeckoProvider.getMarketData();
+     ```
 
 4. **DefiLlama Provider**
-   - Protocol TVL tracking
-   - Token price feeds
-   - DeFi protocol analytics
-   - Market statistics
+   - **Status**: Active ✅
+   - **Features**:
+     - Protocol TVL tracking
+     - Token price feeds
+     - DeFi protocol analytics
+     - Market statistics
+   - **Usage**:
+     ```typescript
+     // Example DefiLlama provider usage
+     const tvl = await defillama.getTVL('mantle');
+     const protocolMetrics = await defillama.getProtocolMetrics();
+     ```
 
-5. **Trust Score Provider** (Work in progress)
-   - Protocol security analysis
-   - Risk assessment metrics
-   - Security scoring
-   - Vulnerability detection
+## Integration Guide
 
-6. **Portfolio Provider**
-   - Portfolio tracking and analysis
-   - Performance metrics
-   - Holdings management
-   - Transaction history
+### Installation
 
-7. **Social Provider** (Work in progress)
-   - Social engagement metrics
-   - Community analytics
-   - Social signal tracking
+```bash
+# Using npm
+npm install @hivefi/plugin-hivefi
 
-## Future Development Phase 1
+# Using pnpm
+pnpm add @hivefi/plugin-hivefi
+```
 
-### Planned Protocol Integrations
+### Basic Setup
 
-#### Mantle Staking Integration
-- **Actions**
-  - Stake ETH/MNT
-  - Unstake operations
-  - Claim staking rewards
-  - Withdraw after lock period
-- **Providers**
-  - APY tracking
-  - Total value staked
-  - User positions
-  - Lock period status
+```typescript
+import { HiveFiPlugin } from '@hivefi/plugin-hivefi';
 
-#### Agni Protocol Integration (Lending & DEX)
-- **Actions**
-  - Lend assets
-  - Borrow against collateral
-  - Repay debt
-  - Remove collateral
-  - Swap tokens
-  - Manage liquidity positions
-- **Providers**
-  - Pool information and stats
-  - Interest rates
-  - Available liquidity
-  - User positions
-- **Evaluators**
-  - LTV monitoring
-  - Liquidation risk assessment
-  - Position health tracking
+// Initialize the plugin
+const hiveFi = new HiveFiPlugin({
+  rpcUrl: 'https://rpc.mantle.xyz',
+  privateKey: process.env.PRIVATE_KEY,
+});
+```
 
-### Planned Infrastructure Integrations
+### Configuration
 
-#### Explorer Provider
+```typescript
+// Plugin configuration options
+interface HiveFiConfig {
+  rpcUrl: string;              // Mantle RPC URL
+  privateKey?: string;         // Optional: Private key for transactions
+  apiKey?: string;            // Optional: API key for enhanced features
+  gasMultiplier?: number;     // Optional: Gas price multiplier (default: 1.1)
+  maxRetries?: number;        // Optional: Max transaction retry attempts
+}
+```
+
+## Usage Examples
+
+### Token Transfers
+
+```typescript
+// ERC20 Token Transfer
+const transfer = await hiveFi.actions.transfer({
+  token: '0x1234...', // Token address
+  to: '0x5678...',    // Recipient address
+  amount: '1.0'       // Amount to transfer
+});
+
+// Native Token (MNT) Transfer
+const nativeTransfer = await hiveFi.actions.transfer({
+  to: '0x5678...',
+  amount: '0.1',
+  isNative: true
+});
+```
+
+### Token Swaps
+
+```typescript
+// Swap tokens on Merchant Moe
+const swap = await hiveFi.actions.swap({
+  fromToken: '0x1234...',  // Input token address
+  toToken: '0x5678...',    // Output token address
+  amount: '1.0',           // Input amount
+  slippage: 0.5           // Max slippage percentage
+});
+```
+
+### Market Data
+
+```typescript
+// Get token prices
+const prices = await hiveFi.providers.coingecko.getPrices([
+  'mantle',
+  'ethereum'
+]);
+
+// Get protocol TVL
+const tvl = await hiveFi.providers.defillama.getTVL('mantle');
+```
+
+## Error Handling
+
+```typescript
+try {
+  const tx = await hiveFi.actions.transfer({...});
+} catch (error) {
+  if (error instanceof InsufficientBalanceError) {
+    console.error('Insufficient balance for transfer');
+  } else if (error instanceof NetworkError) {
+    console.error('Network error occurred');
+  } else {
+    console.error('Unknown error:', error);
+  }
+}
+```
+
+## Best Practices
+
+1. **Gas Management**
+   - Always check gas prices before transactions
+   - Use appropriate gas limits
+   - Consider using gas multiplier for faster confirmations
+
+2. **Error Handling**
+   - Implement proper try-catch blocks
+   - Handle specific error types
+   - Provide meaningful error messages
+   - Implement retry mechanisms for failed transactions
+
+3. **Security**
+   - Never hardcode private keys
+   - Use environment variables for sensitive data
+   - Implement proper access controls
+   - Validate all input parameters
+
+4. **Performance**
+   - Cache frequently used data
+   - Batch requests when possible
+   - Implement proper rate limiting
+   - Monitor resource usage
+
+## Development Status
+
+### Currently Active
+- Basic wallet operations
+- Token transfers
+- Token swaps on Merchant Moe
 - Transaction tracking
-- Block data retrieval
-- Contract state queries
-- Network statistics
-- Chain analytics
+- Market data integration
+- Price feeds
 
-#### Bridge Provider
-- Cross-chain transaction monitoring
-- Bridge status tracking
-- Asset transfer verification
-- Fee estimation
-- Bridge analytics
+### Work in Progress
+- Liquid staking on Mantle Staking
+- Lending operations on INIT Capital
+- Advanced trading features
+- Portfolio management
+- Cross-chain operations
 
-### Swarm Communication Layer
-
-#### Actions
-- Inter-agent message routing
-- Task delegation
-- State synchronization
-- Resource allocation
-- Consensus management
-
-#### Providers
-- Agent discovery
-- State management
-- Resource monitoring
-- Network health tracking
-- Message queue management
-
-#### Evaluators
-- Task completion verification
-- Performance monitoring
-- Resource utilization
-- Network efficiency
-- Communication patterns
-
-## Future Development Phase 2
-
-### Analytics & Metrics Infrastructure
-
-#### Market Analytics Provider
-- Real-time market data aggregation
-- Cross-protocol analytics
-- Custom metrics computation
-- Historical data analysis
-- Performance benchmarking
-- Market trend detection
-
-#### Social Analytics Provider
-- Multi-platform social listening
-- Sentiment analysis engine
-- Engagement metrics tracking
-- Influencer analytics
-- Content performance tracking
-- Community growth metrics
-
-### DeFi Operations Layer
-
-#### Yield Farming Provider
-- Protocol yield tracking
-- Strategy performance monitoring
-- Risk-adjusted returns calculation
-- Liquidity pool analytics
-- Impermanent loss tracking
-
-#### Trading Provider
-- Order book analytics
-- Market making metrics
-- Position management tracking
-- Trading strategy performance
-- Risk exposure monitoring
-
-### NFT Infrastructure
-
-#### NFT Analytics Provider
-- Collection statistics tracking
-- Floor price monitoring
-- Rarity scoring engine
-- Whale wallet tracking
-- Trading volume analytics
-- Market trend analysis
-
-#### NFT Operations Provider
-- Collection metadata management
-- IPFS integration services
-- Minting configuration
-- Royalty tracking
-- Collection analytics
-
-### Governance & Treasury
-
-#### DAO Provider
-- Treasury analytics
-- Proposal tracking
-- Voting analytics
-- Fund allocation monitoring
-- Governance participation metrics
-
-### Development Tools
-
-#### Smart Contract Provider
-- Contract deployment services
-- Verification automation
-- Security audit integration
-- Parameter configuration
-- Gas optimization
-
-### Actions
-
-#### Analytics Actions
-- Custom metric computation
-- Report generation
-- Alert configuration
-- Dashboard creation
-- Data export
-
-#### Trading Actions
-- Strategy execution
-- Position management
-- Market making
-- Portfolio rebalancing
-- Risk management
-
-#### NFT Actions
-- Collection deployment
-- Metadata management
-- Minting operations
-- Royalty configuration
-- Collection management
-
-#### DAO Actions
-- Proposal creation
-- Vote execution
-- Treasury management
-- Fund allocation
-- Governance participation
-
-### Evaluators
-
-#### Market Evaluators
-- Price trend analysis
-- Volume pattern detection
-- Market sentiment assessment
-- Technical indicator computation
-- Risk-reward profiling
-
-#### Strategy Evaluators
-- Performance measurement
-- Risk assessment
-- Efficiency analysis
-- Cost-benefit analysis
-- Strategy optimization
-
-#### Portfolio Evaluators
-- Risk exposure assessment
-- Performance attribution
-- Diversification analysis
-- Correlation tracking
-- Rebalancing recommendations
+For more information about the agents and their capabilities, see our [agents documentation](agents.md).

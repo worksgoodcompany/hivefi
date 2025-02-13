@@ -1,0 +1,43 @@
+﻿Mantle Network is a Layer 2 (L2) EVM-compatible scaling solution built on top of Ethereum. All Ethereum smart contracts and tools can operate on Mantle with minimal modifications, making it fully compatible with the Ethereum ecosystem while providing significantly lower transaction costs.
+
+Mantle Network achieves cost reduction through its optimistic rollup architecture combined with innovative data availability solutions. This architecture inherits Ethereum's security while making transactions cheaper and more accessible for users. The cost savings can exceed 90% compared to Ethereum Layer 1 transactions.
+
+Mantle Network's protocol is designed specifically for user-friendliness and developer accessibility. The platform offers lower transaction costs than Ethereum mainnet, provides a flexible development environment for builders, and includes comprehensive infrastructure tools for creating mass-market decentralized applications.
+
+The Mantle Network validator system works in conjunction with Ethereum validators to process transactions. This dual validation system allows Mantle to significantly reduce gas fees and latency while maintaining security. Users can customize their transaction confirmation requirements to achieve near-instant confirmations when needed.
+
+Mantle Network's architecture is modular, unlike traditional blockchain designs. It separates key functions into distinct layers: an EVM-compatible execution layer for processing transactions, a consensus and settlement layer that operates on Ethereum, and a separate data availability layer powered by EigenDA technology for cost-efficient data storage.
+
+Mantle Network's v2 Tectonic upgrade introduced major improvements to the platform. These include support for EIP-1559 for better fee prediction, a consistent 2-second block time for L2 transactions, and native MNT tokens that operate directly on L2 rather than through ERC-20 contracts. The upgrade also added a fee optimization system using tokenRatio for MNT transaction fees.
+
+Security on Mantle Network is maintained through three core mechanisms: Data Availability ensures secure L2-to-L1 data transfer, Fraud Proofs continuously monitor transaction validity, and Forced Transaction Inclusion provides emergency L1 rollback capabilities if needed. These systems work together to provide robust security guarantees.
+
+Mantle Network's technical specifications include a block gas limit of 250 billion units and a 2-second block time. The network includes safety features such as automatic block production pausing if L1 synchronization fails for over 600 seconds. Transaction finality occurs in approximately 15 minutes on L2, with a 7-day challenge period on L1 for additional security.
+
+Mantle Network's verification system uses Rollup Verifiers that sync with Mantle DA to verify state roots before they are submitted to L1. The system includes automatic safety measures - if verifiers detect any discrepancies, the entire rollup mechanism pauses until the issue is resolved. The network is currently developing fraud proof systems for additional security.
+
+Mantle Network has undergone comprehensive security audits by leading firms including Secure3 (secure3.io), OpenZeppelin, and Sigma Prime. Users can verify all network activity through MantleScan (mantlescan.xyz), the official block explorer that provides transaction lookup, validation services, and APIs for developers.
+
+The MNT token serves as Mantle Network's native cryptocurrency, used for transaction fees and governance. MNT can be bridged between Ethereum (L1) and Mantle Network (L2) using the official Mantle Bridge (bridge.mantle.xyz). The token follows a deflationary model where a portion of transaction fees is burned, reducing the total supply over time.
+
+Mantle Network's bridge system (bridge.mantle.xyz) enables secure asset transfers between Ethereum and Mantle. Users can bridge ETH, MNT, USDT, USDC, and other popular tokens. The bridge implements a 7-day security delay for withdrawals to L1, though fast withdrawals are available through third-party liquidity providers.
+
+The primary decentralized exchange on Mantle Network is Merchant Moe (docs.merchantmoe.com). This DEX provides trading services, liquidity pools, and yield farming opportunities. It is officially backed by the Mantle EcoFund and has a strategic liquidity partnership with the Mantle Foundation to ensure deep liquidity for traders.
+
+INIT Capital (docs.init.capital) serves as Mantle Network's primary lending protocol. It uses an innovative 'Liquidity Hooks' system that allows both users and other protocols to access liquidity efficiently. The platform offers lending opportunities with competitive APRs for lenders and flexible borrowing options through an integrated dashboard.
+
+The mETH Protocol (meth.mantle.xyz) on Mantle Network provides ETH liquid staking services. Users can stake ETH to receive mETH tokens, which accumulate staking rewards, and can further restake through cmETH tokens. These tokens integrate with other Mantle DeFi protocols and can be used as collateral for lending or trading.
+
+Agni Finance (agni.finance) operates as a decentralized exchange on Mantle Network, offering concentrated liquidity pools similar to Uniswap v3. The protocol features single-sided liquidity provision, active liquidity management, and competitive trading fees, making it a key player in Mantle's DeFi ecosystem.
+
+Fusionist (fusionist.io) is a GameFi protocol on Mantle Network that combines gaming with DeFi elements. Players can earn rewards through gameplay, stake assets, and participate in the game's economy. The protocol demonstrates Mantle's capability to support complex blockchain gaming applications.
+
+For developers building on Mantle Network, the maximum supported Solidity version is v0.8.23. While the network maintains broad compatibility with Ethereum opcodes, it has some specific differences in block structure and transaction cost calculations. Comprehensive development resources are available at docs.mantle.xyz.
+
+Mantle Network's RPC endpoints are accessible at rpc.mantle.xyz (public) and endpoints.mantine.network (dedicated). Developers can also access archive nodes for historical data queries. The network supports standard Web3 libraries including ethers.js and web3.js for blockchain interactions.
+
+Gas fees on Mantle Network are paid in MNT tokens, with prices typically ranging from 0.0001 to 0.001 MNT per transaction. The network implements EIP-1559 style fee mechanics, where a portion of the gas fee is burned while the remainder goes to validators. Users can monitor current gas prices through MantleScan.
+
+The Mantle Network community hub is accessible through Discord at discord.gg/mantle. Users can find technical documentation, brand resources, and development guides at mantlescan.xyz. The platform maintains active social media channels for community updates and support.
+
+Mantle Network's governance system allows MNT token holders to participate in protocol decisions. Proposals can be submitted through the governance forum (forum.mantle.xyz) and voted on using MNT tokens. The governance process includes discussion periods, voting phases, and implementation timeframes for approved proposals.

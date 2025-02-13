@@ -9,10 +9,10 @@
   <p>Simplify your Mantle DeFi experience with the power of Multi-Agent Systems (MAS)</p>
 
   <p align="center">
-    <a href="https://discord.gg/dP4VEAP8br">
+    <a href="https://discord.gg/APAKDaUYAM">
       <img src="https://img.shields.io/badge/Discord-Join%20Us-blue?style=for-the-badge&logo=discord" alt="Discord" />
     </a>
-    <a href="https://x.com/HiveFiAgent">
+    <a href="https://x.com/hivefi_agent">
       <img src="https://img.shields.io/badge/X-Follow%20Us-blue?style=for-the-badge&logo=x" alt="X" />
     </a>
     <a href="https://youtu.be/48U3xAXCxqs">
@@ -31,21 +31,33 @@
 ## 📚 Table of Contents
 
 - [🌟 Overview](#-overview)
+  - [Why Multi-Agent Systems (MAS)?](#why-multi-agent-systems-mas)
 - [✨ Features](#-features)
   - [Core Features](#core-features)
-  - [Token Features](#token-features)
-  - [Access Tiers](#access-tiers)
   - [Mantle Features](#mantle-features)
+  - [Web App Features](#️-web-app-features)
+- [🧰 Tech Stack](#-tech-stack)
 - [🤖 Agent Categories](#-agent-categories)
-  - [Internal Agents](#-internal-agents-platform-operations)
-  - [Public Agents](#-public-agents-shared-services)
-  - [Private Agents](#-private-agents-custom-deployments)
-- [💎 Service Packages](#service-packages)
-- [🚀 Getting Started](#-getting-started)
-- [💻 Web Client](#-web-client)
+  - [Internal Agents (Platform Operations)](#-internal-agents-platform-operations)
+  - [Public Agents (Shared Services)](#-public-agents-shared-services)
+  - [Private Agents (Custom Deployments)](#-private-agents-custom-deployments)
+- [🏠 Self-Hosting (Recommended)](#-self-hosting-recommended)
+  - [Requirements for Self-Hosting](#requirements-for-self-hosting)
+  - [Support](#support)
+- [💎 Service Packages](#-service-packages)
+- [🚀 Quick Start](#-quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Running the Agent](#running-the-agent)
+  - [Running the Web Client](#running-the-web-client)
+- [🧪 How to use?](#-how-to-use)
+- [🔍 Important Notes](#-important-notes)
 - [🛠️ Development](#️-development)
+  - [Project Structure](#project-structure)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
+- [🤖 AI Workforce Suite](#-ai-workforce-suite)
 
 ## 🌟 Overview
 
@@ -97,9 +109,9 @@ Learn more about our agent system in the [agents documentation](docs/agents.md).
 - 💰 Wallet management
 - 💸 Token transfers (ETH, USDT, MNT, and custom tokens)
 - 💱 Token swapping on Merchant Moe
-- 💎 Token and liquidity pool deployment
 - 🔍 Transaction tracking
-- 💧 Liquid staking on Mantle Staking
+- 💧 Liquid staking on Mantle Staking (WIP)
+- 💸 Lending on INIT Capital (WIP)
 
 
 ### 🖥️ Web App Features
@@ -272,8 +284,8 @@ pnpm build
 # Start a single agent (Recommended for testing)
 pnpm start --characters="characters/demo-agent.character.json"
 
-# Start demo agents (4)
-pnpm start --characters="characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/mantle-expert-agent.character.json"
+# Start demo agents (5)
+pnpm start --characters="characters/demo-agent.character.json,characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/mantle-expert-agent.character.json"
 
 # Start all agents (18)
 pnpm start --characters="characters/coordinator.character.json,characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/nfts-agent.character.json,characters/alpha-agent.character.json,characters/analyst-agent.character.json,characters/trading-agent.character.json,characters/wallet-agent.character.json,characters/dao-agent.character.json,characters/defi-agent.character.json,characters/demo-agent.character.json,characters/kol-agent.character.json,characters/token-deployer-agent.character.json,characters/nft-deployer-agent.character.json,characters/mantle-expert-agent.character.json,characters/predictions-agent.character.json,characters/advisor-agent.character.json"
@@ -385,21 +397,23 @@ docs/                           # Documentation
   ├── specs.md                  # Technical specifications
   └── whitepaper.md             # Project whitepaper
 assets/                         # Assets
-starkhive-token/                # HiveFi Token Hardhat project
-  ├── contracts/                # HiveFi Token contract
-  │   └── HiveFiToken.sol    # HiveFi Token contract
-  └── README.md                 # HiveFi Token README
   ...
-
 eliza/                          # Eliza project
   ├── packages/
   │   ├── core/                 # Eliza core functionality
   │   ├── plugin-hivefi/         # Mantle integration
   │   │   ├── src/
   │   │   │   ├── actions/      
+  │   │   │   │   ├── lending/        # Work In Progress: Lending on INIT Capital
+  │   │   │   │   ├── erc20Transfer   # ERC20 Transfer Action
+  │   │   │   │   ├── portfolio       # Portfolio Action
+  │   │   │   │   ├── swap            # Swap Action
+  │   │   │   │   ├── stake           # Work In Progress
+  │   │   │   │   └── unstake         # Work In Progress
   │   │   │   ├── providers/    
-  │   │   │   │   ├── coingecko     # CoinGecko API
-  │   │   │   │   ├── defillama     # DefiLlama API
+  │   │   │   │   ├── coingecko     # CoinGecko Provider
+  │   │   │   │   ├── defillama     # DefiLlama Provider
+  │   │   │   │   ├── wallet        # Mantle Wallet Provider
   │   │   │   └── ...
   │   │   ├── templates/    
   │   │   ├── types/        
@@ -428,10 +442,10 @@ HiveFi is part of the broader [AI Workforce Suite (AIWS)](./docs/aiws.md), a col
 <div align="center">
   <p>Built with ❤️ by the HiveFi team</p>
   <p>
-    <a href="https://discord.gg/dP4VEAP8br">
+    <a href="https://discord.gg/APAKDaUYAM">
       <img src="https://img.shields.io/badge/Discord-Join-7289DA?style=for-the-badge&logo=discord" alt="Discord" />
     </a>
-    <a href="https://x.com/HiveFiAgent">
+    <a href="https://x.com/hivefi_agent">
       <img src="https://img.shields.io/badge/X-Follow%20Us-blue?style=for-the-badge&logo=twitter" alt="X" />
     </a>
   </p>

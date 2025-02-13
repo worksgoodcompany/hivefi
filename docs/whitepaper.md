@@ -2,316 +2,210 @@
 
 ## Abstract
 
-HiveFi is a decentralized Multi-Agent System (MAS) designed to enhance DeFi operations on Mantle through intelligent automation and strategic orchestration. For technical implementation details, see our [technical specifications](specs.md).
-
-## Introduction
-
-The DeFi landscape on Mantle presents unique opportunities and challenges that require sophisticated tools for effective participation. HiveFi addresses these needs through a comprehensive suite of AI agents, each specialized in specific aspects of DeFi operations. For a complete list of agents and their capabilities, see our [agents documentation](agents.md).
-
-## System Architecture
-
-### Multi-Agent System
-
-HiveFi employs a modular architecture where specialized agents collaborate to achieve complex DeFi operations. For implementation details, see our [plugin documentation](plugin-starkhive.md).
-
-The system comprises three categories of agents:
-
-1. [Internal Agents](agents.md#internal-agents-platform-operations)
-   - Platform operations
-   - Customer relations
-   - Social engagement
-   - Investment analysis
-
-2. [Public Agents](agents.md#public-agents-shared-services)
-   - Market analytics
-   - Trading signals
-   - NFT operations
-   - Documentation
-   - Token deployment
-
-3. [Private Agents](agents.md#private-agents-custom-deployments)
-   - Task orchestration
-   - DeFi operations
-   - Trading execution
-   - Security management
-   - Treasury operations
-
-### Core Components
-
-1. Action Framework
-   - Event-driven architecture
-   - Priority-based execution
-   - Atomic operations
-   - Transaction management
-
-2. Evaluator System
-   - Risk assessment
-   - Opportunity analysis
-   - Strategy validation
-   - Performance monitoring
-
-3. Provider System
-   - Data integration
-   - Protocol connectivity
-   - Service orchestration
-   - Resource management
-
-For detailed service offerings, see our [services documentation](services.md).
-
-## Technical Implementation
-
-### Infrastructure
-
-1. Decentralized Architecture
-   - Distributed nodes
-   - Peer-to-peer communication
-   - Consensus mechanisms
-   - State synchronization
-
-2. Security Framework
-   - Multi-signature support
-   - Encryption protocols
-   - Access control
-   - Audit logging
-
-3. Scalability Design
-   - Horizontal scaling
-   - Load balancing
-   - Resource optimization
-   - Performance monitoring
-
-### Deployment Options
-
-1. Self-Hosted (Primary Recommendation)
-   - Full control over infrastructure
-   - Customizable configuration
-   - Direct access to all features
-   - Community support via Discord
-
-2. Managed Services (Future Release)
-   - Hosted infrastructure
-   - Managed updates
-   - Premium support
-   - SLA guarantees
-   - Enterprise customization
-
-For development timeline and roadmap, see our [development plan](plan.md).
-
-## Agent Capabilities
-
-### Core Functions
-
-1. Natural Language Processing
-   - Command interpretation
-   - Context understanding
-   - Response generation
-   - Sentiment analysis
-
-2. Strategic Decision Making
-   - Market analysis
-   - Risk assessment
-   - Opportunity identification
-   - Portfolio optimization
-
-3. Operational Execution
-   - Transaction management
-   - Protocol interaction
-   - Position monitoring
-   - Risk management
-
-For integration details, see our [AI Workforce Suite documentation](aiws.md).
-
-## Use Cases
-
-### DeFi Operations
-
-1. Yield Farming
-   - Protocol analysis
-   - Strategy optimization
-   - Position management
-   - Risk monitoring
-
-2. Trading
-   - Market analysis
-   - Signal generation
-   - Order execution
-   - Portfolio balancing
-
-3. Treasury Management
-   - Asset allocation
-   - Risk management
-   - Performance tracking
-   - Rebalancing automation
-
-### NFT Operations
-
-1. Collection Analysis
-   - Market trends
-   - Price discovery
-   - Rarity assessment
-   - Volume analysis
-
-2. Trading Strategies
-   - Buy/sell signals
-   - Floor price tracking
-   - Liquidity analysis
-   - Risk assessment
-
-3. Collection Deployment
-   - Contract generation
-   - Metadata management
-   - Distribution strategy
-   - Community engagement
-
-## Market Analysis
-
-### Protocol Integration
-
-1. DEX Integration
-   - Price discovery
-   - Liquidity analysis
-   - Order routing
-   - Slippage management
-
-2. Lending Protocols
-   - Interest rate monitoring
-   - Collateral management
-   - Risk assessment
-   - Position optimization
-
-3. Yield Aggregators
-   - Strategy analysis
-   - APY comparison
-   - Risk evaluation
-   - Position management
-
-### Data Analytics
-
-1. Market Metrics
-   - Volume analysis
-   - Price trends
-   - Liquidity depth
-   - Volatility assessment
-
-2. Protocol Metrics
-   - TVL tracking
-   - User activity
-   - Revenue analysis
-   - Growth trends
-
-3. Risk Metrics
-   - Exposure analysis
-   - Correlation studies
-   - Volatility measures
-   - Stress testing
-
-## Development Roadmap
-
-### Phase 1: Foundation
-- Core infrastructure
-- Basic agent deployment
-- Protocol integration
-- Security framework
-
-### Phase 2: Enhancement
-- Advanced analytics
-- Strategy optimization
-- UI/UX improvements
-- Performance tuning
-
-### Phase 3: Expansion
-- Cross-chain support
-- Advanced strategies
-- Enterprise features
-- Mobile support
-
-## Security Considerations
-
-### System Security
-
-1. Infrastructure Security
-   - Network protection
-   - Access control
-   - Encryption
-   - Audit logging
-
-2. Transaction Security
-   - Multi-signature support
-   - Transaction validation
-   - Gas optimization
-   - Error handling
-
-3. Data Security
-   - Encryption at rest
-   - Secure transmission
-   - Access control
-   - Privacy protection
-
-### User Security
-
-1. Access Control
-   - Authentication
-   - Authorization
-   - Session management
-   - Activity monitoring
-
-2. Asset Security
-   - Wallet security
-   - Key management
-   - Transaction signing
-   - Recovery procedures
-
-3. Privacy Protection
-   - Data encryption
-   - Access control
-   - Audit logging
-   - Compliance
-
-## Future Developments
-
-### Technical Enhancements
-
-1. Advanced AI Models
-   - Custom training
-   - Specialized models
-   - Performance optimization
-   - Capability expansion
-
-2. Protocol Integration
-   - Cross-chain support
-   - New protocols
-   - Advanced strategies
-   - Custom solutions
-
-3. Infrastructure Scaling
-   - Global distribution
-   - Performance optimization
-   - Resource management
-   - Reliability enhancement
-
-### Market Expansion
-
-1. Protocol Support
-   - New integrations
-   - Custom solutions
-   - Enterprise features
-   - Advanced strategies
-
-2. Geographic Expansion
-   - Regional support
-   - Local compliance
-   - Market adaptation
-   - Community growth
-
-3. Service Enhancement
-   - New features
-   - Custom solutions
-   - Performance optimization
-   - User experience
-
-## Conclusion
-
-HiveFi represents a significant advancement in DeFi automation and management on Mantle. Through its sophisticated multi-agent system, comprehensive security framework, and scalable architecture, it provides a robust platform for both individual and institutional DeFi participants.
-
-For business analysis and projections, see our [business plan](business-plan.md).
+HiveFi is an open-source, decentralized Multi-Agent System (MAS) designed to enhance DeFi operations on Mantle through intelligent automation and strategic orchestration. This whitepaper outlines the system's architecture, current implementation, and future development plans.
+
+## 1. Introduction
+
+### 1.1 Background
+The DeFi landscape on Mantle presents unique opportunities for automation and optimization through artificial intelligence. HiveFi addresses these opportunities through a comprehensive suite of specialized AI agents, each designed for specific aspects of DeFi operations.
+
+### 1.2 Vision
+Our vision is to create an accessible, efficient, and secure DeFi automation platform that leverages the power of AI and multi-agent systems while maintaining a strong focus on user control through self-hosted solutions.
+
+### 1.3 Core Principles
+1. Open Source Development
+2. Self-Hosted First
+3. Security by Design
+4. Modular Architecture
+5. Community-Driven Growth
+
+## 2. System Architecture
+
+### 2.1 Multi-Agent System
+HiveFi employs a modular architecture with 18 specialized agents across three categories:
+
+#### 2.1.1 Internal Agents (Platform Operations)
+- Sales Agent
+- Meme Agent
+- Demo Agent
+
+#### 2.1.2 Public Agents (Shared Services)
+- Metrics Agent
+- Token Deployer
+- Mantle Expert
+- Alpha Agent (Coming Soon)
+- Analyst Agent (Coming Soon)
+- NFTs Agent (Coming Soon)
+- KOL Agent
+- NFT Deployer (Coming Soon)
+- Predictions Agent (Coming Soon)
+
+#### 2.1.3 Private Agents (Custom Deployments)
+- Coordinator Agent
+- DeFi Agent
+- Trading Agent
+- Wallet Agent
+- DAO Agent (Coming Soon)
+- Advisor Agent
+
+### 2.2 Core Components
+
+#### 2.2.1 Action Framework
+- Event-driven architecture
+- Priority-based execution
+- Atomic operations
+- Transaction management
+- Gas optimization
+
+#### 2.2.2 Provider System
+- Wallet Provider
+- Token Provider
+- CoinGecko Provider
+- DefiLlama Provider
+
+## 3. Technical Implementation
+
+### 3.1 Technology Stack
+- Runtime: Node.js 23+
+- Language: TypeScript
+- Framework: ElizaOS
+- Web Framework: Next.js
+- UI: Shadcn UI/Tailwind
+- Blockchain: Ethers.js/Web3.js
+- AI: OpenAI/Claude
+
+### 3.2 Protocol Integrations
+
+#### 3.2.1 Current Integrations
+- **Merchant Moe DEX**
+  - Token swaps
+  - Price discovery
+  - Transaction monitoring
+
+#### 3.2.2 Upcoming Integrations
+- **Mantle Staking**
+  - Liquid staking
+  - Reward tracking
+  - Position management
+
+- **INIT Capital**
+  - Lending operations
+  - Supply/withdraw
+  - Position management
+
+### 3.3 Data Providers
+- CoinGecko: Price and market data
+- DefiLlama: TVL and protocol metrics
+
+## 4. Current Features
+
+### 4.1 DeFi Operations
+- Token transfers (ETH, USDT, MNT, custom tokens)
+- Token swaps on Merchant Moe
+- Transaction tracking
+- Gas optimization
+
+### 4.2 Analytics & Data
+- Real-time TVL metrics
+- Token price tracking
+- Protocol analytics
+- Market statistics
+
+### 4.3 Social & Community
+- Content creation
+- Community management
+- Brand development
+- Social engagement
+
+### 4.4 Development Tools
+- Technical documentation
+- Integration guides
+- Best practices
+- EVM compatibility support
+
+## 5. Security Architecture
+
+### 5.1 System Security
+- Secure environment variables
+- Access control mechanisms
+- Regular security updates
+- Transaction monitoring
+- Input validation
+
+### 5.2 Transaction Security
+- Gas optimization
+- Error handling
+- Recovery procedures
+- Transaction verification
+- Slippage protection
+
+### 5.3 Best Practices
+1. Secure configuration
+2. Transaction monitoring
+3. Regular maintenance
+4. Gas optimization
+5. Error handling
+
+## 6. Deployment Model
+
+### 6.1 Self-Hosted Solution
+- Full infrastructure control
+- Community support
+- Open-source codebase
+- Customizable setup
+
+### 6.2 Requirements
+- Node.js 23+
+- Git
+- pnpm
+- Basic TypeScript/Node.js knowledge
+- API keys for required services
+
+## 7. Development Roadmap
+
+### 7.1 Currently Active
+- Basic wallet operations
+- Token transfers
+- Token swaps on Merchant Moe
+- Transaction tracking
+- Market metrics
+- Social media management
+- Platform education
+- Technical support
+
+### 7.2 Short-term Goals
+- Liquid staking on Mantle Staking
+- Lending operations on INIT Capital
+- Advanced trading strategies
+- Portfolio management
+- Cross-chain operations
+
+### 7.3 Long-term Vision
+- Enhanced protocol integrations
+- Advanced AI capabilities
+- Cross-chain expansion
+- Institutional features
+- Enhanced automation
+
+## 8. Community and Governance
+
+### 8.1 Open Source Development
+- GitHub repository
+- Community contributions
+- Issue tracking
+- Feature requests
+
+### 8.2 Support Channels
+- Discord community
+- Documentation
+- GitHub discussions
+- Technical support
+
+## 9. Conclusion
+
+HiveFi represents a significant advancement in DeFi automation on Mantle, providing an open-source, self-hosted solution that combines the power of AI with the security and control of local deployment. Our focus on modular architecture, security, and community-driven development ensures a robust platform for both individual and institutional DeFi participants.
+
+For detailed technical specifications, see our [technical documentation](specs.md).
+For implementation details, see our [plugin documentation](plugin-hivefi.md).
+For service offerings, see our [services documentation](services.md).
 

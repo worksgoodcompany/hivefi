@@ -2,52 +2,75 @@
 
 ## Introduction
 
-HiveFi is a decentralized Multi-Agent System (MAS) designed to enhance DeFi operations on Mantle through intelligent automation and strategic orchestration. Our platform leverages Mantle's Layer 2 scalability and EVM compatibility to provide efficient, cost-effective DeFi automation solutions. For complete technical specifications, see our [technical documentation](specs.md).
+HiveFi is a decentralized Multi-Agent System (MAS) designed to enhance DeFi operations on Mantle through intelligent automation and strategic orchestration. Our platform leverages Mantle's Layer 2 scalability and EVM compatibility to provide efficient, cost-effective DeFi automation solutions.
+
+## Core Features
+
+### DeFi Operations
+- **Status**: Active ✅
+- Token transfers (ETH, USDT, MNT, custom tokens)
+- Token swaps on Merchant Moe
+- Transaction tracking and monitoring
+- Gas optimization
+- **Coming Soon**:
+  - Liquid staking on Mantle Staking
+  - Lending on INIT Capital
+
+### Analytics & Data
+- **Status**: Active ✅
+- Real-time TVL metrics via DefiLlama
+- Token price tracking via CoinGecko
+- Protocol analytics
+- Market statistics
+- Performance monitoring
+
+### Social & Community
+- **Status**: Active ✅
+- Content creation and management
+- Community engagement
+- Brand development
+- Social media presence
+- Marketing automation
+
+### Development Tools
+- **Status**: Active ✅
+- Technical documentation
+- Integration guides
+- Best practices
+- EVM compatibility support
+- Gas optimization tips
 
 ## System Architecture
 
 ### Multi-Agent System
 
-HiveFi employs a modular architecture where specialized agents collaborate to achieve complex DeFi operations on the Mantle Network. For detailed agent specifications, see our [agents documentation](agents.md).
+HiveFi employs a modular architecture with 18 specialized agents across three categories:
 
-### Core Infrastructure
+1. **Internal Agents** (Platform Operations)
+   - Sales Agent
+   - Meme Agent
+   - Demo Agent
 
-#### Blockchain Layer
-- Mantle Network integration
-- EVM compatibility
-- Cross-chain bridging
-- Gas optimization
-- Transaction management
+2. **Public Agents** (Shared Services)
+   - Metrics Agent
+   - Token Deployer
+   - Mantle Expert
+   - Alpha Agent (Coming Soon)
+   - Analyst Agent (Coming Soon)
+   - NFTs Agent (Coming Soon)
+   - KOL Agent
+   - NFT Deployer (Coming Soon)
+   - Predictions Agent (Coming Soon)
 
-#### Protocol Layer
-- Merchant Moe Protocol integration (DEX)
-- Mantle Staking integration
-- Bridge operations
-- Custom protocol support
+3. **Private Agents** (Custom Deployments)
+   - Coordinator Agent
+   - DeFi Agent
+   - Trading Agent
+   - Wallet Agent
+   - DAO Agent (Coming Soon)
+   - Advisor Agent
 
-### Agent Categories
-
-1. [Internal Agents](agents.md#internal-agents-platform-operations)
-   - Platform operations
-   - Customer relations
-   - Social engagement
-   - Platform demonstration
-
-2. [Public Agents](agents.md#public-agents-shared-services)
-   - Market analytics
-   - Trading signals
-   - NFT operations
-   - Documentation
-   - Token deployment
-
-3. [Private Agents](agents.md#private-agents-custom-deployments)
-   - Task orchestration
-   - DeFi operations
-   - Trading execution
-   - Security management
-   - Treasury operations
-
-For service offerings and packages, see our [services documentation](services.md).
+For detailed agent specifications, see our [agents documentation](agents.md).
 
 ## Core Components
 
@@ -55,138 +78,95 @@ For service offerings and packages, see our [services documentation](services.md
 - Event-driven architecture
 - Priority-based execution
 - Atomic operations
-- Gas-optimized transactions
-- Cross-chain operations
-
-### Evaluator System
-- Risk assessment
-- Opportunity analysis
-- Strategy validation
-- Performance monitoring
-- Gas usage optimization
+- Transaction management
+- Gas optimization
 
 ### Provider System
-- Data integration
-- Protocol connectivity
-- Service orchestration
-- Resource management
-- Bridge monitoring
+- Wallet Provider (Active ✅)
+- Token Provider (Active ✅)
+- CoinGecko Provider (Active ✅)
+- DefiLlama Provider (Active ✅)
 
-For implementation details, see our [plugin documentation](docs/plugin-hivefi.md).
+For implementation details, see our [plugin documentation](plugin-hivefi.md).
 
-## Technical Stack
+## Protocol Integrations
 
-### Core Technologies
-- TypeScript/Node.js
-- Next.js App Router
-- Shadcn UI/Tailwind
-- Ethers.js/Web3.js
-- OpenAI/Claude AI
+### Current Integrations
+- **Merchant Moe** (Active ✅)
+  - Token swaps
+  - Price discovery
+  - Transaction monitoring
 
-### Infrastructure
-- Decentralized deployment
-- High availability
-- Scalable architecture
-- Secure communications
-- Cross-chain support
+### Coming Soon
+- **Mantle Staking** 🔄
+  - Liquid staking
+  - Reward tracking
+  - Position management
 
-### Deployment Options
-- Self-Hosted (Recommended)
-  - Full infrastructure control
-  - Local or cloud deployment
-  - Community support
-- Managed Services (Coming Soon)
-  - Premium support
-  - Managed infrastructure
-  - SLA guarantees
+- **INIT Capital** 🔄
+  - Lending and borrowing
+  - Supply/withdraw
+  - Position management
 
-### Integration Points
-- Mantle RPC endpoints
-- DeFi protocols (Merchant Moe)
-- Cross-chain bridges
-- Data providers
-- Social platforms
+## Deployment Options
 
-### Required APIs
-- OpenAI (core functionality)
-- Anthropic Claude (optional)
-- CoinGecko (price data)
-- DefiLlama (TVL data)
+### Self-Hosted Solution (Recommended)
+- **Status**: Active ✅
+- Full infrastructure control
+- Community support via Discord
+- Open-source codebase
+- Customizable setup
 
-For development timeline and roadmap, see our [development plan](plan.md).
+### Requirements
+- Node.js 23+
+- Git
+- pnpm
+- Basic TypeScript/Node.js knowledge
+- API keys for required services
+
+For detailed setup instructions, see our [services documentation](services.md).
 
 ## Security Architecture
 
 ### System Security
-- Multi-signature support
-- EVM security patterns
-- Cross-chain security
-- Gas attack prevention
-- Bridge security
+- Secure environment variables
+- Access control mechanisms
+- Regular security updates
+- Transaction monitoring
+- Input validation
 
 ### Transaction Security
-- Validation checks
 - Gas optimization
 - Error handling
 - Recovery procedures
-- Bridge monitoring
+- Transaction verification
+- Slippage protection
 
-### Data Security
-- Encryption at rest
-- Secure transmission
-- Privacy protection
-- Compliance
-- Cross-chain verification
+### Best Practices
+1. Use secure configuration
+2. Monitor transactions
+3. Regular maintenance
+4. Follow gas optimization
+5. Implement proper error handling
 
-## Use Cases
+## Development Status
 
-### DeFi Operations
-- Yield farming on Agni/Izumi
-- Liquidity provision
-- Trading execution
+### Currently Active
+- Basic wallet operations
+- Token transfers
+- Token swaps on Merchant Moe
+- Transaction tracking
+- Market metrics
+- Social media management
+- Platform education
+- Technical support
+
+### Work in Progress
+- Liquid staking on Mantle Staking
+- Lending operations on INIT Capital
+- Advanced trading strategies
 - Portfolio management
-- Risk monitoring
 - Cross-chain operations
 
-### NFT Operations
-- Collection deployment
-- Market tracking
-- Trading strategies
-- Deployment automation
-- Metadata management
-
-### Social Operations
-- Content creation
-- Community management
-- Brand development
-- Audience engagement
-- Strategy planning
-
-For AI integration details, see our [AI Workforce Suite documentation](aiws.md).
-
-For business analysis and projections, see our [business plan](business-plan.md).
-
-## Support Services
-
-### Technical Support
-- Implementation guidance
-- EVM integration support
-- Cross-chain operations
-- Troubleshooting
-- Performance optimization
-
-### Strategy Support
-- Market analysis
-- Risk assessment
-- Strategy planning
-- Performance review
-- Gas optimization
-
-### Development Support
-- Technical documentation
-- Code examples
-- Best practices
-- Security guidance
-- Gas optimization tips
-
-For complete system overview, see our [whitepaper](whitepaper.md).
+For technical implementation details, see our [plugin documentation](plugin-hivefi.md).
+For service offerings and deployment options, see our [services documentation](services.md).

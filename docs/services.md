@@ -2,286 +2,192 @@
 
 ## Overview
 
-HiveFi offers a comprehensive suite of AI-powered services for the Mantle ecosystem. Our services are delivered through specialized agents, each designed for specific tasks and operations. For detailed agent specifications, see our [agents documentation](agents.md).
+HiveFi is an open-source Multi-Agent System (MAS) designed for Mantle Network. Our primary focus is providing a robust, self-hosted solution that empowers users to run their own agent swarms. For detailed agent specifications, see our [agents documentation](agents.md).
 
-## Service Categories
+## Current Services
 
-### Analytics Services
+### Core Services (Self-Hosted)
 
-Powered by our [analytics agents](agents.md#public-agents-shared-services):
-- Market analysis
-- Protocol metrics
-- Trading signals
-- Risk assessment
-- Performance tracking
+1. #### DeFi Operations
+- **Status**: Active ✅
+- **Features**:
+  - Token transfers (ETH, USDT, MNT, custom tokens)
+  - Token swaps on Merchant Moe
+  - Transaction tracking
+  - Gas optimization
+- **Coming Soon**:
+  - Liquid staking on Mantle Staking
+  - Lending on INIT Capital
 
-### Trading Services
+2. #### Analytics Services
+- **Status**: Active ✅
+- **Features**:
+  - Real-time TVL metrics
+  - Token price tracking
+  - Protocol analytics
+  - Market statistics
+- **Data Sources**:
+  - CoinGecko integration
+  - DefiLlama integration
 
-Managed by our [trading agents](agents.md#private-agents-custom-deployments):
-- Order execution on Merchant Moe
-- Portfolio management
-- Strategy implementation
-- Risk monitoring
-- Performance optimization
+3. #### Social Services
+- **Status**: Active ✅
+- **Features**:
+  - Content creation
+  - Community management
+  - Brand development
+  - Social engagement
 
-### DeFi Services
+4. #### Development Services
+- **Status**: Active ✅
+- **Features**:
+  - Technical documentation
+  - Development support
+  - Best practices guidance
+  - EVM compatibility support
 
-Operated by our [DeFi agents](agents.md#private-agents-custom-deployments):
-- Liquid staking on Mantle Staking
-- Lending and borrowing on Agni Protocol
-- Liquidity provision on Merchant Moe
-- Position management
-- Strategy optimization
-- Cross-chain bridging
+## Deployment Options
 
-### NFT Services
+### Self-Hosted Solution (Recommended)
+- **Status**: Active ✅
+- **Features**:
+  - Full control over infrastructure
+  - Access to all agents and features
+  - Community support via Discord
+  - Direct access to updates
+- **Requirements**:
+  - Basic server/cloud instance
+  - API keys for required services
+  - Basic TypeScript/Node.js knowledge
+- **Support**:
+  - Detailed documentation
+  - Community support
+  - GitHub issues
+  - Setup guidance
 
-Delivered through our [NFT agents](agents.md#public-agents-shared-services):
-- Collection deployment on Mantle
-- Market tracking
-- Deployment automation
-- Metadata management
-- Trading strategies
+### Future Service Packages (Coming Soon)
 
-### Social Services
+Note: The following packages will be available in future releases.
 
-Managed by our [social agents](agents.md#internal-agents-platform-operations):
-- Content creation
-- Community management
-- Brand development
-- Audience engagement
-- Strategy planning
+1. #### DeFi Trader Package 🔄
+- Private Trading Agent
+- Private DeFi Agent
+- Analytics Suite
+- Strategy Optimization
 
-### Development Services
+2. #### Social Influencer Package 🔄
+- KOL Agent
+- Content Strategy
+- Analytics Tools
+- Performance Tracking
 
-Provided by our [development agents](agents.md#public-agents-shared-services):
-- ERC20 token deployment
-- Liquidity pool creation
-- Technical documentation
-- Development support
-- Security verification
-- Best practices guidance
+3. #### Developer Package 🔄
+- Token Deployment Tools
+- Technical Support
+- Documentation Access
+- Security Tools
 
-For technical implementation details, see our [technical specifications](specs.md).
-
-## Service Packages
-
-### DeFi Trader Package
-- Trading agent access (Agni/Izumi)
-- DeFi agent access
-- Analytics suite
-- Strategy optimization
-- Risk management
-- Cross-chain bridge support
-
-### Social Influencer Package
-- KOL agent access
-- Content strategy
-- Analytics tools
-- Audience insights
-- Performance tracking
-
-### Developer Package
-- Token and pool deployer access
-- Technical support
-- Documentation access
-- Security tools
-- Development resources
-- EVM compatibility guidance
-
-### Enterprise Package
-- Custom agent deployment
-- Dedicated support
-- White-label options
-- Advanced security
-- Custom development
-
-For integration details, see our [plugin documentation](plugin-starkhive.md).
-
-## Access Tiers
-
-### Self-Hosted (Primary Recommendation)
-- Open source, free to deploy
-- Full access to all agents and features
-- Community support via Discord
-- Infrastructure costs: $5-20/month
-- Pay-as-you-go API usage
-- Optional professional support
-
-### Future Access Tiers (Coming Soon)
-
-Note: The following tiers will be available in future releases.
-
-#### Basic Access
-- Public agent access
-- Community features
-- Basic analytics
-- Standard support
-
-#### Premium Access
-- Enhanced features
-- Priority support
-- Advanced analytics
-- Strategy tools
-- Private agent access
-
-#### Enterprise Access
-- Custom deployment
-- Dedicated support
-- White-label options
-- SLA guarantees- Custom solutions
-- Full analytics suite
-- Priority support
-
-For business analysis and projections, see our [business plan](business-plan.md).
+4. #### Enterprise Package 🔄
+- Custom Agent Deployment
+- White-label Options
+- Advanced Security
+- SLA Support
 
 ## Support Services
 
-### Technical Support
-- Implementation guidance
-- EVM integration support
-- Troubleshooting
-- Performance optimization
-- Cross-chain operations support
+### Community Support (Active ✅)
+- Discord Community
+- GitHub Discussions
+- Documentation
+- Setup Guides
 
-### Strategy Support
-- Market analysis
-- Risk assessment
-- Strategy planning
-- Performance review
+### Technical Support (Active ✅)
+- Implementation Guidance
+- Troubleshooting Help
+- Best Practices
+- Security Guidelines
 
-### Development Support
-- EVM development guidance
-- Code examples
-- Best practices
-- Security guidance
-- Gas optimization tips
+### Development Support (Active ✅)
+- Code Examples
+- Integration Guides
+- Security Practices
+- Gas Optimization Tips
 
-## Integration Services
+## Getting Started
 
-### API Integration
-- REST API access
-- WebSocket support
-- GraphQL endpoints
-- Custom endpoints
+### Prerequisites
+- [Node.js 23+](https://nodejs.org/)
+- [Git](https://git-scm.com/)
+- [pnpm](https://pnpm.io/)
 
-### Protocol Integration
-- Agni Protocol connectivity
-- Izumi Finance integration
-- Mantle Staking
-- Cross-chain bridges
-- Custom protocols
+### Basic Setup
+```bash
+# Clone the repository
+git clone https://github.com/worksgoodcompany/hivefi
+cd hivefi/eliza
 
-### Data Integration
-- Market data
-- Protocol metrics
-- Social data
-- Custom data sources
+# Install dependencies
+pnpm install
 
-For development timeline and roadmap, see our [development plan](plan.md).
+# Configure environment
+cp .env.example .env
+```
 
-## Custom Solutions
+### Required Configuration
+```env
+# Mantle Configuration
+EVM_PRIVATE_KEY=your_private_key
+EVM_PROVIDER_URL=https://rpc.mantle.xyz
 
-### Enterprise Solutions
-- Custom agent development
-- White-label platforms
-- Advanced security
-- Dedicated infrastructure
+# AI Provider (Choose One)
+OPENAI_API_KEY=           # OpenAI API key
+ANTHROPIC_API_KEY=        # Claude API key (optional)
 
-### Protocol Solutions
-- Custom integrations
-- Protocol optimization
-- Security audits
-- Performance tuning
+# Optional: Enhanced Features
+COINGECKO_API_KEY=        # For extended price data
+DEFILLAMA_API_KEY=        # For extended TVL data
+```
 
-### Trading Solutions
-- Custom strategies
-- Risk management
-- Portfolio optimization
-- Performance analytics
+## Best Practices
 
-For complete system overview, see our [whitepaper](whitepaper.md).
-
-## Service Delivery
-
-### Implementation Process
-1. Requirements analysis
-2. Solution design
-3. Integration planning
-4. Deployment
-5. Testing
-6. Monitoring
-
-### Quality Assurance
-- Performance monitoring
-- Security audits
-- Reliability testing
-- Compliance checks
-
-### Maintenance
-- Regular updates
-- Performance optimization
-- Security patches
-- Feature enhancements
-
-For AI integration details, see our [AI Workforce Suite documentation](aiws.md).
-
-## Service Level Agreements
-
-### Response Times
-- Critical: < 1 hour
-- High: < 4 hours
-- Medium: < 12 hours
-- Low: < 24 hours
-
-### Availability
-- System uptime: 99.9%
-- API availability: 99.9%
-- Support hours: 24/7
-- Maintenance windows
+### Security
+1. Use secure environment variables
+2. Implement proper access controls
+3. Regular security updates
+4. Monitor transactions
+5. Validate inputs
 
 ### Performance
-- API response time
-- Transaction processing
-- Data accuracy
-- System reliability
+1. Optimize gas usage
+2. Cache frequent data
+3. Batch operations
+4. Monitor resources
+5. Regular maintenance
 
-## Security Services
+### Development
+1. Follow TypeScript best practices
+2. Implement proper error handling
+3. Write comprehensive tests
+4. Document code changes
+5. Regular backups
 
-### System Security
-- Multi-signature support
-- Encryption protocols
-- Access control
-- Audit logging
+## Development Status
 
-### Transaction Security
-- Validation checks
-- Gas optimization
-- Error handling
-- Recovery procedures
+### Currently Active
+- Basic wallet operations
+- Token transfers
+- Token swaps on Merchant Moe
+- Transaction tracking
+- Market metrics
+- Social media management
+- Platform education
+- Technical support
 
-### Data Security
-- Encryption at rest
-- Secure transmission
-- Privacy protection
-- Compliance
+### Work in Progress
+- Liquid staking on Mantle Staking
+- Lending operations on INIT Capital
+- Advanced trading strategies
+- Portfolio management
+- Cross-chain operations
 
-## Support Channels
-
-### Technical Support
-- Documentation
-- Knowledge base
-- Support tickets
-- Live chat
-
-### Community Support
-- Discord server
-- Telegram group
-- Twitter updates
-- Email support
-
-### Enterprise Support
-- Dedicated manager
-- Priority response
-- Custom solutions
-- On-call support
+For technical implementation details, see our [plugin documentation](plugin-hivefi.md).
