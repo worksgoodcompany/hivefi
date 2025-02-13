@@ -1,27 +1,37 @@
 // WIP
 
 import type { Action, Memory } from "@elizaos/core";
-import { createPublicClient, http, parseUnits, formatUnits, encodeFunctionData } from 'viem';
+import { createPublicClient, http, type Address } from 'viem';
 import { mantleChain } from '../../config/chains';
 import { initWalletProvider } from '../../providers/wallet';
-import { TOKENS } from '../../config/tokens';
-import { INIT_CORE, INIT_CORE_ABI, POOLS, ERC20_ABI, parseAmountAndToken } from './utils';
+import { LENDING_POOL_ABI, ERC20_ABI } from './config';
+import {
+    parseAmountAndToken,
+    getLendingPoolAddress,
+    parseTokenAmount,
+    getTokenConfig,
+    formatUserAccountData,
+    formatTokenAmount,
+    getATokenBalance,
+    formatError,
+    formatSuccessMessage
+} from './utils';
 
 export const deposit: Action = {
     name: "DEPOSIT_LENDING",
-    description: "Deposit tokens into INIT Capital lending pools on Mantle",
+    description: "Deposit tokens into Lendle lending pools on Mantle",
     examples: [
         [
             {
                 user: "user1",
                 content: {
-                    text: "Supply 100 USDC to lending pool",
+                    text: "Supply 100 USDC to Lendle",
                 },
             },
             {
                 user: "assistant",
                 content: {
-                    text: "The deposit transaction has been initiated. You will receive a confirmation once complete.",
+                    text: "Let's proceed with supplying 100 USDC to Lendle on the Mantle network. Please hold on while I process the transaction.",
                 },
             },
         ],
@@ -47,7 +57,7 @@ export const deposit: Action = {
             const content = message.content?.text?.toLowerCase();
             if (!content) {
                 callback?.({
-                    text: "Could not parse deposit request. Please use format: Supply <amount> <token> to lending pool",
+                    text: "Could not parse deposit request. Please use format: Supply <amount> <token> to Lendle",
                 });
                 return false;
             }
@@ -55,30 +65,27 @@ export const deposit: Action = {
             // Extract amount and token
             const { amount, tokenSymbol } = parseAmountAndToken(content);
 
-            if (!tokenSymbol || !POOLS[tokenSymbol]) {
-                const supportedTokens = Object.keys(POOLS).join(', ');
+            if (!tokenSymbol) {
                 callback?.({
-                    text: `Invalid token. Supported tokens: ${supportedTokens}`,
+                    text: "Invalid token. Please specify a supported token (e.g., USDC, USDT, WETH, etc.)",
                 });
                 return false;
             }
 
-            const token = TOKENS[tokenSymbol];
-            if (!token || token.type !== 'erc20') {
-                callback?.({
-                    text: `Token ${tokenSymbol} not configured properly or not an ERC20 token.`,
-                });
-                return false;
-            }
+            // Initial confirmation
+            callback?.({
+                text: `Let's proceed with supplying ${amount} ${tokenSymbol} to Lendle on the Mantle network. Please hold on while I process the transaction.`,
+            });
 
-            // Get pool address
-            const poolAddress = POOLS[tokenSymbol];
-            const userAddress = provider.getAddress() as `0x${string}`;
+            // Get token configuration
+            const token = getTokenConfig(tokenSymbol);
+            const lendingPool = getLendingPoolAddress();
+            const userAddress = provider.getAddress() as Address;
 
-            // Convert amount using proper decimals
-            const amountInWei = parseUnits(amount, token.decimals);
+            // Convert amount to proper decimals
+            const amountInWei = parseTokenAmount(amount, tokenSymbol);
 
-            // Check token balance first
+            // Check token balance
             const balance = await publicClient.readContract({
                 address: token.address,
                 abi: ERC20_ABI,
@@ -87,34 +94,39 @@ export const deposit: Action = {
             });
 
             if (balance < amountInWei) {
-                const formattedBalance = formatUnits(balance, token.decimals);
                 callback?.({
-                    text: `Insufficient ${tokenSymbol} balance. You have ${formattedBalance} ${tokenSymbol}, but trying to deposit ${amount} ${tokenSymbol}`,
+                    text: `Insufficient ${tokenSymbol} balance. You have ${formatTokenAmount(balance, tokenSymbol)} ${tokenSymbol}, but trying to deposit ${amount} ${tokenSymbol}`,
                 });
                 return false;
             }
 
-            // Check allowance and approve if needed
+            // Check and handle allowance
             const allowance = await publicClient.readContract({
                 address: token.address,
                 abi: ERC20_ABI,
                 functionName: 'allowance',
-                args: [userAddress, poolAddress]
+                args: [userAddress, lendingPool]
             });
 
             if (allowance < amountInWei) {
                 try {
                     callback?.({
-                        text: `Approving ${tokenSymbol} for pool...`,
+                        text: `Approving ${tokenSymbol} for Lendle...`,
+                    });
+
+                    // Get the latest nonce for approval transaction
+                    const approvalNonce = await publicClient.getTransactionCount({
+                        address: userAddress
                     });
 
                     const approvalHash = await walletClient.writeContract({
                         address: token.address,
                         abi: ERC20_ABI,
                         functionName: 'approve',
-                        args: [poolAddress, amountInWei],
+                        args: [lendingPool, amountInWei],
                         chain: mantleChain,
-                        account: provider.getAccount()
+                        account: provider.getAccount(),
+                        nonce: approvalNonce
                     });
 
                     await publicClient.waitForTransactionReceipt({
@@ -122,115 +134,95 @@ export const deposit: Action = {
                     });
 
                     callback?.({
-                        text: `${tokenSymbol} approved successfully for pool.`,
+                        text: `${tokenSymbol} approved successfully for Lendle.`,
                     });
                 } catch (error) {
                     console.error('Approval failed:', error);
                     callback?.({
-                        text: `Failed to approve ${tokenSymbol}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                        text: formatError(error),
                     });
                     return false;
                 }
             }
 
-            // Send initial confirmation
-            callback?.({
-                text: `Preparing to deposit ${amount} ${tokenSymbol} to lending pool...`,
-            });
-
+            // Deposit into Lendle
             try {
-                // First create position
                 callback?.({
-                    text: "Creating new lending position...",
+                    text: `Depositing ${amount} ${tokenSymbol} into Lendle...`,
                 });
 
-                const createPosHash = await walletClient.writeContract({
-                    address: INIT_CORE,
-                    abi: INIT_CORE_ABI,
-                    functionName: 'createPos',
-                    args: [1, userAddress],
+                // Get the latest nonce for deposit transaction
+                const depositNonce = await publicClient.getTransactionCount({
+                    address: userAddress
+                });
+
+                const depositHash = await walletClient.writeContract({
+                    address: lendingPool,
+                    abi: LENDING_POOL_ABI,
+                    functionName: 'deposit',
+                    args: [token.address, amountInWei, userAddress, 0], // referralCode = 0
                     chain: mantleChain,
-                    account: provider.getAccount()
+                    account: provider.getAccount(),
+                    nonce: depositNonce
                 });
 
-                const createPosReceipt = await publicClient.waitForTransactionReceipt({
-                    hash: createPosHash,
-                    confirmations: 2
+                await publicClient.waitForTransactionReceipt({
+                    hash: depositHash
                 });
 
-                // Get position ID from the logs
-                if (!createPosReceipt.logs || createPosReceipt.logs.length === 0) {
-                    throw new Error('No logs found in create position receipt');
-                }
-
-                const positionIdHex = createPosReceipt.logs[0].data;
-                // Remove '0x' prefix if present and take last 64 characters
-                const cleanHex = positionIdHex.replace('0x', '').slice(-64);
-                const positionId = BigInt(`0x${cleanHex}`);
-                console.log('Position ID:', positionId.toString());
-
-                // Then transfer tokens
-                callback?.({
-                    text: `Transferring ${amount} ${tokenSymbol} to pool...`,
+                // Get updated user account data
+                const [
+                    totalCollateralETH,
+                    totalDebtETH,
+                    availableBorrowsETH,
+                    currentLiquidationThreshold,
+                    ltv,
+                    healthFactor
+                ] = await publicClient.readContract({
+                    address: lendingPool,
+                    abi: LENDING_POOL_ABI,
+                    functionName: 'getUserAccountData',
+                    args: [userAddress]
                 });
 
-                const transferHash = await walletClient.writeContract({
+                // Get updated wallet and supplied balances
+                const newWalletBalance = await publicClient.readContract({
                     address: token.address,
                     abi: ERC20_ABI,
-                    functionName: 'transfer',
-                    args: [poolAddress, amountInWei],
-                    chain: mantleChain,
-                    account: provider.getAccount()
+                    functionName: 'balanceOf',
+                    args: [userAddress]
                 });
 
-                await publicClient.waitForTransactionReceipt({ hash: transferHash });
+                const suppliedBalance = await getATokenBalance(publicClient, tokenSymbol, userAddress);
 
-                // Then mint inTokens and collateralize in one transaction
-                callback?.({
-                    text: "Minting inTokens and adding as collateral...",
+                const formattedData = formatUserAccountData({
+                    totalCollateralETH,
+                    totalDebtETH,
+                    availableBorrowsETH,
+                    currentLiquidationThreshold,
+                    ltv,
+                    healthFactor,
+                    walletBalance: newWalletBalance,
+                    suppliedBalance
                 });
-
-                // Prepare multicall data for INIT Core operations
-                const mintData = encodeFunctionData({
-                    abi: INIT_CORE_ABI,
-                    functionName: 'mintTo',
-                    args: [poolAddress, userAddress]
-                });
-
-                const collateralizeData = encodeFunctionData({
-                    abi: INIT_CORE_ABI,
-                    functionName: 'collateralize',
-                    args: [positionId, poolAddress]
-                });
-
-                const finalHash = await walletClient.writeContract({
-                    address: INIT_CORE,
-                    abi: INIT_CORE_ABI,
-                    functionName: 'multicall',
-                    args: [[mintData, collateralizeData]],
-                    chain: mantleChain,
-                    account: provider.getAccount()
-                });
-
-                await publicClient.waitForTransactionReceipt({ hash: finalHash });
 
                 callback?.({
-                    text: `Successfully completed deposit flow for ${amount} ${tokenSymbol} in position #${positionId}\nView on Explorer: https://explorer.mantle.xyz/tx/${finalHash}`,
-                    content: { hash: finalHash },
+                    text: formatSuccessMessage('deposit', amount, tokenSymbol, depositHash, formattedData),
+                    content: { hash: depositHash },
                 });
 
                 return true;
             } catch (error) {
                 console.error('Deposit failed:', error);
                 callback?.({
-                    text: `Operation failed: ${error instanceof Error ? error.message : 'Unknown error'}. Please ensure you have sufficient balance and the token is approved.`,
+                    text: formatError(error),
                 });
                 return false;
             }
         } catch (error) {
-            console.error('Deposit failed:', error);
+            console.error('Operation failed:', error);
             callback?.({
-                text: `Operation failed: ${error instanceof Error ? error.message : 'Unknown error'}. Please ensure you have sufficient balance and the token is approved.`,
+                text: formatError(error),
                 content: { error: error instanceof Error ? error.message : 'Unknown error' },
             });
             return false;

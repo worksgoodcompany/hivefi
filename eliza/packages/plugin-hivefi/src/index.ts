@@ -15,7 +15,8 @@ export const hivefiPlugin: Plugin = {
         transfer,
         erc20Transfer,
         portfolio,
-        swap
+        swap,
+        deposit
     ],
     evaluators: [],
     providers: [

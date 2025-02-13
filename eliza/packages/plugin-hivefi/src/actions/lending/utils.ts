@@ -1,65 +1,130 @@
-import { parseAbi, type Address } from 'viem';
+import { parseUnits, formatUnits, type PublicClient, type Address } from 'viem';
+import { TOKENS } from '../../config/tokens';
+import type { TokenConfig } from '../../config/tokens';
+import { LENDING_ADDRESSES, MARKET_TOKENS, ATOKEN_ABI, type UserAccountData } from './config';
 
-// INIT Capital Contract Addresses
-export const INIT_CORE = '0x972BcB0284cca0152527c4f70f8F689852bCAFc5';
-export const INIT_LENS = '0x4725e220163e0b90b40dd5405ee08718523dea78';
-
-// Pool Addresses
-export const POOLS = {
-    WETH: '0x51AB74f8B03F0305d8dcE936B473AB587911AEC4',
-    WBTC: '0x9c9F28672C4A8Ad5fb2c9Aca6d8D68B02EAfd552',
-    WMNT: '0x44949636f778fAD2b139E665aee11a2dc84A2976',
-    USDC: '0x00A55649E597d463fD212fBE48a3B40f0E227d06',
-    USDT: '0xadA66a8722B5cdfe3bC504007A5d793e7100ad09',
-    METH: '0x5071c003bB45e49110a905c1915EbdD2383A89dF'
-} as const satisfies Record<string, Address>;
-
-// INIT Core ABI
-export const INIT_CORE_ABI = parseAbi([
-    'function mintTo(address pool, address receiver) external returns (uint256 shares)',
-    'function burnTo(address pool, address receiver) external returns (uint256 amount)',
-    'function multicall(bytes[] calldata data) external payable returns (bytes[] memory results)',
-    'function createPos(uint16 mode, address viewer) external returns (uint256 posId)',
-    'function collateralize(uint256 posId, address pool) external',
-    'function getUserPositionIds(address user) external view returns (uint256[] memory)',
-    'function getPosition(uint256 posId) external view returns ((uint16,address,address,uint256))'
-]);
-
-// Lending Pool ABI
-export const LENDING_POOL_ABI = parseAbi([
-    'function mint(address _receiver) external returns (uint256 shares)',
-    'function burn(address _receiver) external returns (uint256 amt)',
-    'function borrow(address _receiver, uint256 _amt) external returns (uint256 shares)',
-    'function repay(uint256 _shares) external returns (uint256 amt)',
-    'function toShares(uint256 _amt) public view returns (uint256 shares)',
-    'function toAmt(uint256 _shares) public view returns (uint256 amt)',
-    'function totalAssets() public view returns (uint256)',
-    'function getBorrowRate_e18() external view returns (uint256)',
-    'function getSupplyRate_e18() external view returns (uint256)',
-    'function approve(address spender, uint256 amount) external returns (bool)',
-    'function balanceOf(address account) external view returns (uint256)',
-    'function totalDebt() external view returns (uint256)',
-    'function cash() external view returns (uint256)',
-    'function underlyingToken() external view returns (address)'
-]);
-
-// ERC20 ABI for token operations
-export const ERC20_ABI = parseAbi([
-    'function approve(address spender, uint256 amount) external returns (bool)',
-    'function transfer(address to, uint256 amount) external returns (bool)',
-    'function balanceOf(address account) external view returns (uint256)',
-    'function decimals() external view returns (uint8)',
-    'function allowance(address owner, address spender) external view returns (uint256)'
-]);
-
-export function getPoolAddress(symbol: string): Address | undefined {
-    const poolKey = symbol as keyof typeof POOLS;
-    return POOLS[poolKey];
-}
-
-export function parseAmountAndToken(text: string): { amount: string; tokenSymbol: keyof typeof POOLS | undefined } {
+export function parseAmountAndToken(text: string): { amount: string; tokenSymbol: keyof typeof MARKET_TOKENS | undefined } {
     const words = text.split(' ');
     const amount = words.find(w => !Number.isNaN(Number(w))) || '0';
-    const tokenSymbol = words.find(w => Object.keys(POOLS).includes(w.toUpperCase()))?.toUpperCase() as keyof typeof POOLS | undefined;
+    const tokenSymbol = words.find(w => Object.keys(MARKET_TOKENS).includes(w.toUpperCase()))?.toUpperCase() as keyof typeof MARKET_TOKENS | undefined;
     return { amount, tokenSymbol };
+}
+
+export function formatTokenAmount(amount: bigint, tokenSymbol: string): string {
+    const token = TOKENS[tokenSymbol as keyof typeof TOKENS];
+    if (!token) throw new Error(`Token ${tokenSymbol} not found`);
+    return formatUnits(amount, token.decimals);
+}
+
+export function parseTokenAmount(amount: string, tokenSymbol: string): bigint {
+    const token = TOKENS[tokenSymbol as keyof typeof TOKENS];
+    if (!token) throw new Error(`Token ${tokenSymbol} not found`);
+    return parseUnits(amount, token.decimals);
+}
+
+export function getTokenConfig(symbol: string): TokenConfig & { type: 'erc20'; address: Address } {
+    const token = TOKENS[symbol as keyof typeof TOKENS];
+    if (!token) throw new Error(`Token ${symbol} not found`);
+    if (token.type !== 'erc20') throw new Error(`Token ${symbol} is not an ERC20 token`);
+    return token;
+}
+
+export function getLendingPoolAddress(): Address {
+    return LENDING_ADDRESSES.LENDING_POOL;
+}
+
+export function getDataProviderAddress(): Address {
+    return LENDING_ADDRESSES.DATA_PROVIDER;
+}
+
+export function getPriceOracleAddress(): Address {
+    return LENDING_ADDRESSES.PRICE_ORACLE;
+}
+
+// Helper to format user account data with additional balances
+export function formatUserAccountData(data: {
+    totalCollateralETH: bigint;
+    totalDebtETH: bigint;
+    availableBorrowsETH: bigint;
+    currentLiquidationThreshold: bigint;
+    ltv: bigint;
+    healthFactor: bigint;
+    walletBalance?: bigint;
+    suppliedBalance?: bigint;
+    borrowedBalance?: bigint;
+}): UserAccountData {
+    return {
+        totalCollateralETH: formatUnits(data.totalCollateralETH, 18),
+        totalDebtETH: formatUnits(data.totalDebtETH, 18),
+        availableBorrowsETH: formatUnits(data.availableBorrowsETH, 18),
+        currentLiquidationThreshold: Number(data.currentLiquidationThreshold) / 100,
+        ltv: Number(data.ltv) / 100,
+        healthFactor: formatUnits(data.healthFactor, 18),
+        walletBalance: data.walletBalance ? formatUnits(data.walletBalance, 6) : undefined,
+        suppliedBalance: data.suppliedBalance ? formatUnits(data.suppliedBalance, 6) : undefined,
+        borrowedBalance: data.borrowedBalance ? formatUnits(data.borrowedBalance, 6) : undefined,
+    };
+}
+
+// Helper to check aToken balance
+export async function getATokenBalance(
+    publicClient: PublicClient,
+    tokenSymbol: keyof typeof MARKET_TOKENS,
+    userAddress: Address
+): Promise<bigint> {
+    const marketToken = MARKET_TOKENS[tokenSymbol];
+    const balance = await publicClient.readContract({
+        address: marketToken.aToken,
+        abi: ATOKEN_ABI,
+        functionName: 'balanceOf',
+        args: [userAddress]
+    });
+    return balance;
+}
+
+// Helper to format error messages
+export function formatError(error: unknown): string {
+    if (error instanceof Error) {
+        // Handle common error cases
+        if (error.message.includes('insufficient allowance')) {
+            return 'Insufficient allowance. Please approve the token first.';
+        }
+        if (error.message.includes('insufficient balance')) {
+            return 'Insufficient balance in your wallet.';
+        }
+        if (error.message.includes('user rejected')) {
+            return 'Transaction was rejected by the user.';
+        }
+        return error.message;
+    }
+    return 'An unknown error occurred';
+}
+
+// Helper to format success message
+export function formatSuccessMessage(
+    action: 'deposit' | 'withdraw',
+    amount: string,
+    tokenSymbol: string,
+    txHash: string,
+    accountData: UserAccountData
+): string {
+    const lines = [
+        `Successfully ${action}ed ${amount} ${tokenSymbol} into Lendle`,
+        `View on Explorer: https://explorer.mantle.xyz/tx/${txHash}`,
+        '',
+        'Updated Account Status:',
+        `Total Collateral: ${accountData.totalCollateralETH} USD`,
+        `Total Debt: ${accountData.totalDebtETH} USD`,
+        `Available to Borrow: ${accountData.availableBorrowsETH} USD`,
+        `Health Factor: ${accountData.healthFactor}`,
+    ];
+
+    if (accountData.walletBalance) {
+        lines.push(`Wallet Balance: ${accountData.walletBalance} ${tokenSymbol}`);
+    }
+    if (accountData.suppliedBalance) {
+        lines.push(`Supplied Balance: ${accountData.suppliedBalance} ${tokenSymbol}`);
+    }
+
+    return lines.join('\n');
 }

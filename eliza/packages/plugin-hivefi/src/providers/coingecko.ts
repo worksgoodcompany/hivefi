@@ -13,8 +13,7 @@ const TRACKED_TOKENS = [
   { id: 'optimism', symbol: 'op', name: 'Optimism' },
   { id: 'arbitrum', symbol: 'arb', name: 'Arbitrum' },
   { id: 'polygon', symbol: 'matic', name: 'Polygon' },
-  { id: 'base', symbol: 'base', name: 'Base' },
-  { id: 'agni', symbol: 'agni', name: 'Agni' }
+  { id: 'base', symbol: 'base', name: 'Base' }
 ];
 
 type TokenInfo = typeof TRACKED_TOKENS[number];

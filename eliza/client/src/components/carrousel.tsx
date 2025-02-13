@@ -12,6 +12,7 @@ import merchantmoe from "../assets/logos-ext/Merchant Moe.svg";
 import initcapital from "../assets/logos-ext/initcapital.svg";
 import mantlenetwork from "../assets/logos-ext/mantlenetwork.svg";
 import methprotocol from "../assets/logos-ext/methprotocol.svg";
+import elizaos from "../assets/logos-ext/elizaos.svg";
 import ondo from "../assets/logos-ext/ondo.svg";
 import pendle from "../assets/logos-ext/pendle.svg";
 import stargate from "../assets/logos-ext/stargate.svg";
@@ -20,15 +21,11 @@ import treehouse from "../assets/logos-ext/treehouse.svg";
 const logos = [
   { id: "defillama", src: defillama, alt: "DefiLlama" },
   { id: "ai16z", src: ai16z, alt: "AI16Z" },
+  { id: "elizaos", src: elizaos, alt: "ElizaOS" },
   { id: "coingecko", src: coingecko, alt: "CoinGecko" },
   { id: "merchantmoe", src: merchantmoe, alt: "Merchant Moe" },
-  { id: "initcapital", src: initcapital, alt: "INIT Capital" },
   { id: "mantlenetwork", src: mantlenetwork, alt: "Mantle Network" },
   { id: "methprotocol", src: methprotocol, alt: "METH Protocol" },
-  { id: "ondo", src: ondo, alt: "Ondo Finance" },
-  { id: "pendle", src: pendle, alt: "Pendle" },
-  { id: "stargate", src: stargate, alt: "Stargate" },
-  { id: "treehouse", src: treehouse, alt: "Treehouse" },
   { id: "discord", src: discord, alt: "Discord" },
   { id: "telegram", src: telegram, alt: "Telegram" },
 ];

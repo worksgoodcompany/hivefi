@@ -314,6 +314,12 @@ export class TwitterInteractionClient {
             return { text: "", action: "IGNORE" };
         }
 
+        // Skip tweets that contain images
+        if (tweet.photos?.length > 0) {
+            elizaLogger.log("Skipping Tweet with images", tweet.id);
+            return { text: "", action: "IGNORE" };
+        }
+
         elizaLogger.log("Processing Tweet: ", tweet.id);
         const formatTweet = (tweet: Tweet) => {
             return `  ID: ${tweet.id}

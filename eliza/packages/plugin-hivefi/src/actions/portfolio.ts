@@ -21,8 +21,7 @@ const COINGECKO_IDS = {
     USDC: 'usd-coin',
     WETH: 'weth',
     WMNT: 'wrapped-mantle',
-    WBTC: 'wrapped-bitcoin',
-    AGNI: 'agni-finance'
+    WBTC: 'wrapped-bitcoin'
 } as const;
 
 interface TokenBalance {
