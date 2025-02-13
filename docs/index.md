@@ -69,16 +69,18 @@
   - Price discovery
   - Transaction monitoring
 
+- Lendle
+  - Lending & Borrowing
+  - Supply/withdraw
+  - Position management
+  
 #### Coming Soon 🔄
 - Mantle Staking
   - Liquid staking
   - Reward tracking
   - Position management
 
-- INIT Capital
-  - Lending operations
-  - Supply/withdraw
-  - Position management
+
 
 ### Technical Resources
 - [Integration Guide](plugin-hivefi.md#integration-guide)

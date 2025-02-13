@@ -36,7 +36,7 @@ A comprehensive plugin for HiveFi that provides essential DeFi functionality and
 
 5. **Lending Operations**
    - **Status**: Work in Progress 🔄
-   - Lending on INIT Capital
+   - Lending on Lendle
    - Supply/withdraw assets
    - Borrow/repay loans
    - Position management
@@ -234,7 +234,7 @@ try {
 
 ### Work in Progress
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
+- Lending & Borrowing on Lendle
 - Advanced trading features
 - Portfolio management
 - Cross-chain operations

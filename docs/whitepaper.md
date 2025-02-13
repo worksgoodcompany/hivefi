@@ -82,16 +82,17 @@ HiveFi employs a modular architecture with 18 specialized agents across three ca
   - Price discovery
   - Transaction monitoring
 
+- **Lendle**
+  - Lending & Borrowing
+  - Supply/withdraw
+  - Position management
+
 #### 3.2.2 Upcoming Integrations
 - **Mantle Staking**
   - Liquid staking
   - Reward tracking
   - Position management
 
-- **INIT Capital**
-  - Lending operations
-  - Supply/withdraw
-  - Position management
 
 ### 3.3 Data Providers
 - CoinGecko: Price and market data
@@ -175,7 +176,6 @@ HiveFi employs a modular architecture with 18 specialized agents across three ca
 
 ### 7.2 Short-term Goals
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations

@@ -110,8 +110,8 @@ Learn more about our agent system in the [agents documentation](docs/agents.md).
 - 💸 Token transfers (ETH, USDT, MNT, and custom tokens)
 - 💱 Token swapping on Merchant Moe
 - 🔍 Transaction tracking
+- 💸 Lending on Lendle
 - 💧 Liquid staking on Mantle Staking (WIP)
-- 💸 Lending on INIT Capital (WIP)
 
 
 ### 🖥️ Web App Features
@@ -412,7 +412,7 @@ eliza/                          # Eliza project
   │   ├── plugin-hivefi/         # Mantle integration
   │   │   ├── src/
   │   │   │   ├── actions/      
-  │   │   │   │   ├── lending/        # Work In Progress: Lending on INIT Capital
+  │   │   │   │   ├── lending/        # Lending & Borrowing on Lendle
   │   │   │   │   ├── erc20Transfer   # ERC20 Transfer Action
   │   │   │   │   ├── portfolio       # Portfolio Action
   │   │   │   │   ├── swap            # Swap Action

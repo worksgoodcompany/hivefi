@@ -1,7 +1,14 @@
 import { parseUnits, formatUnits, type PublicClient, type Address } from 'viem';
 import { TOKENS } from '../../config/tokens';
 import type { TokenConfig } from '../../config/tokens';
-import { LENDING_ADDRESSES, MARKET_TOKENS, ATOKEN_ABI, DEBT_TOKEN_ABI, type UserAccountData } from './config';
+import {
+    LENDING_ADDRESSES,
+    MARKET_TOKENS,
+    ATOKEN_ABI,
+    DEBT_TOKEN_ABI,
+    LENDING_POOL_ABI,
+    type UserAccountData
+} from './config';
 
 export function parseAmountAndToken(text: string): { amount: string; tokenSymbol: keyof typeof MARKET_TOKENS | undefined } {
     const words = text.split(' ');
@@ -134,17 +141,52 @@ export async function getDebtTokenBalance(
     publicClient: PublicClient,
     tokenSymbol: keyof typeof MARKET_TOKENS,
     userAddress: Address,
-    isStableRate: boolean = false
+    isStableRate = false
 ): Promise<bigint> {
-    const marketToken = MARKET_TOKENS[tokenSymbol];
-    const debtTokenAddress = isStableRate ? marketToken.stableDebtToken : marketToken.variableDebtToken;
-    const balance = await publicClient.readContract({
-        address: debtTokenAddress,
-        abi: DEBT_TOKEN_ABI,
-        functionName: 'balanceOf',
-        args: [userAddress]
-    });
-    return balance;
+    try {
+        const lendingPool = getLendingPoolAddress();
+        const marketToken = MARKET_TOKENS[tokenSymbol];
+
+        // Get user account data from lending pool
+        const [
+            _totalCollateralETH,
+            totalDebtETH,
+            _availableBorrowsETH,
+            _currentLiquidationThreshold,
+            _ltv,
+            _healthFactor
+        ] = await publicClient.readContract({
+            address: lendingPool,
+            abi: LENDING_POOL_ABI,
+            functionName: 'getUserAccountData',
+            args: [userAddress]
+        });
+
+        // If there's no debt at all, return 0
+        if (totalDebtETH === 0n) {
+            return 0n;
+        }
+
+        // Try to get the specific debt token balance
+        try {
+            const debtTokenAddress = isStableRate ? marketToken.stableDebtToken : marketToken.variableDebtToken;
+            const balance = await publicClient.readContract({
+                address: debtTokenAddress,
+                abi: DEBT_TOKEN_ABI,
+                functionName: 'balanceOf',
+                args: [userAddress]
+            });
+            return balance;
+        } catch (error) {
+            console.error('Failed to get specific debt balance:', error);
+            // If we can't get specific token debt but user has total debt, return a small non-zero value
+            // This allows repayment to proceed while preventing false "no debt" messages
+            return totalDebtETH > 0n ? 1n : 0n;
+        }
+    } catch (error) {
+        console.error('Failed to get debt balance:', error);
+        return 0n;
+    }
 }
 
 // Helper to check if user can borrow

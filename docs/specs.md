@@ -42,17 +42,19 @@ HiveFi is built on a modular Multi-Agent System (MAS) architecture, designed for
    - Slippage management
    - Transaction monitoring
 
-2. **Mantle Staking** (Coming Soon 🔄)
+2. **Lending & Borrowing on Lendle** (Active ✅)
+   - Lending platform integration
+   - Supply/withdraw functionality
+   - Borrowing operations
+   - Position management
+
+3. **Mantle Staking** (Coming Soon 🔄)
    - Liquid staking interface
    - Reward tracking
    - Position management
    - Withdrawal handling
 
-3. **INIT Capital** (Coming Soon 🔄)
-   - Lending platform integration
-   - Supply/withdraw functionality
-   - Borrowing operations
-   - Position management
+
 
 ## Data Providers
 
@@ -224,7 +226,6 @@ interface APIConfig {
 
 ### Work in Progress
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations

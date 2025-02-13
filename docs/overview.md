@@ -10,11 +10,12 @@ HiveFi is a decentralized Multi-Agent System (MAS) designed to enhance DeFi oper
 - **Status**: Active ✅
 - Token transfers (ETH, USDT, MNT, custom tokens)
 - Token swaps on Merchant Moe
+- Lending & Borrowing on Lendle
 - Transaction tracking and monitoring
 - Gas optimization
 - **Coming Soon**:
   - Liquid staking on Mantle Staking
-  - Lending on INIT Capital
+
 
 ### Analytics & Data
 - **Status**: Active ✅
@@ -97,16 +98,17 @@ For implementation details, see our [plugin documentation](plugin-hivefi.md).
   - Price discovery
   - Transaction monitoring
 
+- **Lendle** 🔄
+  - Lending and borrowing
+  - Supply/withdraw
+  - Position management
+
 ### Coming Soon
 - **Mantle Staking** 🔄
   - Liquid staking
   - Reward tracking
   - Position management
 
-- **INIT Capital** 🔄
-  - Lending and borrowing
-  - Supply/withdraw
-  - Position management
 
 ## Deployment Options
 
@@ -155,6 +157,7 @@ For detailed setup instructions, see our [services documentation](services.md).
 - Basic wallet operations
 - Token transfers
 - Token swaps on Merchant Moe
+- Lending & Borrowing on Lendle
 - Transaction tracking
 - Market metrics
 - Social media management
@@ -163,7 +166,6 @@ For detailed setup instructions, see our [services documentation](services.md).
 
 ### Work in Progress
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations

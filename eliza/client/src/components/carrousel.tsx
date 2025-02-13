@@ -17,13 +17,14 @@ import ondo from "../assets/logos-ext/ondo.svg";
 import pendle from "../assets/logos-ext/pendle.svg";
 import stargate from "../assets/logos-ext/stargate.svg";
 import treehouse from "../assets/logos-ext/treehouse.svg";
-
+import lendle from "../assets/logos-ext/lendle.svg";
 const logos = [
   { id: "defillama", src: defillama, alt: "DefiLlama" },
   { id: "ai16z", src: ai16z, alt: "AI16Z" },
   { id: "elizaos", src: elizaos, alt: "ElizaOS" },
   { id: "coingecko", src: coingecko, alt: "CoinGecko" },
   { id: "merchantmoe", src: merchantmoe, alt: "Merchant Moe" },
+  { id: "lendle", src: lendle, alt: "Lendle" },
   { id: "mantlenetwork", src: mantlenetwork, alt: "Mantle Network" },
   { id: "methprotocol", src: methprotocol, alt: "METH Protocol" },
   { id: "discord", src: discord, alt: "Discord" },

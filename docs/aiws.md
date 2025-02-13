@@ -18,6 +18,7 @@ Our first production swarm, focused on Mantle DeFi operations. Features include:
 ##### Current Features (Active ✅)
 - Token transfers (ETH, USDT, MNT, custom tokens)
 - Token swaps on Merchant Moe
+- Lending & Borrowing on Lendle
 - Transaction tracking and monitoring
 - Gas optimization
 - Real-time TVL metrics via DefiLlama
@@ -30,7 +31,6 @@ Our first production swarm, focused on Mantle DeFi operations. Features include:
 
 ##### Coming Soon Features 🔄
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations

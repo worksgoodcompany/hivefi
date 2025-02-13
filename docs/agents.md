@@ -220,9 +220,9 @@ These agents handle HiveFi's core platform operations and can be replicated in p
   - Token transfers
   - Token swaps on Merchant Moe
   - Transaction tracking
+  - Lending & Borrowing on Lendle
 - **Coming Soon**:
   - Liquid staking on Mantle Staking
-  - Lending on INIT Capital
   - Advanced yield farming strategies
   - Dynamic liquidity provision
   - Portfolio rebalancing
@@ -309,7 +309,7 @@ These agents handle HiveFi's core platform operations and can be replicated in p
 
 ### Work in Progress Features
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
+- Lending & Borrowing on Lendle
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations

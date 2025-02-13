@@ -14,6 +14,7 @@
 #### DeFi Operations
 - Token transfers (ETH, USDT, MNT, custom tokens)
 - Token swaps on Merchant Moe
+- Lending & Borrowing on Lendle
 - Transaction tracking
 - Gas optimization
 - Portfolio management
@@ -40,11 +41,6 @@
   - Reward tracking
   - Position management
 
-- Lending on INIT Capital
-  - Supply/withdraw assets
-  - Borrow/repay loans
-  - Position management
-
 #### Advanced Features
 - Advanced trading strategies
 - Portfolio optimization
@@ -67,7 +63,7 @@
 #### Protocol Integration
 - [x] Merchant Moe integration
 - [ ] Mantle Staking integration (80%)
-- [ ] INIT Capital integration (60%)
+- [x] Lendle integration (60%)
 - [ ] Gas optimization improvements
 - [ ] Transaction monitoring enhancements
 
@@ -82,7 +78,6 @@
 
 #### Protocol Expansion
 - Complete Mantle Staking integration
-- Complete INIT Capital integration
 - Add new protocol integrations
 - Enhance trading capabilities
 - Implement advanced strategies

@@ -17,7 +17,7 @@ HiveFi is an open-source Multi-Agent System (MAS) designed for Mantle Network. O
   - Gas optimization
 - **Coming Soon**:
   - Liquid staking on Mantle Staking
-  - Lending on INIT Capital
+  - Lending & Borrowing on Lendle
 
 2. #### Analytics Services
 - **Status**: Active ✅
@@ -185,7 +185,6 @@ DEFILLAMA_API_KEY=        # For extended TVL data
 
 ### Work in Progress
 - Liquid staking on Mantle Staking
-- Lending operations on INIT Capital
 - Advanced trading strategies
 - Portfolio management
 - Cross-chain operations
