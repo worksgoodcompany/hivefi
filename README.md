@@ -312,6 +312,14 @@ Interact with the agents with these example prompts:
 What is Mantle Network?
 ```
 
+### Web Search
+
+```
+Search the web for latest news on Mantle Network
+```
+
+
+
 ### TVL Metrics
 
 ```
