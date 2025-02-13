@@ -6,6 +6,7 @@ import { transfer } from "./actions/transfer";
 import { erc20Transfer } from "./actions/erc20Transfer";
 import { portfolio } from "./actions/portfolio";
 import { swap } from "./actions/swap";
+import { deposit } from "./actions/lending/deposit";
 
 export const hivefiPlugin: Plugin = {
     name: "hivefi",
@@ -14,7 +15,8 @@ export const hivefiPlugin: Plugin = {
         transfer,
         erc20Transfer,
         portfolio,
-        swap
+        swap,
+        deposit
     ],
     evaluators: [],
     providers: [
