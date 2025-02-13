@@ -327,7 +327,7 @@ Get prices for ETH, BTC, MNT
 ### Wallet Operations
 
 ```
-Show me my Mantle wallet address and balances
+Show me my Mantle wallet address and MNT balance
 ```
 
 ```

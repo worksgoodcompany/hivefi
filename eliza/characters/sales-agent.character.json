@@ -2,7 +2,7 @@
   "name": "Sales Agent",
   "plugins": [],
   "clients": ["telegram"],
-  "modelProvider": "anthropic",
+  "modelProvider": "openai",
   "settings": {
     "secrets": {},
     "voice": {

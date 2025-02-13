@@ -29,6 +29,7 @@
     "@elizaos/client-telegram": "workspace:*",
     "@elizaos/client-twitter": "workspace:*",
     "@elizaos/client-slack": "workspace:*",
+    "@elizaos/plugin-web-search": "workspace:*",
     "@elizaos/core": "workspace:*",
     "@elizaos/plugin-hivefi": "workspace:*",
     "@elizaos/plugin-0g": "workspace:*",

@@ -1,4 +1,4 @@
-import { Bot, LineChart, Briefcase, Wallet, Shield, Puzzle, Brain, Rocket, ChartBar, Image, MessageSquare, Code, GraduationCap, Network, Coins, Building, Lightbulb, Sparkles, Shapes } from "lucide-react";
+import { Bot, LineChart, Briefcase, Wallet, Shield, Puzzle, Brain, Rocket, BarChart, Image, MessageSquare, Code, GraduationCap, Network, Coins, Building, Lightbulb, Sparkles, Shapes } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./components/ui/card";
 import { HomeHeader } from "./components/home-header";
 import type { FC } from 'react';
@@ -157,7 +157,7 @@ const agentCategories: Record<string, AgentCategory> = {
                 description: "Comprehensive analytics platform providing real-time insights for Mantle protocols",
                 capabilities: ["TVL tracking", "APY monitoring", "Protocol analytics", "Market trends", "Custom dashboards"],
                 category: "Analytics",
-                icon: ChartBar,
+                icon: BarChart,
                 imagePath: metricsAgentImg
             },
             {

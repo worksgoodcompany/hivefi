@@ -2,7 +2,7 @@
   "name": "Mantle Expert Agent",
   "plugins": [],
   "clients": [],
-  "modelProvider": "anthropic",
+  "modelProvider": "openai",
   "settings": {
     "secrets": {
     },

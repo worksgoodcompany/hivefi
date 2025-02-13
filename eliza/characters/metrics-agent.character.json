@@ -2,7 +2,7 @@
   "name": "Metrics Agent",
   "plugins": [],
   "clients": [],
-  "modelProvider": "anthropic",
+  "modelProvider": "openai",
   "settings": {
     "secrets": {},
     "voice": {

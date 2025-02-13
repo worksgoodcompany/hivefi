@@ -8,6 +8,7 @@ import { SlackClientInterface } from "@elizaos/client-slack";
 import { TelegramClientInterface } from "@elizaos/client-telegram";
 import { TwitterClientInterface } from "@elizaos/client-twitter";
 import { hivefiPlugin } from "@elizaos/plugin-hivefi";
+import { webSearchPlugin } from "@elizaos/plugin-web-search";
 import {
     AgentRuntime,
     CacheManager,
@@ -523,6 +524,7 @@ export async function createAgent(
             bootstrapPlugin,
             nodePlugin,
             hivefiPlugin,
+            webSearchPlugin,
             getSecret(character, "SOLANA_PUBLIC_KEY") ||
             (getSecret(character, "WALLET_PUBLIC_KEY") &&
                 !getSecret(character, "WALLET_PUBLIC_KEY")?.startsWith("0x"))
