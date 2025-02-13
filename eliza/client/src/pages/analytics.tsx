@@ -64,7 +64,7 @@ const protocolData = [
     { id: 'treehouse', name: 'Treehouse Protocol', value: 96.73 },
     { id: 'merchant', name: 'Merchant Moe', value: 89.34 },
     { id: 'agni', name: 'Agni Finance', value: 78.68 },
-    { id: 'init', name: 'INIT Capital', value: 70.48 },
+    { id: 'init', name: 'Lendle', value: 70.48 },
     { id: 'pendle', name: 'Pendle', value: 61.70 },
     { id: 'stargate', name: 'Stargate Finance', value: 35.95 }
 ];

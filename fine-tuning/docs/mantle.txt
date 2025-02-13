@@ -24,7 +24,7 @@ Mantle Network's bridge system (bridge.mantle.xyz) enables secure asset transfer
 
 The primary decentralized exchange on Mantle Network is Merchant Moe (docs.merchantmoe.com). This DEX provides trading services, liquidity pools, and yield farming opportunities. It is officially backed by the Mantle EcoFund and has a strategic liquidity partnership with the Mantle Foundation to ensure deep liquidity for traders.
 
-INIT Capital (docs.init.capital) serves as Mantle Network's primary lending protocol. It uses an innovative 'Liquidity Hooks' system that allows both users and other protocols to access liquidity efficiently. The platform offers lending opportunities with competitive APRs for lenders and flexible borrowing options through an integrated dashboard.
+Lendle (docs.init.capital) serves as Mantle Network's primary lending protocol. It uses an innovative 'Liquidity Hooks' system that allows both users and other protocols to access liquidity efficiently. The platform offers lending opportunities with competitive APRs for lenders and flexible borrowing options through an integrated dashboard.
 
 The mETH Protocol (meth.mantle.xyz) on Mantle Network provides ETH liquid staking services. Users can stake ETH to receive mETH tokens, which accumulate staking rewards, and can further restake through cmETH tokens. These tokens integrate with other Mantle DeFi protocols and can be used as collateral for lending or trading.
 

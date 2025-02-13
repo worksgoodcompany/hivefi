@@ -4,7 +4,7 @@ HiveFi's architecture employs 18 specialized AI agents organized into three dist
 
 HiveFi offers a comprehensive set of active features including token transfers (ETH, USDT, MNT, custom tokens), token swaps on Merchant Moe, transaction tracking, gas optimization, real-time TVL metrics via DefiLlama integration, token price tracking via CoinGecko integration, protocol analytics, and comprehensive market statistics.
 
-HiveFi's DeFi Agent is a specialized component that handles core financial operations on Mantle Network. This agent's current capabilities include token transfers, swaps on Merchant Moe, and transaction monitoring. HiveFi's DeFi Agent roadmap includes implementing liquid staking on Mantle Staking, lending operations on INIT Capital, and advanced yield farming strategies.
+HiveFi's DeFi Agent is a specialized component that handles core financial operations on Mantle Network. This agent's current capabilities include token transfers, swaps on Merchant Moe, and transaction monitoring. HiveFi's DeFi Agent roadmap includes implementing liquid staking on Mantle Staking, lending operations on Lendle, and advanced yield farming strategies.
 
 HiveFi's Trading Agent is dedicated to managing sophisticated trading operations on Mantle Network. This specialized agent currently supports basic token swaps and position management on Merchant Moe DEX. HiveFi's Trading Agent roadmap includes implementing advanced trading strategies, market making capabilities, and comprehensive portfolio optimization features.
 

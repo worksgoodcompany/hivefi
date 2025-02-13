@@ -36,7 +36,7 @@ export const MARKET_TOKENS = {
     },
     METH: {
         underlying: '0xcDA86A272531e8640cD7F1a92c01839911B90bb0' as Address,
-        aToken: '0x6f1c4f245ed5f9fca38664fb452c0ed5d6170cdf' as Address,     // lvMETH
+        aToken: '0x0e927Aa52A38783C1Fd5DfA5c8873cbdBd01D2Ca' as Address,     // lvMETH
         stableDebtToken: '0x79f21bc30da8f5b9c0fb5c5d5f33ce4442611f8c' as Address,
         variableDebtToken: '0x5d0ec1f843c1233d304b96dbde0cab9ec04d71ef' as Address,
     },
@@ -67,6 +67,29 @@ export const LENDING_POOL_ABI = [{
         { name: "to", type: "address" }
     ],
     name: "withdraw",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function"
+}, {
+    inputs: [
+        { name: "asset", type: "address" },
+        { name: "amount", type: "uint256" },
+        { name: "interestRateMode", type: "uint256" },
+        { name: "referralCode", type: "uint16" },
+        { name: "onBehalfOf", type: "address" }
+    ],
+    name: "borrow",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
+}, {
+    inputs: [
+        { name: "asset", type: "address" },
+        { name: "amount", type: "uint256" },
+        { name: "rateMode", type: "uint256" },
+        { name: "onBehalfOf", type: "address" }
+    ],
+    name: "repay",
     outputs: [{ name: "", type: "uint256" }],
     stateMutability: "nonpayable",
     type: "function"
@@ -174,6 +197,30 @@ export const LENDING_POOL_EVENTS = [{
     ],
     name: "Deposit",
     type: "event"
+}, {
+    anonymous: false,
+    inputs: [
+        { indexed: true, name: "reserve", type: "address" },
+        { indexed: true, name: "user", type: "address" },
+        { indexed: true, name: "onBehalfOf", type: "address" },
+        { indexed: false, name: "amount", type: "uint256" },
+        { indexed: false, name: "interestRateMode", type: "uint256" },
+        { indexed: false, name: "borrowRate", type: "uint256" },
+        { indexed: false, name: "referral", type: "uint16" }
+    ],
+    name: "Borrow",
+    type: "event"
+}, {
+    anonymous: false,
+    inputs: [
+        { indexed: true, name: "reserve", type: "address" },
+        { indexed: true, name: "user", type: "address" },
+        { indexed: true, name: "repayer", type: "address" },
+        { indexed: false, name: "amount", type: "uint256" },
+        { indexed: false, name: "useATokens", type: "bool" }
+    ],
+    name: "Repay",
+    type: "event"
 }] as const;
 
 // Response formatting helpers
@@ -191,3 +238,24 @@ export type UserAccountData = {
     suppliedBalance?: string;
     borrowedBalance?: string;
 };
+
+// DebtToken ABI for debt balance operations
+export const DEBT_TOKEN_ABI = [{
+    inputs: [{ name: "user", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+}, {
+    inputs: [],
+    name: "UNDERLYING_ASSET_ADDRESS",
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function"
+}, {
+    inputs: [{ name: "user", type: "address" }],
+    name: "principalBalanceOf",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+}] as const;

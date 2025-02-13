@@ -1,7 +1,7 @@
 import { parseUnits, formatUnits, type PublicClient, type Address } from 'viem';
 import { TOKENS } from '../../config/tokens';
 import type { TokenConfig } from '../../config/tokens';
-import { LENDING_ADDRESSES, MARKET_TOKENS, ATOKEN_ABI, type UserAccountData } from './config';
+import { LENDING_ADDRESSES, MARKET_TOKENS, ATOKEN_ABI, DEBT_TOKEN_ABI, type UserAccountData } from './config';
 
 export function parseAmountAndToken(text: string): { amount: string; tokenSymbol: keyof typeof MARKET_TOKENS | undefined } {
     const words = text.split(' ');
@@ -124,6 +124,78 @@ export function formatSuccessMessage(
     }
     if (accountData.suppliedBalance) {
         lines.push(`Supplied Balance: ${accountData.suppliedBalance} ${tokenSymbol}`);
+    }
+
+    return lines.join('\n');
+}
+
+// Helper to check debt token balance (borrowed amount)
+export async function getDebtTokenBalance(
+    publicClient: PublicClient,
+    tokenSymbol: keyof typeof MARKET_TOKENS,
+    userAddress: Address,
+    isStableRate: boolean = false
+): Promise<bigint> {
+    const marketToken = MARKET_TOKENS[tokenSymbol];
+    const debtTokenAddress = isStableRate ? marketToken.stableDebtToken : marketToken.variableDebtToken;
+    const balance = await publicClient.readContract({
+        address: debtTokenAddress,
+        abi: DEBT_TOKEN_ABI,
+        functionName: 'balanceOf',
+        args: [userAddress]
+    });
+    return balance;
+}
+
+// Helper to check if user can borrow
+export function canBorrow(accountData: UserAccountData, amount: string, tokenSymbol: string): {
+    canBorrow: boolean;
+    reason?: string;
+} {
+    const borrowAmount = Number(amount);
+    const availableToBorrow = Number(accountData.availableBorrowsETH);
+    const healthFactor = Number(accountData.healthFactor);
+
+    if (borrowAmount <= 0) {
+        return { canBorrow: false, reason: 'Borrow amount must be greater than 0' };
+    }
+
+    if (borrowAmount > availableToBorrow) {
+        return { canBorrow: false, reason: `You can only borrow up to ${availableToBorrow} USD worth of ${tokenSymbol}` };
+    }
+
+    if (healthFactor < 1.05) {
+        return { canBorrow: false, reason: 'Health factor too low. Please deposit more collateral first.' };
+    }
+
+    return { canBorrow: true };
+}
+
+// Helper to format success message for borrow/repay
+export function formatBorrowRepayMessage(
+    action: 'borrow' | 'repay',
+    amount: string,
+    tokenSymbol: string,
+    txHash: string,
+    accountData: UserAccountData,
+    borrowedBalance?: string
+): string {
+    const lines = [
+        `Successfully ${action}ed ${amount} ${tokenSymbol} ${action === 'borrow' ? 'from' : 'to'} Lendle`,
+        `View on Explorer: https://explorer.mantle.xyz/tx/${txHash}`,
+        '',
+        'Updated Account Status:',
+        `Total Collateral: ${accountData.totalCollateralETH} USD`,
+        `Total Debt: ${accountData.totalDebtETH} USD`,
+        `Available to Borrow: ${accountData.availableBorrowsETH} USD`,
+        `Health Factor: ${accountData.healthFactor}`,
+    ];
+
+    if (accountData.walletBalance) {
+        lines.push(`Wallet Balance: ${accountData.walletBalance} ${tokenSymbol}`);
+    }
+    if (borrowedBalance) {
+        lines.push(`Borrowed Balance: ${borrowedBalance} ${tokenSymbol}`);
     }
 
     return lines.join('\n');

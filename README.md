@@ -364,22 +364,22 @@ Send 0.00001 METH to 0xF12d64817029755853bc74a585EcD162f63c5f84
 Swap 0.1 MNT for USDC
 ```
 
-### Token Lending (INIT Capital) (WIP)
+### Token Lending & Borrowing (Lendle)
 
 ```
-Supply 0.1 USDC to lending pool
-```
-
-```
-Withdraw 0.01 USDC from lending pool
+Supply 0.1 USDC to Lendle
 ```
 
 ```
-Borrow 0.01 USDT from lending pool
+Withdraw 0.01 USDC from Lendle
 ```
 
 ```
-Repay 0.001 USDT to lending pool
+Borrow 0.001 USDT from Lendle
+```
+
+```
+Repay 0.0001 USDT to Lendle
 ```
 
 

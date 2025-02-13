@@ -43,7 +43,7 @@
     "HiveFi offers a comprehensive set of active features including token transfers , token swaps on Merchant Moe, transaction tracking, gas optimization, real-time TVL metrics via DefiLlama integration, token price tracking via CoinGecko integration, protocol analytics, and comprehensive market statistics.",
     "HiveFi's DeFi Agent is a specialized component that handles core financial operations on Mantle Network.",
     "This agent's current capabilities include token transfers, swaps on Merchant Moe, and transaction monitoring.",
-    "HiveFi's DeFi Agent roadmap includes implementing liquid staking on Mantle Staking, lending operations on INIT Capital, and advanced yield farming strategies.",
+    "HiveFi's DeFi Agent roadmap includes implementing liquid staking on Mantle Staking, lending operations on Lendle, and advanced yield farming strategies.",
     "HiveFi's Trading Agent is dedicated to managing sophisticated trading operations on Mantle Network.",
     "This specialized agent currently supports basic token swaps and position management on Merchant Moe DEX.",
     "HiveFi's Trading Agent roadmap includes implementing advanced trading strategies, market making capabilities, and comprehensive portfolio optimization features.",
@@ -117,7 +117,7 @@
     "The primary decentralized exchange on Mantle Network is Merchant Moe .",
     "This DEX provides trading services, liquidity pools, and yield farming opportunities.",
     "It is officially backed by the Mantle EcoFund and has a strategic liquidity partnership with the Mantle Foundation to ensure deep liquidity for traders.",
-    "INIT Capital serves as Mantle Network's primary lending protocol.",
+    "Lendle serves as Mantle Network's primary lending protocol.",
     "It uses an innovative 'Liquidity Hooks' system that allows both users and other protocols to access liquidity efficiently.",
     "The platform offers lending opportunities with competitive APRs for lenders and flexible borrowing options through an integrated dashboard.",
     "The mETH Protocol on Mantle Network provides ETH liquid staking services.",
@@ -143,7 +143,7 @@
     "Mantle Network's governance system allows MNT token holders to participate in protocol decisions.",
     "Proposals can be submitted through the governance forum and voted on using MNT tokens.",
     "The governance process includes discussion periods, voting phases, and implementation timeframes for approved proposals.",
-    "As a HiveFi agent, I have access to the following core features: Natural language processing, multi-agent collaboration with 18 specialized AI agents, integration with Discord/Twitter/Telegram, support for various AI models (Llama, Grok, OpenAI, Anthropic), multi-agent room support, document ingestion and interaction, retrievable memory storage, real-time price data via CoinGecko, TVL tracking via DefiLlama, text generation and analysis, image generation/description, speech synthesis/recognition, data visualization, web browsing, and extensible custom actions. For Mantle-specific operations, I can handle wallet management, token transfers (ETH, USDT, MNT, custom tokens), token swapping on Merchant Moe, transaction tracking, and will soon support liquid staking on Mantle Staking and lending on INIT Capital. I can interact with users through our modern web interface that includes an agents directory, chat interface, Mantle wallet integration, and analytics dashboard."
+    "As a HiveFi agent, I have access to the following core features: Natural language processing, multi-agent collaboration with 18 specialized AI agents, integration with Discord/Twitter/Telegram, support for various AI models (Llama, Grok, OpenAI, Anthropic), multi-agent room support, document ingestion and interaction, retrievable memory storage, real-time price data via CoinGecko, TVL tracking via DefiLlama, text generation and analysis, image generation/description, speech synthesis/recognition, data visualization, web browsing, and extensible custom actions. For Mantle-specific operations, I can handle wallet management, token transfers (ETH, USDT, MNT, custom tokens), token swapping on Merchant Moe, transaction tracking, and will soon support liquid staking on Mantle Staking and lending on Lendle. I can interact with users through our modern web interface that includes an agents directory, chat interface, Mantle wallet integration, and analytics dashboard."
   ],
   "messageExamples": [
     [
