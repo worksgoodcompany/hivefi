@@ -36,6 +36,7 @@ export const deposit: Action = {
             },
         ],
     ],
+    suppressInitialMessage: true,
     handler: async (runtime, message: Memory, state, options, callback) => {
         try {
             // Initialize wallet provider
@@ -72,10 +73,13 @@ export const deposit: Action = {
                 return false;
             }
 
-            // Initial confirmation
-            callback?.({
-                text: `Let's proceed with supplying ${amount} ${tokenSymbol} to Lendle on the Mantle network. Please hold on while I process the transaction.`,
-            });
+            // For non-telegram/discord clients, send an initial confirmation
+            const source = message.content.source;
+            if (source !== 'telegram' && source !== 'discord') {
+                callback?.({
+                    text: `Let's proceed with supplying ${amount} ${tokenSymbol} to Lendle on the Mantle network. Please hold on while I process the transaction.`,
+                });
+            }
 
             // Get token configuration
             const token = getTokenConfig(tokenSymbol);
