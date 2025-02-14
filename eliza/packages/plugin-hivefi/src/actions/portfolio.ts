@@ -1,4 +1,4 @@
-import type { Action, Memory } from "@elizaos/core";
+import type { Action, Memory, State } from "@elizaos/core";
 import { formatEther, formatUnits, createPublicClient, http } from "viem";
 import { mantleChain } from "../config/chains";
 import { initWalletProvider } from "../providers/wallet";
@@ -14,16 +14,6 @@ const ERC20_BALANCE_ABI = [{
     "type": "function"
 }] as const;
 
-// CoinGecko IDs mapping
-const COINGECKO_IDS = {
-    MNT: 'mantle',
-    USDT: 'tether',
-    USDC: 'usd-coin',
-    WETH: 'weth',
-    WMNT: 'wrapped-mantle',
-    WBTC: 'wrapped-bitcoin'
-} as const;
-
 interface TokenBalance {
     symbol: string;
     name: string;
@@ -31,6 +21,19 @@ interface TokenBalance {
     usdPrice: number;
     usdValue: number;
 }
+
+// Module-level response cache
+const responseCache = new Map<string, { timestamp: number; processing: boolean }>();
+
+// Clean up old cache entries every minute
+setInterval(() => {
+    const now = Date.now();
+    for (const [key, value] of responseCache.entries()) {
+        if (now - value.timestamp > 60000) { // Remove entries older than 1 minute
+            responseCache.delete(key);
+        }
+    }
+}, 60000);
 
 export const portfolio: Action = {
     name: "SHOW_PORTFOLIO",
@@ -46,49 +49,77 @@ export const portfolio: Action = {
             {
                 user: "assistant",
                 content: {
-                    text: "Here's your current portfolio on Mantle:\n\nMNT: 10.5 ($21.00)\nUSDC: 100 ($100.00)\nTotal Value: $121.00",
+                    text: "Fetching your current portfolio data from Mantle Network...",
                 },
             },
         ],
     ],
-    handler: async (runtime, message: Memory, state, options, callback) => {
+    suppressInitialMessage: true, // This prevents double responses in Telegram
+    handler: async (runtime, message: Memory, state: State | undefined, options, callback) => {
+        if (!callback) return false;
+        if (!state) return false;
+
+        // Check if this is a memory-based response
+        if (state.isMemoryResponse) {
+            return false;
+        }
+
+        // Mark this as not a memory response
+        state.isMemoryResponse = true;
+
+        // For telegram, we want to skip the initial acknowledgment
+        const isTelegram = message.content.source === 'telegram';
+
         try {
             // Initialize wallet provider
             const provider = initWalletProvider(runtime);
             if (!provider) {
-                callback?.({
+                callback({
                     text: "Mantle wallet not configured. Please set EVM_PRIVATE_KEY in your environment variables.",
                 });
                 return false;
             }
 
             const address = provider.getAddress() as `0x${string}`;
-
-            // Create a public client for reading data
             const publicClient = createPublicClient({
                 chain: mantleChain,
                 transport: http("https://rpc.mantle.xyz")
             });
 
-            // Fetch native MNT balance
-            const mntBalance = await publicClient.getBalance({ address });
+            // For non-telegram clients, send an immediate acknowledgment
+            if (!isTelegram) {
+                callback({
+                    text: "Fetching your current portfolio data from Mantle Network...",
+                });
+            }
+
+            // Fetch all data in parallel for better performance
+            const [mntBalance, erc20Tokens, pricesResponse] = await Promise.all([
+                publicClient.getBalance({ address }),
+                getERC20Tokens(),
+                axios.get('https://api.coingecko.com/api/v3/simple/price', {
+                    params: {
+                        ids: Object.values(TOKENS).map(t => t.coingeckoId).filter(Boolean).join(','),
+                        vs_currencies: 'usd'
+                    },
+                    timeout: 10000 // Increased timeout
+                }).catch(error => {
+                    console.error('Error fetching prices:', error);
+                    return { data: {} };
+                })
+            ]);
+
             const mntBalanceFormatted = formatEther(mntBalance);
-
-            // Fetch token balances
-            const tokenBalances: TokenBalance[] = [];
-
-            // Add MNT balance first
-            tokenBalances.push({
+            const tokenBalances: TokenBalance[] = [{
                 symbol: 'MNT',
                 name: TOKENS.MNT.name,
                 balance: mntBalanceFormatted,
-                usdPrice: 0, // Will be updated
-                usdValue: 0, // Will be updated
-            });
+                usdPrice: pricesResponse.data?.[TOKENS.MNT.coingeckoId]?.usd || 0,
+                usdValue: Number(mntBalanceFormatted) * (pricesResponse.data?.[TOKENS.MNT.coingeckoId]?.usd || 0),
+            }];
 
-            // Fetch ERC20 token balances
-            const erc20Tokens = getERC20Tokens();
-            for (const token of erc20Tokens) {
+            // Fetch ERC20 balances
+            await Promise.all(erc20Tokens.map(async (token) => {
                 try {
                     const balance = await publicClient.readContract({
                         address: token.address,
@@ -98,48 +129,25 @@ export const portfolio: Action = {
                     }) as bigint;
 
                     const formattedBalance = formatUnits(balance, token.decimals);
-
                     if (Number(formattedBalance) > 0) {
+                        const usdPrice = pricesResponse.data?.[token.coingeckoId]?.usd || 0;
                         tokenBalances.push({
                             symbol: token.symbol,
                             name: token.name,
                             balance: formattedBalance,
-                            usdPrice: 0, // Will be updated
-                            usdValue: 0, // Will be updated
+                            usdPrice,
+                            usdValue: Number(formattedBalance) * usdPrice,
                         });
                     }
                 } catch (error) {
                     console.error(`Error fetching ${token.symbol} balance:`, error);
                 }
-            }
+            }));
 
-            // Fetch prices from CoinGecko
-            try {
-                const tokens = tokenBalances.map(t => TOKENS[t.symbol].coingeckoId).filter(Boolean);
-                const pricesResponse = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
-                    params: {
-                        ids: tokens.join(','),
-                        vs_currencies: 'usd'
-                    }
-                });
-
-                // Update token balances with prices
-                for (const token of tokenBalances) {
-                    const geckoId = TOKENS[token.symbol].coingeckoId;
-                    if (geckoId && pricesResponse.data[geckoId]) {
-                        token.usdPrice = pricesResponse.data[geckoId].usd;
-                        token.usdValue = Number(token.balance) * token.usdPrice;
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching prices:', error);
-            }
-
-            // Calculate total portfolio value
             const totalValue = tokenBalances.reduce((sum, token) => sum + token.usdValue, 0);
 
-            // Format the response
-            const lines = [
+            // Format response
+            const response = [
                 'Your Mantle Portfolio:',
                 '',
                 ...tokenBalances
@@ -161,15 +169,13 @@ export const portfolio: Action = {
                 })}`,
                 '',
                 `View on Explorer: https://explorer.mantle.xyz/address/${address}`
-            ];
+            ].join('\n');
 
-            callback?.({
-                text: lines.join('\n')
-            });
+            callback({ text: response });
             return true;
         } catch (error) {
             console.error("Error fetching portfolio:", error);
-            callback?.({
+            callback({
                 text: `Error fetching portfolio: ${error instanceof Error ? error.message : 'Unknown error'}`,
             });
             return false;
