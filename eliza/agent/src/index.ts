@@ -32,8 +32,8 @@ import {
 import { RedisClient } from "@elizaos/adapter-redis";
 import { zgPlugin } from "@elizaos/plugin-0g";
 import { bootstrapPlugin } from "@elizaos/plugin-bootstrap";
-import createGoatPlugin from "@elizaos/plugin-goat";
-// import { intifacePlugin } from "@elizaos/plugin-intiface";
+/* import createGoatPlugin from "@elizaos/plugin-goat";
+ */// import { intifacePlugin } from "@elizaos/plugin-intiface";
 import { DirectClient } from "@elizaos/client-direct";
 import { aptosPlugin } from "@elizaos/plugin-aptos";
 import {
@@ -506,12 +506,12 @@ export async function createAgent(
         throw new Error("Invalid TEE configuration");
     }
 
-    let goatPlugin: any | undefined;
+/*     let goatPlugin: any | undefined;
     if (getSecret(character, "EVM_PROVIDER_URL")) {
         goatPlugin = await createGoatPlugin((secret) =>
             getSecret(character, secret)
         );
-    }
+    } */
 
     return new AgentRuntime({
         databaseAdapter: db,
