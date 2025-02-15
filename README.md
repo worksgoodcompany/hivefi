@@ -7,19 +7,21 @@
   <img src="assets/logo/logo.svg" alt="HiveFi Logo" width="200"/>
   <h3>Revolutionizing Mantle DeFi with AI-Powered Agent Swarms</h3>
   <p>Simplify your Mantle DeFi experience with the power of Multi-Agent Systems (MAS)</p>
-
-  <p align="center">
+    <p align="center">
     <a href="https://discord.gg/APAKDaUYAM">
       <img src="https://img.shields.io/badge/Discord-Join%20Us-blue?style=for-the-badge&logo=discord" alt="Discord" />
     </a>
     <a href="https://x.com/hivefi_agent">
       <img src="https://img.shields.io/badge/X-Follow%20Us-blue?style=for-the-badge&logo=x" alt="X" />
     </a>
-    <a href="https://youtu.be/48U3xAXCxqs">
+    <a href="https://www.youtube.com/watch?v=eKaUS8KV_WQ">
       <img src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=for-the-badge&logo=youtube" alt="Demo Video" />
     </a>
     <a href="https://linktr.ee/HiveFi">
       <img src="https://img.shields.io/badge/Linktree-Visit%20Us-green?style=for-the-badge&logo=linktree" alt="Linktree" />
+    </a>
+    <a href="https://hivefi.vercel.app/">
+      <img src="https://img.shields.io/badge/Website-Visit%20App-purple?style=for-the-badge&logo=vercel" alt="Website" />
     </a>
   </p>
   🔅 Sozu Virtual AI Hack Project 💥
@@ -79,7 +81,7 @@ Learn more about our agent system in the [agents documentation](docs/agents.md).
 
 
 <div align="center">
-  <img src="assets/architecture.jpg" alt="HiveFi Architecture" width="800"/>
+  <img src="assets/architecture.png" alt="HiveFi Architecture" width="800"/>
   <p><em>HiveFi Architecture</em></p>
 </div>
 
@@ -111,19 +113,20 @@ Learn more about our agent system in the [agents documentation](docs/agents.md).
 - 💱 Token swapping on Merchant Moe
 - 🔍 Transaction tracking
 - 💸 Lending on Lendle
-- 💧 Liquid staking on Mantle Staking (WIP)
+- 💸 Borrowing on Lendle
+- 💧 Add and Remove Liquidity on Merchant Moe (WIP)
 
 
 ### 🖥️ Web App Features
 - 🚀 Landing page
 - 📄 Agents Directory
 - 🤖 Chat with Agent Swarm through web interface
-- 👛 Mantle wallet integration (Braavos, Argent X & MetaMask)
+- 👛 Mantle wallet connector (MetaMask)
 - 📊 Portfolio & Analytics dashboard
 - 🎨 Modern, responsive design
 
 <div align="center">
-  <img src="assets/starkhive-client.png" alt="HiveFi Client Interface" width="800"/>
+  <img src="assets/WebApp.png" alt="HiveFi Client Interface" width="800"/>
   <p><em>HiveFi Web Client</em></p>
 </div>
 
@@ -395,38 +398,43 @@ For detailed development roadmap and milestones, see our [development plan](docs
 ### Project Structure
 
 ```
-README.md                       # This file
-docs/                           # Documentation
-  ├── aiws.md                   # AI Workforce Suite docs
-  ├── business-plan.md          # Business plan and strategy
-  ├── overview.md               # Project overview
-  ├── plan.md                   # Development roadmap
-  ├── plugin-hivefi.md          # HiveFi plugin documentation
-  ├── specs.md                  # Technical specifications
-  └── whitepaper.md             # Project whitepaper
-assets/                         # Assets
-  ...
-eliza/                          # Eliza project
+README.md                             # This file
+docs/                                 # Documentation
+  ├── HiveFi_Pitch_Deck.pdf           # HiveFi Pitch Deck
+  ├── agents.md                       # Agents documentation
+  ├── aiws.md                         # AI Workforce Suite docs
+  ├── business-plan.md                # Business plan and strategy
+  ├── overview.md                     # Project overview
+  ├── plan.md                         # Development roadmap
+  ├── plugin-hivefi.md                # HiveFi plugin documentation
+  ├── specs.md                        # Technical specifications
+  └── whitepaper.md                   # Project whitepaper
+assets/                               # Branding Assets & Guidelines
+eliza/                                # Eliza project
   ├── packages/
-  │   ├── core/                 # Eliza core functionality
-  │   ├── plugin-hivefi/         # Mantle integration
+  │   ├── core/                       # Eliza core functionality
+  │   ├── plugin-hivefi/              # Mantle integration
   │   │   ├── src/
   │   │   │   ├── actions/      
-  │   │   │   │   ├── lending/        # Lending & Borrowing on Lendle
+  │   │   │   │   ├── lending/        # Lending & Borrowing Actions (Lendle)
+  │   │   │   │   │   ├── deposit.ts
+  │   │   │   │   │   ├── withdraw.ts
+  │   │   │   │   │   ├── borrow.ts
+  │   │   │   │   │   └── repay.ts
   │   │   │   │   ├── erc20Transfer   # ERC20 Transfer Action
   │   │   │   │   ├── portfolio       # Portfolio Action
-  │   │   │   │   ├── swap            # Swap Action
+  │   │   │   │   ├── swap            # Swap Action (Merchant Moe)
   │   │   │   │   ├── stake           # Work In Progress
   │   │   │   │   └── unstake         # Work In Progress
   │   │   │   ├── providers/    
-  │   │   │   │   ├── coingecko     # CoinGecko Provider
-  │   │   │   │   ├── defillama     # DefiLlama Provider
-  │   │   │   │   ├── wallet        # Mantle Wallet Provider
+  │   │   │   │   ├── coingecko       # CoinGecko Provider
+  │   │   │   │   ├── defillama       # DefiLlama Provider
+  │   │   │   │   ├── wallet          # Mantle Wallet Provider
   │   │   │   └── ...
   │   │   ├── templates/    
   │   │   ├── types/        
   │   │   └── utils/        
-  └── client/                   # Web App
+  └── client/                         # Custom Web App
 ```
 
 ## 🤝 Contributing
